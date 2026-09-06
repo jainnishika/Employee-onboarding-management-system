@@ -611,61 +611,52 @@ body {
    MOBILE
 ========================================================= */
 
+/* =========================================
+   MOBILE SIDEBAR - FINAL OVERRIDE
+========================================= */
+
 @media (max-width: 768px) {
 
-    /* NAVBAR */
-    .navbar {
-        width: 100%;
-        left: 0;
-    }
-
-    .navbar.collapsed {
-        width: 100%;
-    }
-
-    /* SIDEBAR */
     .sidebar {
-        width: 250px;
-        left: -250px;
+        width: 250px !important;
+        left: -250px !important;
+
         top: 65px;
         height: calc(100vh - 65px);
 
-        transition: left 0.3s ease;
-        z-index: 1000;
+        transition: left 0.3s ease !important;
+        z-index: 1001;
     }
 
-    /* WHEN OPEN */
-    .sidebar:not(.collapsed) {
-        left: 0;
+    .sidebar.mobile-open {
+        left: 0 !important;
+        width: 250px !important;
     }
 
-    /* WHEN CLOSED */
-    .sidebar.collapsed {
-        width: 250px;
-        left: -250px;
-    }
-
-    /* CONTENT ALWAYS FULL WIDTH */
     .content,
     .content.collapsed {
-        width: 100%;
-        margin-left: 0;
-        padding: 15px;
+        width: 100% !important;
+        margin-left: 0 !important;
     }
 
-    /* OVERLAY */
+    .navbar,
+    .navbar.collapsed {
+        width: 100% !important;
+        left: 0 !important;
+    }
+
     .overlay {
         display: block;
         position: fixed;
         top: 65px;
         left: 0;
-        width: 100%;
-        height: calc(100vh - 65px);
+        right: 0;
+        bottom: 0;
+
         background: rgba(0, 0, 0, 0.35);
-        z-index: 999;
+        z-index: 1000;
     }
 }
-
 
 /* =========================================================
    SMALL MOBILE
