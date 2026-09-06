@@ -1,0 +1,1082 @@
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+
+/* =========================================================
+   ANGULAR HOST
+========================================================= */
+
+:host {
+    display: block;
+
+    width: 100%;
+    height: 100vh;
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+========================================================= */
+
+.login-container {
+
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    padding: 30px;
+
+    position: relative;
+
+    background-image: url('/assets/images/rec_build.jpeg');
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   BACKGROUND OVERLAY
+========================================================= */
+
+.login-container::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    
+
+    z-index: 0;
+}
+
+
+/* =========================================================
+   LOGIN LAYOUT
+========================================================= */
+
+.login-layout {
+
+    position: relative;
+
+    z-index: 1;
+
+    width: 92vw;
+
+    max-width: 1180px;
+
+    display: flex;
+
+    background: #ffffff;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.25);
+
+    /*
+       Keeps the card proportional
+       without making it unnecessarily tall
+    */
+
+    aspect-ratio: 1.85 / 1;
+}
+
+
+/* =========================================================
+   LEFT SIDE
+========================================================= */
+
+.login-left {
+
+    width: 48%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 40px 65px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff 0%,
+            #f9fbfd 100%
+        );
+}
+
+
+/*
+   Login content width
+*/
+
+.login-left > div {
+
+    width: 100%;
+
+    max-width: 410px;
+}
+
+
+/* =========================================================
+   LOGIN HEADER
+========================================================= */
+
+.login-header {
+
+    width: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    margin-bottom: 25px;
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.logo {
+
+    width: 120px;
+
+    height: auto;
+
+    max-height: 75px;
+
+    object-fit: contain;
+
+    margin-bottom: 10px;
+}
+
+
+/* =========================================================
+   HEADING
+========================================================= */
+
+.login-left h1 {
+
+    width: 100%;
+
+    margin: 0;
+
+    color: #075da8;
+
+    font-size: 30px;
+
+    font-weight: 700;
+
+    line-height: 1.2;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   SUBTITLE
+========================================================= */
+
+/*
+   If you add a subtitle later this will automatically style it.
+*/
+
+.login-left .subtitle {
+
+    text-align: center;
+
+    color: #64748b;
+
+    font-size: 13px;
+
+    margin-top: 8px;
+
+    margin-bottom: 22px;
+}
+
+
+/* =========================================================
+   INPUT GROUP
+========================================================= */
+
+.input-group {
+
+    width: 100%;
+
+    margin-bottom: 17px;
+}
+
+
+.input-group label {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #334155;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   NORMAL INPUT
+========================================================= */
+
+.input-group > input {
+
+    width: 100%;
+
+    height: 48px;
+
+    padding: 0 15px;
+
+    border: 1px solid #d6dee8;
+
+    border-radius: 9px;
+
+    background: #f8fafc;
+
+    color: #1e293b;
+
+    font-size: 14px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.input-group > input::placeholder {
+
+    color: #9aa6b2;
+}
+
+
+.input-group > input:hover {
+
+    border-color: #b8c6d5;
+}
+
+
+.input-group > input:focus {
+
+    outline: none;
+
+    background: #ffffff;
+
+    border-color: #0865b5;
+
+    box-shadow:
+        0 0 0 3px rgba(8, 101, 181, 0.10);
+}
+
+
+/* =========================================================
+   PASSWORD
+========================================================= */
+
+.password-field {
+
+    position: relative;
+
+    width: 100%;
+}
+
+
+.password-field input {
+
+    width: 100%;
+
+    height: 48px;
+
+    padding: 0 52px 0 15px;
+
+    border: 1px solid #d6dee8;
+
+    border-radius: 9px;
+
+    background: #f8fafc;
+
+    color: #1e293b;
+
+    font-size: 14px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.password-field input::placeholder {
+
+    color: #9aa6b2;
+}
+
+
+.password-field input:hover {
+
+    border-color: #b8c6d5;
+}
+
+
+.password-field input:focus {
+
+    outline: none;
+
+    background: #ffffff;
+
+    border-color: #0865b5;
+
+    box-shadow:
+        0 0 0 3px rgba(8, 101, 181, 0.10);
+}
+
+
+/* =========================================================
+   EYE BUTTON
+========================================================= */
+
+.eye-btn {
+
+    position: absolute;
+
+    right: 6px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 36px !important;
+
+    height: 36px !important;
+
+    padding: 0 !important;
+
+    margin: 0 !important;
+
+    display: flex !important;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: transparent !important;
+
+    border: none !important;
+
+    color: #64748b;
+
+    cursor: pointer;
+
+    border-radius: 50%;
+
+    z-index: 5;
+}
+
+
+.eye-btn:hover {
+
+    color: #075da8;
+
+    background: #edf5fc !important;
+}
+
+
+.eye-btn mat-icon {
+
+    width: 20px;
+
+    height: 20px;
+
+    font-size: 20px;
+
+    line-height: 20px;
+}
+
+
+/* =========================================================
+   FORGOT PASSWORD
+========================================================= */
+
+.forgot {
+
+    width: 100%;
+
+    text-align: right;
+
+    margin-top: -2px;
+
+    margin-bottom: 20px;
+}
+
+
+.forgot a {
+
+    color: #075da8;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    cursor: pointer;
+}
+
+
+.forgot a:hover {
+
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   LOGIN BUTTON
+========================================================= */
+
+.login-btn {
+
+    width: 100%;
+
+    height: 48px;
+
+    padding: 0 20px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0865b5,
+            #004b91
+        );
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.2px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 6px 15px rgba(0, 83, 155, 0.20);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.login-btn:hover {
+
+    background:
+        linear-gradient(
+            135deg,
+            #075da8,
+            #003f7a
+        );
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 9px 20px rgba(0, 83, 155, 0.28);
+}
+
+
+.login-btn:active {
+
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   BACK BUTTON
+========================================================= */
+
+.back-btn {
+
+    width: 100%;
+
+    height: 44px;
+
+    margin-top: 12px;
+
+    padding: 0 20px;
+
+    border: 1px solid #0865b5;
+
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    color: #0865b5;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+
+.back-btn:hover {
+
+    background: #eef6ff;
+}
+
+
+/* =========================================================
+   RIGHT SIDE
+========================================================= */
+
+.login-right {
+
+    width: 52%;
+
+    min-width: 0;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0065b3,
+            #004d98
+        );
+
+    position: relative;
+}
+
+
+/*
+   Subtle blue overlay
+*/
+
+.login-right::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0, 88, 170, 0.08),
+            rgba(0, 25, 70, 0.18)
+        );
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   RIGHT IMAGE
+========================================================= */
+
+.login-right img {
+
+    width: 100%;
+
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    object-position: center;
+
+    position: relative;
+
+    z-index: 1;
+}
+
+
+/* =========================================================
+   LARGE DESKTOP
+========================================================= */
+
+@media (min-width: 1400px) {
+
+    .login-layout {
+
+        max-width: 1250px;
+    }
+
+    .login-left {
+
+        padding-left: 75px;
+        padding-right: 75px;
+    }
+
+    .login-left > div {
+
+        max-width: 430px;
+    }
+
+    .logo {
+
+        width: 130px;
+    }
+
+    .login-left h1 {
+
+        font-size: 32px;
+    }
+}
+
+
+/* =========================================================
+   NORMAL DESKTOP
+   1200px - 1399px
+========================================================= */
+
+@media (min-width: 1200px) and (max-width: 1399px) {
+
+    .login-layout {
+
+        width: 90vw;
+
+        max-width: 1150px;
+    }
+
+    .login-left {
+
+        padding: 38px 55px;
+    }
+
+    .login-left > div {
+
+        max-width: 400px;
+    }
+}
+
+
+/* =========================================================
+   LAPTOP
+   1024px - 1199px
+========================================================= */
+
+@media (min-width: 1024px) and (max-width: 1199px) {
+
+    .login-container {
+
+        padding: 20px;
+    }
+
+    .login-layout {
+
+        width: 94vw;
+
+        max-width: 1000px;
+
+        aspect-ratio: 1.75 / 1;
+    }
+
+    .login-left {
+
+        width: 48%;
+
+        padding: 30px 40px;
+    }
+
+    .login-right {
+
+        width: 52%;
+    }
+
+    .login-left > div {
+
+        max-width: 350px;
+    }
+
+    .login-header {
+
+        margin-bottom: 18px;
+    }
+
+    .logo {
+
+        width: 95px;
+
+        max-height: 60px;
+
+        margin-bottom: 7px;
+    }
+
+    .login-left h1 {
+
+        font-size: 26px;
+    }
+
+    .input-group {
+
+        margin-bottom: 13px;
+    }
+
+    .input-group label {
+
+        font-size: 12px;
+
+        margin-bottom: 5px;
+    }
+
+    .input-group > input,
+    .password-field input {
+
+        height: 43px;
+
+        font-size: 13px;
+    }
+
+    .login-btn {
+
+        height: 43px;
+
+        font-size: 13px;
+    }
+
+    .forgot {
+
+        margin-bottom: 15px;
+    }
+}
+
+
+/* =========================================================
+   SMALL LAPTOP / TABLET
+   769px - 1023px
+========================================================= */
+
+@media (min-width: 769px) and (max-width: 1023px) {
+
+    .login-container {
+
+        padding: 18px;
+    }
+
+    .login-layout {
+
+        width: 94vw;
+
+        max-width: 900px;
+
+        aspect-ratio: 1.65 / 1;
+    }
+
+    .login-left {
+
+        width: 50%;
+
+        padding: 25px 30px;
+    }
+
+    .login-right {
+
+        width: 50%;
+    }
+
+    .login-left > div {
+
+        max-width: 320px;
+    }
+
+    .logo {
+
+        width: 85px;
+
+        max-height: 55px;
+    }
+
+    .login-left h1 {
+
+        font-size: 24px;
+    }
+
+    .input-group {
+
+        margin-bottom: 12px;
+    }
+
+    .input-group > input,
+    .password-field input {
+
+        height: 41px;
+
+        font-size: 12px;
+    }
+
+    .login-btn {
+
+        height: 41px;
+
+        font-size: 13px;
+    }
+
+    .forgot {
+
+        margin-bottom: 13px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .login-container {
+
+        padding: 15px;
+
+        overflow-y: auto;
+    }
+
+    .login-layout {
+
+        width: 100%;
+
+        max-width: 450px;
+
+        display: block;
+
+        aspect-ratio: auto;
+
+        border-radius: 17px;
+    }
+
+    .login-left {
+
+        width: 100%;
+
+        padding: 35px 28px;
+    }
+
+    .login-left > div {
+
+        max-width: 100%;
+    }
+
+    .login-right {
+
+        display: none;
+    }
+
+    .logo {
+
+        width: 95px;
+
+        max-height: 65px;
+    }
+
+    .login-left h1 {
+
+        font-size: 27px;
+    }
+
+    .input-group > input,
+    .password-field input {
+
+        height: 47px;
+    }
+
+    .login-btn {
+
+        height: 47px;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .login-container {
+
+        padding: 12px;
+    }
+
+    .login-layout {
+
+        max-width: 400px;
+
+        border-radius: 15px;
+    }
+
+    .login-left {
+
+        padding: 28px 20px;
+    }
+
+    .logo {
+
+        width: 80px;
+
+        max-height: 55px;
+    }
+
+    .login-left h1 {
+
+        font-size: 24px;
+    }
+
+    .input-group label {
+
+        font-size: 12px;
+    }
+
+    .input-group > input,
+    .password-field input {
+
+        height: 44px;
+
+        font-size: 13px;
+    }
+
+    .login-btn {
+
+        height: 44px;
+
+        font-size: 14px;
+    }
+
+    .back-btn {
+
+        height: 42px;
+    }
+}
+
+
+/* =========================================================
+   VERY SHORT LAPTOP SCREENS
+   Handles 1366x768 / 1280x720 nicely
+========================================================= */
+
+@media (min-width: 769px) and (max-height: 750px) {
+
+    .login-container {
+
+        padding-top: 10px;
+
+        padding-bottom: 10px;
+    }
+
+    .login-layout {
+
+        max-height: 92vh;
+    }
+
+    .login-left {
+
+        padding-top: 20px;
+
+        padding-bottom: 20px;
+    }
+
+    .login-header {
+
+        margin-bottom: 14px;
+    }
+
+    .logo {
+
+        width: 85px;
+
+        max-height: 52px;
+
+        margin-bottom: 5px;
+    }
+
+    .login-left h1 {
+
+        font-size: 24px;
+    }
+
+    .input-group {
+
+        margin-bottom: 10px;
+    }
+
+    .input-group label {
+
+        margin-bottom: 4px;
+    }
+
+    .input-group > input,
+    .password-field input {
+
+        height: 40px;
+    }
+
+    .forgot {
+
+        margin-bottom: 12px;
+    }
+
+    .login-btn {
+
+        height: 40px;
+    }
+}

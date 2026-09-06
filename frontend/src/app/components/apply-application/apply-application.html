@@ -1,0 +1,267 @@
+<div class="container">
+
+    <button
+        class="back-btn"
+        (click)="back()">
+
+        ← Back
+
+    </button>
+
+    <h2>Apply Application</h2>
+
+    <!-- Application Type -->
+
+    <div class="form-group">
+
+        <label>
+
+            Application Type
+
+        </label>
+
+        <select
+            [(ngModel)]="application.applicationType">
+
+            <option value="">Select</option>
+
+            <option value="Leave">
+
+                Leave
+
+            </option>
+
+            <option value="Resignation">
+
+                Resignation
+
+            </option>
+
+            <option value="Work From Home">
+
+                Work From Home
+
+            </option>
+
+            <option value="Reimbursement">
+
+                Reimbursement
+
+            </option>
+
+        </select>
+
+    </div>
+
+    <!-- Leave -->
+
+    <div *ngIf="application.applicationType=='Leave'">
+
+        <div class="form-group">
+
+            <label>
+
+                Leave Type
+
+            </label>
+
+            <select
+                [(ngModel)]="application.applicationData.leaveType">
+
+                <option value="">Select</option>
+
+                <option>Casual Leave</option>
+
+                <option>Sick Leave</option>
+
+                <option>Earned Leave</option>
+
+                <option>Loss Of Pay</option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>
+
+                From Date
+
+            </label>
+
+            <input
+                type="date"
+                [(ngModel)]="application.applicationData.fromDate"
+                [min]="today"
+                (ngModelChange)="onFromDateChange()">
+
+        </div>
+
+        <div class="form-group">
+
+            <label>
+
+                To Date
+
+            </label>
+
+            <input
+                type="date"
+                [(ngModel)]="application.applicationData.toDate"
+                [min]="application.applicationData.fromDate||today">
+
+        </div>
+
+    </div>
+
+    <!-- Resignation -->
+
+    <div *ngIf="application.applicationType=='Resignation'">
+
+        <div class="form-group">
+
+            <label>
+
+                Last Working Day
+
+            </label>
+
+            <input
+                type="date"
+                [(ngModel)]="application.applicationData.lastWorkingDay"
+                [min]="today">
+
+        </div>
+
+    </div>
+
+    <!-- Work From Home -->
+
+    <div *ngIf="application.applicationType=='Work From Home'">
+
+        <div class="form-group">
+
+            <label>
+
+                From Date
+
+            </label>
+
+            <input
+                type="date"
+                [(ngModel)]="application.applicationData.fromDate"
+                [min]="today"
+                (ngModelChange)="onFromDateChange()">
+
+        </div>
+
+        <div class="form-group">
+
+            <label>
+
+                To Date
+
+            </label>
+
+            <input
+                type="date"
+                [(ngModel)]="application.applicationData.toDate"
+                 [min]="application.applicationData.fromDate || today">
+
+        </div>
+
+    </div>
+
+    <!-- Reimbursement -->
+
+    <div *ngIf="application.applicationType=='Reimbursement'">
+
+        <div class="form-group">
+
+            <label>
+
+                Expense Type
+
+            </label>
+
+            <select
+                [(ngModel)]="application.applicationData.expenseType">
+
+                <option value="">Select</option>
+
+                <option>Travel</option>
+
+                <option>Food</option>
+
+                <option>Hotel</option>
+
+                <option>Medical</option>
+
+                <option>Office Supplies</option>
+
+                <option>Other</option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>
+
+                Amount
+
+            </label>
+
+            <input
+                type="number"
+                [(ngModel)]="application.applicationData.amount">
+
+        </div>
+
+    </div>
+
+    <!-- Reason -->
+
+    <div class="form-group">
+
+        <label>
+
+            Reason
+
+        </label>
+
+        <textarea
+            rows="5"
+            [(ngModel)]="application.applicationData.reason">
+
+        </textarea>
+
+    </div>
+
+    <!-- Upload -->
+
+    <div class="form-group">
+
+        <label>
+
+            Upload Supporting Document
+
+        </label>
+
+        <input
+            type="file"
+            (change)="onFileSelected($event)">
+
+    </div>
+
+    <button
+        class="submit-btn"
+        (click)="submitApplication()">
+
+        Submit Application
+
+    </button>
+
+</div>

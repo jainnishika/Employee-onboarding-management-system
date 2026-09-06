@@ -1,0 +1,338 @@
+<div class="login-container">
+    
+        
+    <div class="login-layout">
+
+
+        <!-- =========================
+             LEFT SIDE
+        ========================== -->
+
+        <div class="login-left">
+
+
+            <!-- LOGO -->
+        <div *ngIf="!forgotMode">
+            <div class="login-header">
+
+                <img
+                    src="assets/images/logo.svg"
+                    class="logo"
+                    alt="Logo">
+
+                <h1>Login</h1>
+            </div>
+
+
+                <!-- USERNAME -->
+
+                <div class="input-group">
+
+                    <label>
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        placeholder="Enter Username"
+                        [(ngModel)]="username">
+
+                </div>
+
+
+
+                <!-- PASSWORD -->
+
+                <div class="input-group">
+
+                    <label>
+                        Password
+                    </label>
+
+
+                    <div class="password-field">
+
+                        <input
+                            [type]="
+                                hidePassword
+                                ? 'password'
+                                : 'text'
+                            "
+                            placeholder="Enter Password"
+                            [(ngModel)]="password">
+
+
+                        <!-- EYE BUTTON -->
+
+                        <button
+                            type="button"
+                            class="eye-btn"
+                            (click)="
+                                hidePassword =
+                                !hidePassword
+                            ">
+
+                            <mat-icon>
+                                {{
+                                    hidePassword
+                                    ? 'visibility'
+                                    : 'visibility_off'
+                                }}
+                            </mat-icon>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- FORGOT PASSWORD -->
+
+                <div class="forgot">
+
+                    <a
+                        (click)="showForgotPassword()">
+
+                        Forgot Password?
+
+                    </a>
+
+                </div>
+
+
+
+                <!-- LOGIN BUTTON -->
+
+                <button
+                    type="button"
+                    class="login-btn"
+                    (click)="login()">
+
+                    Login
+
+                </button>
+
+            </div>
+
+
+
+            <!-- =========================
+                 FORGOT PASSWORD
+            ========================== -->
+
+            <div *ngIf="forgotMode">
+
+
+                <h1>
+                    Forgot Password
+                </h1>
+
+
+                <p class="subtitle">
+
+                    Verify your account to reset password
+
+                </p>
+
+
+
+                <!-- USERNAME -->
+
+                <div class="input-group">
+
+                    <label>
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        placeholder="Enter Username"
+                        [(ngModel)]="forgotUsername">
+
+                </div>
+
+
+
+                <!-- EMAIL -->
+
+                <div class="input-group">
+
+                    <label>
+                        Registered Email
+                    </label>
+
+                    <input
+                        type="email"
+                        placeholder="Enter Registered Email"
+                        [(ngModel)]="forgotEmail">
+
+                </div>
+
+
+
+                <!-- VERIFY BUTTON -->
+
+                <button
+                    *ngIf="!verified"
+                    type="button"
+                    class="login-btn"
+                    (click)="verifyUser()">
+
+                    Verify User
+
+                </button>
+
+
+
+                <!-- =========================
+                     RESET PASSWORD
+                ========================== -->
+
+                <div *ngIf="verified">
+
+
+                    <!-- NEW PASSWORD -->
+
+                    <div class="input-group">
+
+                        <label>
+                            New Password
+                        </label>
+
+
+                        <div class="password-field">
+
+                            <input
+                                [type]="
+                                    hideNewPassword
+                                    ? 'password'
+                                    : 'text'
+                                "
+                                placeholder="Enter New Password"
+                                [(ngModel)]="newPassword">
+
+
+                            <button
+                                type="button"
+                                class="eye-btn"
+                                (click)="
+                                    hideNewPassword =
+                                    !hideNewPassword
+                                ">
+
+                                <mat-icon>
+
+                                    {{
+                                        hideNewPassword
+                                        ? 'visibility'
+                                        : 'visibility_off'
+                                    }}
+
+                                </mat-icon>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- CONFIRM PASSWORD -->
+
+                    <div class="input-group">
+
+                        <label>
+                            Confirm Password
+                        </label>
+
+
+                        <div class="password-field">
+
+                            <input
+                                [type]="
+                                    hideConfirmPassword
+                                    ? 'password'
+                                    : 'text'
+                                "
+                                placeholder="Confirm Password"
+                                [(ngModel)]="confirmPassword">
+
+
+                            <button
+                                type="button"
+                                class="eye-btn"
+                                (click)="
+                                    hideConfirmPassword =
+                                    !hideConfirmPassword
+                                ">
+
+                                <mat-icon>
+
+                                    {{
+                                        hideConfirmPassword
+                                        ? 'visibility'
+                                        : 'visibility_off'
+                                    }}
+
+                                </mat-icon>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- UPDATE PASSWORD -->
+
+                    <button
+                        type="button"
+                        class="login-btn"
+                        (click)="updateForgotPassword()">
+
+                        Update Password
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- BACK BUTTON -->
+
+                <button
+                    type="button"
+                    class="back-btn"
+                    (click)="backToLogin()">
+
+                    ← Back to Login
+
+                </button>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================
+             RIGHT SIDE
+        ========================== -->
+
+        <div class="login-right">
+
+            <img
+                src="assets/images/login-illustration1.png"
+                alt="Illustration">
+
+        </div>
+
+
+    </div>
+
+</div>

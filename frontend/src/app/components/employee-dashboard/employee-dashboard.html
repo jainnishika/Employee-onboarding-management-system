@@ -1,0 +1,106 @@
+<div class="dashboard-container">
+
+    <!-- Welcome Section -->
+    <div class="welcome-section">
+        <h1>Welcome, {{username}} </h1>
+        
+    </div>
+
+    <!-- Status Card -->
+    <div class="status-card">
+        <h3>📋 Profile Update Status</h3>
+        <p>
+            <strong>Status:</strong>
+            <span
+                [ngClass]="{
+                    'pending': requestStatus === 'Pending',
+                    'approved': requestStatus === 'Approved',
+                    'rejected': requestStatus === 'Rejected'
+                }">
+                {{requestStatus}}
+            </span>
+
+        </p>
+          <div *ngIf="requestStatus === 'Rejected'">
+        <p>
+            <strong>Reason:</strong>
+        </p>
+
+        <div class="remarks-box">
+            {{remarks}}
+        </div>
+         <!-- <p> <strong> Rejected By:</strong>
+                {{reviewedBy}}</p>
+                <p>
+                <strong>
+                    Rejected On:
+                </strong>
+                {{reviewedAt | date:'dd/MM/yyyy hh:mm a'}}
+            </p> -->
+</div>
+        <!-- <div *ngIf="requestStatus === 'Approved'">
+            <p>
+                <strong> Approved By:</strong>
+                {{reviewedBy}}
+            </p>
+            <p>
+                <strong>
+                    Approved On:
+                </strong>
+                {{reviewedAt | date:'dd/MM/yyyy hh:mm a'}}
+            </p>
+
+        </div> -->
+        
+
+    </div>
+
+</div>
+
+    <!-- Action Cards -->
+    <div class="card-container">
+
+        <div class="card" (click)="myProfile()">
+
+            <div class="icon">👤</div>
+
+            <h2>My Profile</h2>
+
+            <p>View your personal details and employee information.</p>
+
+        </div>
+
+        <div class="card" (click)="changePassword()">
+
+            <div class="icon">🔒</div>
+
+            <h2>Change Password</h2>
+
+            <p>Update your account password securely.</p>
+
+        </div>
+        <div class="card " (click)="applyApplication()">
+         <div class="card-header">
+        <div class="icon">
+            📝
+        </div>
+        <h2>Submit Application</h2>
+
+    </div>
+
+  </div>
+</div>
+
+    <!-- Information Card -->
+
+    <!-- <div class="info-card">
+
+        <h2>Employee Portal</h2>
+
+        <p>
+            Welcome to the Employee Management System.
+            Use the options above to view your profile and manage your account.
+        </p>
+
+    </div>
+ -->

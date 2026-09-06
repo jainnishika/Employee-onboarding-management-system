@@ -1,0 +1,1088 @@
+<div class="container">
+
+    <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
+
+    <div class="page-header">
+
+            <h2>
+                Application Requests
+            </h2>
+        
+
+    </div>
+
+
+    <!-- =====================================================
+         SEARCH + STATUS FILTER
+    ====================================================== -->
+
+    <div class="filter-container">
+       
+
+        <!-- SEARCH -->
+
+        <div class="search-wrapper">
+
+            <mat-icon>
+                search
+            </mat-icon>
+
+            <input
+                type="text"
+                placeholder="Search Employee..."
+                [(ngModel)]="searchText"
+                (input)="filterApplications()"
+            >
+
+        </div>
+
+
+        <!-- STATUS -->
+
+        <select
+            [(ngModel)]="statusFilter"
+            (change)="filterApplications()"
+        >
+
+            <option value="All">
+                All
+            </option>
+
+            <option value="Pending">
+                Pending
+            </option>
+
+            <option value="Approved">
+                Approved
+            </option>
+
+            <option value="Rejected">
+                Rejected
+            </option>
+
+        </select>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         RECORDS
+    ====================================================== -->
+
+    <div class="table-header">
+        <div>
+
+        <label>
+            Show
+        </label>
+
+        <select
+            [(ngModel)]="selectedCount"
+            (change)="changeRecords(selectedCount)"
+        >
+
+            <option [ngValue]="5">
+                5
+            </option>
+
+            <option [ngValue]="10">
+                10
+            </option>
+
+            <option [ngValue]="20">
+                20
+            </option>
+
+            <option [ngValue]="50">
+                50
+            </option>
+
+        </select>
+
+        <span>
+            Applications
+        </span>
+        </div>
+         <div class="action-buttons">
+
+            <button
+                class="excel-btn"
+                (click)="exportToExcel()">
+
+                <mat-icon>
+                    download
+                </mat-icon>
+
+                Export Excel
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         TABLE
+    ====================================================== -->
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <!-- EMPLOYEE -->
+
+                    <th
+                        class="sortable-header"
+                        (click)="sortColumn('username')"
+                    >
+
+                        <span>
+                            Employee
+                        </span>
+
+                        <mat-icon
+                            class="sort-icon"
+                        >
+
+                            {{
+                                sortBy === 'username'
+                                ? (
+                                    sortOrder === 'asc'
+                                    ? 'arrow_upward'
+                                    : 'arrow_downward'
+                                )
+                                : 'unfold_more'
+                            }}
+
+                        </mat-icon>
+
+                    </th>
+
+
+
+                    <!-- APPLICATION -->
+
+                    <th>
+                        Application
+                    </th>
+
+
+
+                    <!-- STATUS -->
+
+                    <th>
+                        Status
+                    </th>
+
+
+
+                    <!-- SUBMITTED -->
+
+                    <th
+                        class="sortable-header"
+                        (click)="sortColumn('submittedAt')"
+                    >
+
+                        <span>
+                            Submitted
+                        </span>
+
+                        <mat-icon
+                            class="sort-icon"
+                        >
+
+                            {{
+                                sortBy === 'submittedAt'
+                                ? (
+                                    sortOrder === 'asc'
+                                    ? 'arrow_upward'
+                                    : 'arrow_downward'
+                                )
+                                : 'unfold_more'
+                            }}
+
+                        </mat-icon>
+
+                    </th>
+
+
+
+                    <!-- ACTION -->
+
+                    <th>
+                        Action
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+
+            <tbody>
+
+                <tr
+                    *ngFor="
+                        let app of displayedApplications;
+                        trackBy: trackByApplication
+                    "
+                >
+
+                    <!-- EMPLOYEE -->
+
+                    <td>
+                        {{ app.username || '-' }}
+                    </td>
+
+
+
+                    <!-- APPLICATION -->
+
+                    <td>
+                        {{ app.applicationType || '-' }}
+                    </td>
+
+
+
+                    <!-- STATUS -->
+
+                    <td>
+
+                        <span
+                            class="status"
+                            [ngClass]="
+                                app.status?.toLowerCase()
+                            "
+                        >
+
+                            {{ app.status }}
+
+                        </span>
+
+                    </td>
+
+
+
+                    <!-- DATE -->
+
+                    <td>
+
+                        {{
+                            formatDate(
+                                app.submittedAt
+                            )
+                        }}
+
+                    </td>
+
+
+
+                    <!-- VIEW -->
+
+                    <td>
+
+                        <button
+                            type="button"
+                            class="view-btn"
+                            title="View Application"
+                            (click)="view(app)"
+                        >
+
+                            <mat-icon>
+                                visibility
+                            </mat-icon>
+
+                        </button>
+
+                    </td>
+
+                </tr>
+
+
+
+                <!-- NO DATA -->
+
+                <tr
+                    *ngIf="
+                        displayedApplications.length === 0
+                    "
+                >
+
+                    <td
+                        colspan="5"
+                        class="no-data"
+                    >
+
+                        <mat-icon>
+                            description
+                        </mat-icon>
+
+                        <span>
+                            No Applications Found
+                        </span>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         PAGINATION
+    ====================================================== -->
+
+    <div
+        class="pagination"
+        *ngIf="totalPages > 1"
+    >
+
+        <button
+            type="button"
+            (click)="previousPage()"
+            [disabled]="currentPage === 1"
+        >
+
+            <mat-icon>
+                chevron_left
+            </mat-icon>
+
+        </button>
+
+
+
+        <button
+            type="button"
+            *ngFor="
+                let page of pageNumbers
+            "
+            [class.active]="
+                page === currentPage
+            "
+            (click)="goToPage(page)"
+        >
+
+            {{ page }}
+
+        </button>
+
+
+
+        <button
+            type="button"
+            (click)="nextPage()"
+            [disabled]="
+                currentPage === totalPages
+            "
+        >
+
+            <mat-icon>
+                chevron_right
+            </mat-icon>
+
+        </button>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         APPLICATION POPUP
+    ====================================================== -->
+
+    <div
+        class="modal-overlay"
+        *ngIf="showPopup"
+    >
+
+        <div class="modal">
+
+
+            <!-- =================================================
+                 MODAL HEADER
+            ================================================== -->
+
+            <div class="modal-header">
+
+                <div>
+
+                    <h2>
+                        Application Details
+                    </h2>
+
+                    <p class="modal-subtitle">
+
+                        Employee:
+                        <strong>
+                            {{ selectedApplication?.username }}
+                        </strong>
+
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="close-icon"
+                    title="Close"
+                    (click)="closePopup()"
+                >
+
+                    <mat-icon>
+                        close
+                    </mat-icon>
+
+                </button>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 APPLICATION BASIC DETAILS
+            ================================================== -->
+
+            <div class="details-section">
+
+                <h3>
+                    Application Information
+                </h3>
+
+
+                <div class="details-grid">
+
+
+                    <!-- EMPLOYEE -->
+
+                    <div class="detail-item">
+
+                        <label>
+                            Employee
+                        </label>
+
+                        <span>
+                            {{
+                                selectedApplication?.username
+                                || '-'
+                            }}
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- APPLICATION TYPE -->
+
+                    <div class="detail-item">
+
+                        <label>
+                            Application Type
+                        </label>
+
+                        <span>
+                            {{
+                                selectedApplication
+                                ?.applicationType
+                                || '-'
+                            }}
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- STATUS -->
+
+                    <div class="detail-item">
+
+                        <label>
+                            Status
+                        </label>
+
+                        <span
+                            class="status"
+                            [ngClass]="
+                                selectedApplication
+                                ?.status
+                                ?.toLowerCase()
+                            "
+                        >
+
+                            {{
+                                selectedApplication?.status
+                            }}
+
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- SUBMITTED -->
+
+                    <div class="detail-item">
+
+                        <label>
+                            Submitted Date
+                        </label>
+
+                        <span>
+
+                            {{
+                                formatDate(
+                                    selectedApplication
+                                    ?.submittedAt
+                                )
+                            }}
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 APPLICATION DATA
+            ================================================== -->
+
+            <div
+                class="details-section"
+                *ngIf="
+                    selectedApplication
+                    ?.applicationData
+                "
+            >
+
+                <h3>
+                    Application Details
+                </h3>
+
+
+                <div class="details-grid">
+
+
+                    <!-- LEAVE TYPE -->
+
+                    <div
+                        class="detail-item"
+                        *ngIf="
+                            selectedApplication
+                            ?.applicationData
+                            ?.leaveType
+                        "
+                    >
+
+                        <label>
+                            Leave Type
+                        </label>
+
+                        <span>
+
+                            {{
+                                selectedApplication
+                                ?.applicationData
+                                ?.leaveType
+                            }}
+
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- FROM DATE -->
+
+                    <div
+                        class="detail-item"
+                        *ngIf="
+                            selectedApplication
+                            ?.applicationData
+                            ?.fromDate
+                        "
+                    >
+
+                        <label>
+                            From Date
+                        </label>
+
+                        <span>
+
+                            {{
+                                formatDate(
+                                    selectedApplication
+                                    ?.applicationData
+                                    ?.fromDate
+                                )
+                            }}
+
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- TO DATE -->
+
+                    <div
+                        class="detail-item"
+                        *ngIf="
+                            selectedApplication
+                            ?.applicationData
+                            ?.toDate
+                        "
+                    >
+
+                        <label>
+                            To Date
+                        </label>
+
+                        <span>
+
+                            {{
+                                formatDate(
+                                    selectedApplication
+                                    ?.applicationData
+                                    ?.toDate
+                                )
+                            }}
+
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- LAST WORKING DAY -->
+
+                    <div
+                        class="detail-item"
+                        *ngIf="
+                            selectedApplication
+                            ?.applicationData
+                            ?.lastWorkingDay
+                        "
+                    >
+
+                        <label>
+                            Last Working Day
+                        </label>
+
+                        <span>
+
+                            {{
+                                formatDate(
+                                    selectedApplication
+                                    ?.applicationData
+                                    ?.lastWorkingDay
+                                )
+                            }}
+
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- AMOUNT -->
+
+                    <div
+                        class="detail-item"
+                        *ngIf="
+                            selectedApplication
+                            ?.applicationData
+                            ?.amount
+                        "
+                    >
+
+                        <label>
+                            Amount
+                        </label>
+
+                        <span>
+
+                            ₹{{
+                                selectedApplication
+                                ?.applicationData
+                                ?.amount
+                            }}
+
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- REASON -->
+
+                    <div
+                        class="detail-item full-width"
+                        *ngIf="
+                            selectedApplication
+                            ?.applicationData
+                            ?.reason
+                        "
+                    >
+
+                        <label>
+                            Reason
+                        </label>
+
+                        <span>
+
+                            {{
+                                selectedApplication
+                                ?.applicationData
+                                ?.reason
+                            }}
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 DOCUMENTS
+            ================================================== -->
+
+            <div
+                class="details-section"
+                *ngIf="
+                    selectedApplication
+                    ?.documents
+                "
+            >
+
+                <h3>
+                    Documents
+                </h3>
+
+
+                <div class="documents-list">
+
+
+                    <!-- APPLICATION LETTER -->
+
+                    <div
+                        class="document-item"
+                        *ngIf="
+                            selectedApplication
+                            ?.documents
+                            ?.applicationLetter
+                        "
+                    >
+
+                        <div class="document-name">
+
+                            <mat-icon>
+                                description
+                            </mat-icon>
+
+                            <span>
+                                Application Letter
+                            </span>
+
+                        </div>
+
+
+                        <a
+                            class="document-btn"
+                            [href]="
+                                getDocumentUrl(
+                                    selectedApplication
+                                    ?.documents
+                                    ?.applicationLetter
+                                )
+                            "
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+
+                            <mat-icon>
+                                visibility
+                            </mat-icon>
+
+                            View Document
+
+                        </a>
+
+                    </div>
+
+
+
+                    <!-- OTHER DOCUMENTS -->
+
+                    <div
+                        class="document-item"
+                        *ngIf="
+                            selectedApplication
+                            ?.documents
+                            ?.aadhaar
+                        "
+                    >
+
+                        <div class="document-name">
+
+                            <mat-icon>
+                                description
+                            </mat-icon>
+
+                            <span>
+                                Aadhaar
+                            </span>
+
+                        </div>
+
+
+                        <a
+                            class="document-btn"
+                            [href]="
+                                getDocumentUrl(
+                                    selectedApplication
+                                    ?.documents
+                                    ?.aadhaar
+                                )
+                            "
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+
+                            <mat-icon>
+                                visibility
+                            </mat-icon>
+
+                            View Document
+
+                        </a>
+
+                    </div>
+
+
+
+                    <div
+                        class="document-item"
+                        *ngIf="
+                            selectedApplication
+                            ?.documents
+                            ?.pan
+                        "
+                    >
+
+                        <div class="document-name">
+
+                            <mat-icon>
+                                description
+                            </mat-icon>
+
+                            <span>
+                                PAN
+                            </span>
+
+                        </div>
+
+
+                        <a
+                            class="document-btn"
+                            [href]="
+                                getDocumentUrl(
+                                    selectedApplication
+                                    ?.documents
+                                    ?.pan
+                                )
+                            "
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+
+                            <mat-icon>
+                                visibility
+                            </mat-icon>
+
+                            View Document
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 REVIEW INFORMATION
+            ================================================== -->
+
+            <div
+                class="details-section"
+                *ngIf="
+                    selectedApplication?.reviewedBy ||
+                    selectedApplication?.reviewedAt
+                "
+            >
+
+                <h3>
+                    Review Information
+                </h3>
+
+
+                <div class="details-grid">
+
+
+                    <div
+                        class="detail-item"
+                        *ngIf="
+                            selectedApplication
+                            ?.reviewedBy
+                        "
+                    >
+
+                        <label>
+                            Reviewed By
+                        </label>
+
+                        <span>
+
+                            {{
+                                selectedApplication
+                                ?.reviewedBy
+                            }}
+
+                        </span>
+
+                    </div>
+
+
+
+                    <div
+                        class="detail-item"
+                        *ngIf="
+                            selectedApplication
+                            ?.reviewedAt
+                        "
+                    >
+
+                        <label>
+                            Reviewed On
+                        </label>
+
+                        <span>
+
+                            {{
+                                selectedApplication
+                                ?.reviewedAt
+                                | date:'dd/MM/yyyy hh:mm a'
+                            }}
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- =================================================
+                 REMARKS
+            ================================================== -->
+            <div class="remarks-section">
+
+                <label>
+                    Remarks
+                </label>
+
+                <textarea
+                    rows="4"
+                    [(ngModel)]="remarks"
+                    placeholder="Enter remarks..."
+                >
+                </textarea>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 ACTION BUTTONS
+            ================================================== -->
+
+            <div class="modal-buttons">
+
+                <button
+                    type="button"
+                    class="approve-btn"
+                    (click)="approve()"
+                    [disabled]="
+                        selectedApplication?.status
+                        !== 'Pending'
+                    "
+                >
+
+                    <mat-icon>
+                        check
+                    </mat-icon>
+
+                    Approve
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="reject-btn"
+                    (click)="reject()"
+                    [disabled]="
+                        selectedApplication?.status
+                        !== 'Pending'
+                    "
+                >
+
+                    <mat-icon>
+                        close
+                    </mat-icon>
+
+                    Reject
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="close-btn"
+                    (click)="closePopup()"
+                >
+
+                    Close
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

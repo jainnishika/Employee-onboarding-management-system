@@ -1,0 +1,678 @@
+<div class="container">
+
+    <div class="page-header">
+
+        <div>
+
+            <h1>Edit Employee Profile</h1>
+
+        </div>
+
+    </div>
+
+    <form>
+
+        <!-- ================= Personal Information ================= -->
+
+        <section class="form-section">
+
+            <div class="section-title">
+
+                <h2>Personal Information</h2>
+
+                
+
+            </div>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Name</label>
+
+                    <input
+                        type="text"
+                        [(ngModel)]="employee.name"
+                        name="name"
+                        disabled>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Username</label>
+
+                    <input
+                        type="text"
+                        [(ngModel)]="employee.username"
+                        name="username"
+                        disabled>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Email</label>
+
+                    <input
+                        type="email"
+                        [(ngModel)]="employee.email"
+                        name="email"
+                        disabled>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Phone Number</label>
+
+                    <input
+                        type="text"
+                        maxlength="10"
+                        [(ngModel)]="employee.phone"
+                        name="phone">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Date of Birth</label>
+
+                    <input
+                        type="date"
+                        [(ngModel)]="employee.dob"
+                        name="dob"
+                        disabled>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Age</label>
+
+                    <input
+                        type="number"
+                        [(ngModel)]="employee.age"
+                        name="age"
+                        disabled>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Gender</label>
+
+                    <select
+                        [(ngModel)]="employee.gender"
+                        name="gender">
+
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Other</option>
+
+                    </select>
+
+                </div>
+
+                <div class="form-group full-width">
+
+                    <label>Address</label>
+
+                    <textarea
+
+                        rows="3"
+
+                        [(ngModel)]="employee.address"
+
+                        name="address">
+
+                    </textarea>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ================= Employment ================= -->
+
+        <section class="form-section">
+
+            <div class="section-title">
+                <h2>Employment Information</h2>
+            </div>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+
+                    <label>Department</label>
+
+                    <input
+                        type="text"
+                        [(ngModel)]="employee.department"
+                        disabled
+                        name="department">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Designation</label>
+
+                    <input
+                        type="text"
+                        [(ngModel)]="employee.designation"
+                        disabled
+                        name="designation">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Date of Joining</label>
+
+                    <input
+                        type="date"
+                        [(ngModel)]="employee.joiningDate"
+                        disabled
+                        name="joiningDate">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Role</label>
+
+                    <input
+                        type="text"
+                        [(ngModel)]="employee.role"
+                        disabled
+                        name="role">
+
+                </div>
+
+            </div>
+
+        </section>
+       
+
+<!-- ================= Previous Service History ================= -->
+
+<section class="form-section">
+
+    <div class="section-header">
+
+        <div>
+
+            <h2>Previous Service History</h2>
+        </div>
+
+        <button
+            type="button"
+            class="add-service-btn"
+            (click)="addService()">
+
+            + Add Service
+
+        </button>
+
+    </div>
+
+    <div
+        class="service-card"
+        *ngFor="let service of previousServices; let i=index">
+
+        <div class="form-grid">
+
+            <div class="form-group">
+
+                <label>Organisation / Company</label>
+
+                <input
+                    type="text"
+                    [(ngModel)]="service.organisation"
+                    name="organisation{{i}}">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Duration From</label>
+
+                <input
+                    type="date"
+                    [(ngModel)]="service.fromDate"
+                    (change)="calculateTenure(service)"
+                    name="fromDate{{i}}">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Duration To</label>
+
+                <input
+                    type="date"
+                    [(ngModel)]="service.toDate"
+                    (change)="calculateTenure(service)"
+                    name="toDate{{i}}">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Computed Tenure</label>
+
+                <input
+                    type="text"
+                    [(ngModel)]="service.tenure"
+                    readonly
+                    name="tenure{{i}}">
+
+            </div>
+
+        </div>
+
+        <div class="service-bottom">
+
+            <div class="certificate-upload">
+
+                <label>Experience Certificate</label>
+
+                <input
+                    type="file"
+                    accept=".pdf,.jpg,.jpeg,.png"
+                    (change)="onExperienceCertificateSelected($event,i)">
+
+            </div>
+
+            <button
+
+                type="button"
+
+                class="remove-service"
+
+                *ngIf="previousServices.length>1"
+
+                (click)="removeService(i)">
+
+                Remove Service
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+        <!-- ================= Additional Information ================= -->
+
+        <section class="form-section">
+
+    <div class="section-title">
+
+        <h2>Additional Information</h2>
+
+    </div>
+
+           <div class="form-grid">
+
+    <div class="form-group">
+
+        <label>Emergency Contact Name</label>
+
+        <input
+            type="text"
+            [(ngModel)]="employee.additionalDetails.emergencyContactName"
+            name="emergencyContactName">
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Emergency Contact Number</label>
+
+        <input
+            type="text"
+            [(ngModel)]="employee.additionalDetails.emergencyContactNumber"
+            maxlength="10"
+            name="emergencyContactNumber">
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Blood Group</label>
+
+        <select
+            [(ngModel)]="employee.additionalDetails.bloodGroup"
+            name="bloodGroup">
+
+            <option value="">Select Blood Group</option>
+
+            <option>A+</option>
+            <option>A-</option>
+            <option>B+</option>
+            <option>B-</option>
+            <option>AB+</option>
+            <option>AB-</option>
+            <option>O+</option>
+            <option>O-</option>
+
+        </select>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Marital Status</label>
+
+        <select
+            [(ngModel)]="employee.additionalDetails.maritalStatus"
+            name="maritalStatus">
+
+            <option>Single</option>
+            <option>Married</option>
+            <option>Divorced</option>
+
+        </select>
+
+    </div>
+
+</div>
+<div
+    class="form-grid"
+    *ngIf="employee.additionalDetails.maritalStatus=='Married'">
+
+    <div class="form-group">
+
+        <label>Spouse Name</label>
+
+        <input
+            type="text"
+            [(ngModel)]="employee.additionalDetails.spouseName"
+            name="spouseName">
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Spouse Occupation</label>
+
+        <input
+            type="text"
+            [(ngModel)]="employee.additionalDetails.spouseOccupation"
+            name="spouseOccupation">
+
+    </div>
+
+</div>
+
+</section>
+
+        <!-- ================= Nominee Details ================= -->
+
+<section class="form-section">
+
+    <div class="section-title">
+
+        <h2>Nominee Details</h2>
+    </div>
+
+    <div class="form-grid">
+
+        <div class="form-group">
+
+            <label>Nominee Name</label>
+
+            <input
+                type="text"
+                [(ngModel)]="employee.additionalDetails.nomineeName"
+                name="nomineeName">
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Relationship</label>
+
+            <input
+                type="text"
+                [(ngModel)]="employee.additionalDetails.relationship"
+                name="relationship">
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Nominee Contact Number</label>
+
+            <input
+                type="text"
+                maxlength="10"
+                [(ngModel)]="employee.additionalDetails.nomineePhone"
+                name="nomineePhone">
+
+        </div>
+
+    </div>
+
+</section>
+
+        <!-- ================= Benefits ================= -->
+
+<section class="form-section">
+
+    <div class="section-title">
+
+        <h2>Benefits & Facilities</h2>
+    </div>
+
+    <div class="form-grid">
+
+        <div class="form-group">
+
+            <label>Transport Facility</label>
+
+            <select
+                [(ngModel)]="employee.additionalDetails.transportFacility"
+                name="transportFacility">
+
+                <option>No</option>
+
+                <option>Yes</option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>House Rent Allowance</label>
+
+            <select
+                [(ngModel)]="employee.additionalDetails.hra"
+                name="hra">
+                <option>No</option>
+
+                <option>HRA</option>
+
+                <option>Lease</option>
+
+            </select>
+
+        </div>
+
+    </div>
+    <div
+*ngIf="employee.additionalDetails.transportFacility=='Yes'">
+
+    <div class="upload-grid">
+
+        <div class="upload-card">
+
+            <label>Driving Licence</label>
+
+            <input
+                type="file"
+                accept=".pdf,.jpg,.jpeg,.png"
+                (change)="onFileSelected($event,'licence')">
+
+        </div>
+
+        <div class="upload-card">
+
+            <label>Registration Certificate (RC)</label>
+
+            <input
+                type="file"
+                accept=".pdf,.jpg,.jpeg,.png"
+                (change)="onFileSelected($event,'rc')">
+
+        </div>
+
+        <div class="upload-card">
+
+            <label>Vehicle Document</label>
+
+            <input
+                type="file"
+                accept=".pdf,.jpg,.jpeg,.png"
+                (change)="onFileSelected($event,'vehicle')">
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+        <!-- ================= Government IDs ================= -->
+
+<section class="form-section">
+
+    <div class="section-title">
+
+        <h2>Government Identity Details</h2>
+    </div>
+
+    <div class="form-grid">
+
+        <div class="form-group">
+
+            <label>Aadhaar Number</label>
+
+            <input
+                type="text"
+                maxlength="12"
+                [(ngModel)]="employee.additionalDetails.aadhaar"
+                (input)="employee.additionalDetails.aadhaar = employee.additionalDetails.aadhaar.replace(/[^0-9]/g,'')"
+                name="aadhaar">
+
+        </div>
+
+        <div class="form-group">
+
+            <label>PAN Number</label>
+
+            <input
+                type="text"
+                maxlength="10"
+                [(ngModel)]="employee.additionalDetails.pan"
+                (input)="employee.additionalDetails.pan = employee.additionalDetails.pan.toUpperCase()"
+                name="pan">
+
+        </div>
+
+    </div>
+
+</section>
+    
+
+<!-- ================= Upload Documents ================= -->
+
+<section class="form-section">
+
+    <div class="section-title">
+
+        <h2>Upload Documents</h2>
+    </div>
+
+    <div class="upload-grid">
+
+        <div class="upload-card">
+
+            <label>Profile Photo</label>
+
+            <input
+                type="file"
+                accept=".jpg,.jpeg,.png"
+                (change)="onFileSelected($event,'profilePhoto')">
+
+        </div>
+
+        <div class="upload-card">
+
+            <label>Aadhaar Card</label>
+
+            <input
+                type="file"
+                accept=".pdf,.jpg,.jpeg,.png"
+                (change)="onFileSelected($event,'aadhaar')">
+
+        </div>
+
+        <div class="upload-card">
+
+            <label>PAN Card</label>
+
+            <input
+                type="file"
+                accept=".pdf,.jpg,.jpeg,.png"
+                (change)="onFileSelected($event,'pan')">
+
+        </div>
+
+        <div class="upload-card">
+
+            <label>Resume</label>
+
+            <input
+                type="file"
+                accept=".pdf,.doc,.docx"
+                (change)="onFileSelected($event,'resume')">
+
+        </div>
+
+    </div>
+
+</section>
+
+        <!-- ================= Buttons ================= -->
+
+        <div class="button-bar">
+
+    <button
+        type="button"
+        class="back-btn"
+        (click)="back()">
+
+        Back
+
+    </button>
+
+    <button
+        type="button"
+        class="save-btn"
+        (click)="submit()">
+
+        Submit for Approval
+
+    </button>
+
+</div>
+
+    </form>
+
+</div>

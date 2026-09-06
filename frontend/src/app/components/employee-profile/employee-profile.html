@@ -1,0 +1,935 @@
+<div class="profile-container">
+
+    <!-- =====================================================
+         PROFILE HEADER
+    ====================================================== -->
+
+    <div class="profile-header">
+
+        <div class="profile-avatar">
+            👤
+        </div>
+
+        <div class="profile-heading">
+
+            <h2>
+                {{ employee.name || 'Employee Profile' }}
+            </h2>
+
+            <p>
+                {{ employee.designation || employee.role || 'Employee' }}
+            </p>
+
+            <span class="username-badge">
+                @{{ employee.username || '-' }}
+            </span>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         PERSONAL INFORMATION
+    ====================================================== -->
+
+    <div class="profile-card">
+
+        <div class="section-header">
+
+            <div class="section-icon">
+                👤
+            </div>
+
+            <div>
+                <h3>Personal Information</h3>
+               
+            </div>
+
+        </div>
+
+
+        <div class="info-grid">
+
+
+            <div class="info-item">
+
+                <label>Username</label>
+
+                <span>
+                    {{ employee.username || '-' }}
+                </span>
+
+            </div>
+
+
+
+            <div class="info-item">
+
+                <label>Email</label>
+
+                <span>
+                    {{ employee.email || '-' }}
+                </span>
+
+            </div>
+
+
+
+            <div class="info-item">
+
+                <label>Phone</label>
+
+                <span>
+                    {{ employee.phone || '-' }}
+                </span>
+
+            </div>
+
+
+
+            <div class="info-item">
+
+                <label>Date of Birth</label>
+
+                <span>
+                    {{
+                        employee.dob
+                        ? (employee.dob | date:'dd/MM/yyyy')
+                        : '-'
+                    }}
+                </span>
+
+            </div>
+
+
+
+            <div class="info-item">
+
+                <label>Age</label>
+
+                <span>
+                    {{ employee.age || '-' }}
+                </span>
+
+            </div>
+
+
+
+            <div class="info-item">
+
+                <label>Gender</label>
+
+                <span>
+                    {{ employee.gender || '-' }}
+                </span>
+
+            </div>
+
+
+
+            <div class="info-item">
+
+                <label>Blood Group</label>
+
+                <span>
+                    {{ employee.bloodGroup || '-' }}
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         WORK INFORMATION
+    ====================================================== -->
+
+    <div class="profile-card">
+
+        <div class="section-header">
+
+            <div class="section-icon">
+                💼
+            </div>
+
+            <div>
+                <h3>Work Information</h3>
+                
+            </div>
+
+        </div>
+
+
+        <div class="info-grid">
+
+
+            <div class="info-item">
+
+                <label>Department</label>
+
+                <span>
+                    {{ employee.department || '-' }}
+                </span>
+
+            </div>
+
+
+
+            <div class="info-item">
+
+                <label>Designation</label>
+
+                <span>
+                    {{ employee.designation || '-' }}
+                </span>
+
+            </div>
+
+
+
+            <div class="info-item">
+
+                <label>Joining Date</label>
+
+                <span>
+                    {{
+                        employee.joiningDate
+                        ? (
+                            employee.joiningDate
+                            | date:'dd/MM/yyyy'
+                        )
+                        : '-'
+                    }}
+                </span>
+
+            </div>
+
+
+
+            <div class="info-item">
+
+                <label>Role</label>
+
+                <span>
+                    {{ employee.role || '-' }}
+                </span>
+
+            </div>
+
+
+
+            <div class="info-item">
+
+                <label>Transport Facility</label>
+
+                <span>
+                    {{ employee.transportFacility || '-' }}
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         ADDRESS
+    ====================================================== -->
+
+    <div class="profile-card">
+
+        <div class="section-header">
+
+            <div class="section-icon">
+                📍
+            </div>
+
+            <div>
+                <h3>Address</h3>
+             
+            </div>
+
+        </div>
+
+
+        <div class="address-box">
+
+            {{ employee.address || 'Address not provided' }}
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         ADDITIONAL DETAILS
+    ====================================================== -->
+
+    <div
+        class="profile-card"
+        *ngIf="employee.additionalDetails"
+    >
+
+        <div class="section-header">
+
+            <div class="section-icon">
+                📋
+            </div>
+
+            <div>
+                <h3>Additional Details</h3>
+                
+            </div>
+
+        </div>
+
+
+        <div class="info-grid">
+
+
+            <div
+                class="info-item"
+                *ngIf="
+                    employee.additionalDetails.bloodGroup
+                "
+            >
+
+                <label>Blood Group</label>
+
+                <span>
+                    {{
+                        employee.additionalDetails
+                        .bloodGroup
+                    }}
+                </span>
+
+            </div>
+
+
+
+            <div
+                class="info-item"
+                *ngIf="
+                    employee.additionalDetails
+                    .transportFacility
+                "
+            >
+
+                <label>Transport Facility</label>
+
+                <span>
+                    {{
+                        employee.additionalDetails
+                        .transportFacility
+                    }}
+                </span>
+
+            </div>
+
+
+
+            <div
+                class="info-item"
+                *ngIf="
+                    employee.additionalDetails
+                    .panNumber
+                "
+            >
+
+                <label>PAN Number</label>
+
+                <span>
+                    {{
+                        employee.additionalDetails
+                        .panNumber
+                    }}
+                </span>
+
+            </div>
+
+
+
+            <div
+                class="info-item"
+                *ngIf="
+                    employee.additionalDetails
+                    .aadhaarNumber
+                "
+            >
+
+                <label>Aadhaar Number</label>
+
+                <span>
+                    {{
+                        employee.additionalDetails
+                        .aadhaarNumber
+                    }}
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         PREVIOUS SERVICE HISTORY
+    ====================================================== -->
+
+    <div class="profile-card">
+
+        <div class="section-header">
+
+            <div class="section-icon">
+                💼
+            </div>
+
+            <div>
+                <h3>Previous Service History</h3>
+            </div>
+
+        </div>
+
+
+        <div
+            class="service-table-wrapper"
+            *ngIf="
+                employee.additionalDetails
+                ?.previousServices?.length > 0
+            "
+        >
+
+            <table class="service-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Organisation
+                        </th>
+
+                        <th>
+                            From
+                        </th>
+
+                        <th>
+                            To
+                        </th>
+
+                        <th>
+                            Tenure
+                        </th>
+
+                        <th>
+                            Certificate
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    <tr
+                        *ngFor="
+                            let service of
+                            employee.additionalDetails
+                            .previousServices
+                        "
+                    >
+
+                        <td>
+                            {{
+                                service.organisation
+                                || '-'
+                            }}
+                        </td>
+
+
+                        <td>
+                            {{
+                                service.fromDate
+                                ? (
+                                    service.fromDate
+                                    | date:'dd/MM/yyyy'
+                                )
+                                : '-'
+                            }}
+                        </td>
+
+
+                        <td>
+                            {{
+                                service.toDate
+                                ? (
+                                    service.toDate
+                                    | date:'dd/MM/yyyy'
+                                )
+                                : '-'
+                            }}
+                        </td>
+
+
+                        <td>
+                            {{ service.tenure || '-' }}
+                        </td>
+
+
+                        <td>
+
+                            <a
+                                *ngIf="
+                                    service
+                                    .experienceCertificate
+                                "
+                                class="document-link"
+                                [href]="
+                                    'http://localhost:8082/uploads/experienceCertificate/'
+                                    + service.experienceCertificate
+                                "
+                                target="_blank"
+                            >
+
+                                View Certificate
+
+                            </a>
+
+
+                            <span
+                                class="not-uploaded"
+                                *ngIf="
+                                    !service
+                                    .experienceCertificate
+                                "
+                            >
+
+                                Not Uploaded
+
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <div
+            class="empty-message"
+            *ngIf="
+                !employee.additionalDetails
+                ?.previousServices?.length
+            "
+        >
+
+            <span class="empty-icon">
+                📄
+            </span>
+
+            No Previous Service History
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         DOCUMENTS
+    ====================================================== -->
+
+    <div class="profile-card">
+
+        <div class="section-header">
+
+            <div class="section-icon">
+                📎
+            </div>
+
+            <div>
+                <h3>Documents</h3>
+                
+            </div>
+
+        </div>
+
+
+        <div class="documents-grid">
+
+
+            <!-- PROFILE PHOTO -->
+
+            <div class="document-card">
+
+                <div class="document-icon">
+                    👤
+                </div>
+
+                <div class="document-info">
+
+                    <label>
+                        Profile Photo
+                    </label>
+
+                    <a
+                        *ngIf="
+                            employee.documents
+                            ?.profilePhoto
+                        "
+                        [href]="
+                            'http://localhost:8082/uploads/profile/'
+                            + employee.documents.profilePhoto
+                        "
+                        target="_blank"
+                    >
+
+                        View Photo
+
+                    </a>
+
+                    <span
+                        *ngIf="
+                            !employee.documents
+                            ?.profilePhoto
+                        "
+                        class="not-uploaded"
+                    >
+
+                        Not Uploaded
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- AADHAAR -->
+
+            <div class="document-card">
+
+                <div class="document-icon">
+                    🪪
+                </div>
+
+                <div class="document-info">
+
+                    <label>
+                        Aadhaar Card
+                    </label>
+
+                    <a
+                        *ngIf="
+                            employee.documents
+                            ?.aadhaar
+                        "
+                        [href]="
+                            'http://localhost:8082/uploads/aadhaar/'
+                            + employee.documents.aadhaar
+                        "
+                        target="_blank"
+                    >
+
+                        View Aadhaar
+
+                    </a>
+
+                    <span
+                        *ngIf="
+                            !employee.documents
+                            ?.aadhaar
+                        "
+                        class="not-uploaded"
+                    >
+
+                        Not Uploaded
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- PAN -->
+
+            <div class="document-card">
+
+                <div class="document-icon">
+                    📄
+                </div>
+
+                <div class="document-info">
+
+                    <label>
+                        PAN Card
+                    </label>
+
+                    <a
+                        *ngIf="
+                            employee.documents
+                            ?.pan
+                        "
+                        [href]="
+                            'http://localhost:8082/uploads/pan/'
+                            + employee.documents.pan
+                        "
+                        target="_blank"
+                    >
+
+                        View PAN
+
+                    </a>
+
+                    <span
+                        *ngIf="
+                            !employee.documents
+                            ?.pan
+                        "
+                        class="not-uploaded"
+                    >
+
+                        Not Uploaded
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- RESUME -->
+
+            <div class="document-card">
+
+                <div class="document-icon">
+                    📑
+                </div>
+
+                <div class="document-info">
+
+                    <label>
+                        Resume
+                    </label>
+
+                    <a
+                        *ngIf="
+                            employee.documents
+                            ?.resume
+                        "
+                        [href]="
+                            'http://localhost:8082/uploads/resume/'
+                            + employee.documents.resume
+                        "
+                        target="_blank"
+                    >
+
+                        View Resume
+
+                    </a>
+
+                    <span
+                        *ngIf="
+                            !employee.documents
+                            ?.resume
+                        "
+                        class="not-uploaded"
+                    >
+
+                        Not Uploaded
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- DRIVING LICENCE -->
+
+            <div class="document-card">
+
+                <div class="document-icon">
+                    🚗
+                </div>
+
+                <div class="document-info">
+
+                    <label>
+                        Driving Licence
+                    </label>
+
+                    <a
+                        *ngIf="
+                            employee.documents
+                            ?.licence
+                        "
+                        [href]="
+                            'http://localhost:8082/uploads/licence/'
+                            + employee.documents.licence
+                        "
+                        target="_blank"
+                    >
+
+                        View Driving Licence
+
+                    </a>
+
+                    <span
+                        *ngIf="
+                            !employee.documents
+                            ?.licence
+                        "
+                        class="not-uploaded"
+                    >
+
+                        Not Uploaded
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- RC -->
+
+            <div class="document-card">
+
+                <div class="document-icon">
+                    🚘
+                </div>
+
+                <div class="document-info">
+
+                    <label>
+                        RC
+                    </label>
+
+                    <a
+                        *ngIf="
+                            employee.documents
+                            ?.rc
+                        "
+                        [href]="
+                            'http://localhost:8082/uploads/rc/'
+                            + employee.documents.rc
+                        "
+                        target="_blank"
+                    >
+
+                        View RC
+
+                    </a>
+
+                    <span
+                        *ngIf="
+                            !employee.documents
+                            ?.rc
+                        "
+                        class="not-uploaded"
+                    >
+
+                        Not Uploaded
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- VEHICLE DOCUMENTS -->
+
+            <div class="document-card">
+
+                <div class="document-icon">
+                    🚙
+                </div>
+
+                <div class="document-info">
+
+                    <label>
+                        Vehicle Documents
+                    </label>
+
+                    <a
+                        *ngIf="
+                            employee.documents
+                            ?.vehicle
+                        "
+                        [href]="
+                            'http://localhost:8082/uploads/vehicle/'
+                            + employee.documents.vehicle
+                        "
+                        target="_blank"
+                    >
+
+                        View Vehicle Documents
+
+                    </a>
+
+                    <span
+                        *ngIf="
+                            !employee.documents
+                            ?.vehicle
+                        "
+                        class="not-uploaded"
+                    >
+
+                        Not Uploaded
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         ACTION BUTTONS
+    ====================================================== -->
+
+    <div class="button-group">
+
+
+        <button
+            type="button"
+            class="edit-btn"
+            (click)="editDetails()"
+        >
+
+            ✏ Edit Details
+
+        </button>
+
+    </div>
+
+</div>

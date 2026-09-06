@@ -1,0 +1,61 @@
+<div class="container">
+
+    <div class="header">
+
+        <button class="back-btn"
+                (click)="back()">
+
+            ← Back
+
+        </button>
+
+        <h2>Request Management</h2>
+
+    </div>
+
+    <div class="cards">
+
+        <!-- Profile Request -->
+
+        <div
+            class="request-card"
+            (click)="openProfileRequests()">
+
+            <div class="icon">
+                👤
+            </div>
+
+            <h3>Profile Update Requests</h3>
+            <h2>{{ pendingRequests||0}}</h2>
+
+            <p>
+                Review employee profile update requests.
+            </p>
+
+        </div>
+
+        <!-- Applications -->
+
+        <div
+            class="request-card"
+            (click)="openApplications()">
+
+            <div class="icon">
+                📄
+            </div>
+
+            <h3> Application Requests</h3>
+            <h2>{{ pendingApplications||0 }}</h2>
+
+            <p>
+
+                Leave, Resignation,
+                WFH, Reimbursement etc.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>

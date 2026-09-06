@@ -1,0 +1,408 @@
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+.page-wrapper {
+    width: 100%;
+    min-height: 100vh;
+
+    padding: 24px 30px 40px;
+
+    background: #f3f6fa;
+
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #1f2937;
+}
+
+
+/* =========================================================
+   TOP ACTION BAR
+========================================================= */
+
+.action-bar {
+    width: 100%;
+
+    max-width: 1200px;
+
+    margin: 0 auto 22px;
+
+    padding: 18px 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: #ffffff;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+
+/* Heading */
+
+.action-bar h2 {
+    margin: 0;
+
+    color: #005aab;
+
+    font-size: 24px;
+    font-weight: 700;
+
+    line-height: 1.3;
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
+
+.actions {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+/* Common button */
+
+.btn {
+    height: 42px;
+
+    padding: 0 18px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    border: none;
+    border-radius: 8px;
+
+    font-family: "Segoe UI", Arial, sans-serif;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   PRIMARY BUTTON
+========================================================= */
+
+.btn-primary {
+    background: #005aab;
+
+    color: #ffffff;
+
+    box-shadow:
+        0 3px 8px rgba(0, 90, 171, 0.18);
+}
+
+.btn-primary:hover {
+    background: #00488a;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 5px 12px rgba(0, 90, 171, 0.25);
+}
+
+
+/* =========================================================
+   SECONDARY BUTTON
+========================================================= */
+
+.btn-secondary {
+    background: #eef4f9;
+
+    color: #005aab;
+}
+
+.btn-secondary:hover {
+    background: #dcebf7;
+
+    transform: translateY(-1px);
+}
+
+
+/* Active */
+
+.btn:active {
+    transform: translateY(0);
+}
+
+
+/* Disabled */
+
+.btn:disabled {
+    opacity: 0.55;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   DOCUMENT VIEWER
+========================================================= */
+
+.document-viewer {
+    width: 100%;
+
+    max-width: 1200px;
+
+    min-height: 700px;
+
+    margin: 0 auto;
+
+    padding: 35px 40px;
+
+    background: #ffffff;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.08);
+
+    overflow-x: auto;
+}
+
+
+/* =========================================================
+   DOCX PREVIEW
+========================================================= */
+
+/*
+   docx-preview generates its own document/page elements.
+   These styles make the rendered Word document look
+   like an actual paper document.
+*/
+
+.document-viewer ::ng-deep .docx-wrapper {
+    background: #eef1f5 !important;
+
+    padding: 25px 0 !important;
+}
+
+
+/* Word page */
+
+.document-viewer ::ng-deep .docx-wrapper > section {
+    margin: 0 auto 25px !important;
+
+    background: #ffffff !important;
+
+    box-shadow:
+        0 3px 12px rgba(0, 0, 0, 0.12);
+}
+
+
+
+/* =========================================================
+   ERROR STATE
+========================================================= */
+
+.error-state {
+    width: 100%;
+    max-width: 1200px;
+
+    margin: 0 auto 20px;
+
+    padding: 18px 22px;
+
+    background: #fff1f2;
+
+    border-left: 4px solid #dc2626;
+
+    border-radius: 8px;
+
+    color: #b91c1c;
+
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+
+.error-state p {
+    margin: 0;
+
+    font-size: 14px;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   PRINT
+========================================================= */
+
+@media print {
+
+    .no-print {
+        display: none !important;
+    }
+
+    .page-wrapper {
+        padding: 0;
+
+        background: #ffffff;
+    }
+
+    .document-viewer {
+        max-width: none;
+
+        padding: 0;
+
+        margin: 0;
+
+        box-shadow: none;
+
+        border-radius: 0;
+    }
+
+}
+
+
+/* =========================================================
+   LARGE DESKTOP
+========================================================= */
+
+@media (min-width: 1400px) {
+
+    .page-wrapper {
+        padding: 30px 50px 50px;
+    }
+
+    .action-bar,
+    .document-viewer,
+    .loading-state,
+    .error-state {
+        max-width: 1300px;
+    }
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .page-wrapper {
+        padding: 20px;
+    }
+
+    .action-bar {
+        padding: 16px 18px;
+    }
+
+    .action-bar h2 {
+        font-size: 21px;
+    }
+
+    .document-viewer {
+        padding: 25px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+    .page-wrapper {
+        padding: 12px;
+    }
+
+    .action-bar {
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 15px;
+
+        padding: 16px;
+    }
+
+    .action-bar h2 {
+        font-size: 19px;
+
+        text-align: center;
+    }
+
+    .actions {
+        width: 100%;
+
+        display: flex;
+
+        gap: 8px;
+    }
+
+    .btn {
+        flex: 1;
+
+        height: 42px;
+
+        padding: 0 10px;
+
+        font-size: 13px;
+    }
+
+    .document-viewer {
+        padding: 12px;
+
+        border-radius: 8px;
+
+        min-height: 500px;
+    }
+
+    .document-viewer ::ng-deep .docx-wrapper {
+        padding: 10px 0 !important;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 420px) {
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+    .action-bar h2 {
+        font-size: 17px;
+    }
+
+}

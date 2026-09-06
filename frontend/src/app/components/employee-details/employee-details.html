@@ -1,0 +1,337 @@
+
+<div class="container">
+    <div class="profile-header">
+     <button class="back-btn" (click)="back()">
+        ← Back
+    </button>
+     <button class="edit-btn" (click)="edit()">
+         Edit
+    </button>
+    </div>
+
+    <h2>Employee Details</h2>
+
+    <div class="card">
+
+        <div class="row">
+            <label>Name</label>
+            <span>{{employee.name}}</span>
+        </div>
+
+        <div class="row">
+            <label>Username</label>
+            <span>{{employee.username}}</span>
+        </div>
+
+        <div class="row">
+            <label>Email</label>
+            <span>{{employee.email}}</span>
+        </div>
+
+        <div class="row">
+            <label>Phone</label>
+            <span>{{employee.phone}}</span>
+        </div>
+
+        <div class="row">
+            <label>Date of Birth</label>
+            <span>{{employee.dob | date:'dd/MM/yyyy'}}</span>
+        </div>
+
+        <div class="row">
+            <label>Age</label>
+            <span>{{employee.age}}</span>
+        </div>
+
+        <div class="row">
+            <label>Gender</label>
+            <span>{{employee.gender}}</span>
+        </div>
+
+        <div class="row">
+            <label>Department</label>
+            <span>{{employee.department}}</span>
+        </div>
+
+        <div class="row">
+            <label>Designation</label>
+            <span>{{employee.designation}}</span>
+        </div>
+
+        <div class="row">
+            <label>Joining Date</label>
+            <span>{{employee.joiningDate | date:'dd/MM/yyyy'}}</span>
+        </div>
+
+        <div class="row">
+            <label>Role</label>
+            <span>{{employee.role}}</span>
+        </div>
+
+        <div class="row">
+            <label>Address</label>
+            <span>{{employee.address}}</span>
+        </div>
+        
+
+    </div>
+    <hr>
+
+<h3>Previous Service History</h3>
+
+<div class="card">
+    <div class="table-wrapper">
+
+    <table
+        class="service-table"
+        *ngIf="employee.additionalDetails?.previousServices?.length">
+
+        <thead>
+            <tr>
+                <th>Organisation</th>
+                <th>From Date</th>
+                <th>To Date</th>
+                <th>Tenure</th>
+                <th>Experience Certificate</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr
+                *ngFor="let service of employee.additionalDetails.previousServices">
+
+                <td>{{service.organisation}}</td>
+
+                <td>{{service.fromDate | date:'dd/MM/yyyy'}}</td>
+
+                <td>{{service.toDate | date:'dd/MM/yyyy'}}</td>
+
+                <td>{{service.tenure}}</td>
+
+                <td>
+
+                    <a
+                       *ngIf="service.experienceCertificate"
+                        [href]="'http://localhost:8082/uploads/experienceCertificate/' + service.experienceCertificate"
+                        target="_blank">
+                        View Certificate
+                    </a>
+                    <span *ngIf="!service.experienceCertificate">
+                        Not Uploaded
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+
+    <div
+        *ngIf="!employee.additionalDetails?.previousServices?.length"
+        class="no-data">
+
+        No Previous Service History Available
+
+    </div>
+
+</div>
+    <hr>
+    
+<h3>Additional Details</h3>
+
+<div class="card">
+
+    <div class="row">
+        <label>Blood Group</label>
+        <span>{{ employee.additionalDetails?.bloodGroup || '-' }}</span>
+    </div>
+
+    <div class="row">
+        <label>Emergency Contact Name</label>
+        <span>{{ employee.additionalDetails?.emergencyContactName || '-' }}</span>
+    </div>
+
+    <div class="row">
+        <label>Emergency Contact Number</label>
+        <span>{{ employee.additionalDetails?.emergencyContactNumber || '-' }}</span>
+    </div>
+
+    <div class="row">
+        <label>Marital Status</label>
+        <span>{{ employee.additionalDetails?.maritalStatus || '-' }}</span>
+    </div>
+
+    <div class="row">
+        <label>Spouse Name</label>
+        <span>{{ employee.additionalDetails?.spouseName || '-' }}</span>
+    </div>
+
+    <div class="row">
+        <label>Spouse Occupation</label>
+        <span>{{ employee.additionalDetails?.spouseOccupation || '-' }}</span>
+    </div>
+
+    <div class="row">
+        <label>Nominee Name</label>
+        <span>{{ employee.additionalDetails?.nomineeName || '-' }}</span>
+    </div>
+
+    <div class="row">
+        <label>Relationship</label>
+        <span>{{ employee.additionalDetails?.relationship || '-' }}</span>
+    </div>
+
+    <div class="row">
+        <label>Nominee Phone</label>
+        <span>{{ employee.additionalDetails?.nomineePhone || '-' }}</span>
+    </div>
+
+    <div class="row">
+        <label>Transport Facility</label>
+        <span>{{ employee.additionalDetails?.transportFacility || '-' }}</span>
+    </div>
+
+    <div class="row">
+        <label>House Rent Allowance (HRA)</label>
+        <span>{{ employee.additionalDetails?.hra || '-' }}</span>
+    </div>
+
+    <div class="row">
+        <label>Aadhaar Number</label>
+        <span>{{ employee.additionalDetails?.aadhaar || '-' }}</span>
+    </div>
+
+    <div class="row">
+        <label>PAN Number</label>
+        <span>{{ employee.additionalDetails?.pan || '-' }}</span>
+    </div>
+
+</div>
+
+
+<h3>Documents</h3>
+
+<div class="card">
+
+    <div class="row">
+        <label>Profile Photo</label>
+
+        <img
+            *ngIf="employee.documents?.profilePhoto"
+            [src]="'http://localhost:8082/uploads/profile/' + employee.documents.profilePhoto"
+            class="profile-photo">
+
+        <span *ngIf="!employee.documents?.profilePhoto">
+            Not Uploaded
+        </span>
+    </div>
+    
+
+    <div class="row">
+        <label>Aadhaar</label>
+
+        <a
+            *ngIf="employee.documents?.aadhaar"
+            [href]="'http://localhost:8082/uploads/aadhaar/' + employee.documents.aadhaar"
+            target="_blank">
+
+            View Aadhaar
+
+        </a>
+
+        <span *ngIf="!employee.documents?.aadhaar">
+            Not Uploaded
+        </span>
+    </div>
+
+    <div class="row">
+        <label>PAN</label>
+
+        <a
+            *ngIf="employee.documents?.pan"
+            [href]="'http://localhost:8082/uploads/pan/' + employee.documents.pan"
+            target="_blank">
+
+            View PAN
+
+        </a>
+
+        <span *ngIf="!employee.documents?.pan">
+            Not Uploaded
+        </span>
+    </div>
+
+    <div class="row">
+        <label>Resume</label>
+
+        <a
+            *ngIf="employee.documents?.resume"
+            [href]="'http://localhost:8082/uploads/resume/' + employee.documents.resume"
+            target="_blank">
+
+            Download Resume
+
+        </a>
+
+        <span *ngIf="!employee.documents?.resume">
+            Not Uploaded
+        </span>
+    </div>
+    <div class="row">
+    <label>Driving Licence</label>
+
+    <a
+        *ngIf="employee.documents?.licence"
+        [href]="'http://localhost:8082/uploads/licence/' + employee.documents.licence"
+        target="_blank">
+
+        View Licence
+
+    </a>
+
+    <span *ngIf="!employee.documents?.licence">
+        Not Uploaded
+    </span>
+</div>
+
+<div class="row">
+    <label>RC</label>
+
+    <a
+        *ngIf="employee.documents?.rc"
+        [href]="'http://localhost:8082/uploads/rc/' + employee.documents.rc"
+        target="_blank">
+
+        View RC
+
+    </a>
+
+    <span *ngIf="!employee.documents?.rc">
+        Not Uploaded
+    </span>
+</div>
+
+<div class="row">
+    <label>Vehicle Document</label>
+
+    <a
+        *ngIf="employee.documents?.vehicle"
+        [href]="'http://localhost:8082/uploads/vehicle/' + employee.documents.vehicle"
+        target="_blank">
+
+        View Vehicle Document
+
+    </a>
+
+    <span *ngIf="!employee.documents?.vehicle">
+        Not Uploaded
+    </span>
+</div>
+
+</div>
+
+   
+
+</div>

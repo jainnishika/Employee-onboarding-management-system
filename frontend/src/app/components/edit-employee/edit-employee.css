@@ -1,0 +1,713 @@
+body{
+    margin:0;
+    padding:0;
+    background:#f4f7fc;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+.container{
+
+    width:700px;
+
+    margin:40px auto;
+
+}
+
+h2{
+    text-align:center;
+    margin-bottom:25px;
+    color:#1f2937;
+}
+
+.form{
+    background:white;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-top:15px;
+    margin-bottom:6px;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    font-size:15px;
+    box-sizing:border-box;
+}
+
+textarea{
+    resize:none;
+}
+
+.buttons{
+    display:flex;
+    justify-content:space-between;
+    margin-top:25px;
+}
+
+.update-btn{
+    background:#198754;
+    color:white;
+    border:none;
+    padding:12px 25px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:15px;
+}
+
+.update-btn:hover{
+    background:#157347;
+}
+
+.back-btn{
+    background:#6c757d;
+    color:white;
+    border:none;
+    padding:12px 25px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:15px;
+}
+
+.back-btn:hover{
+    background:#565e64;
+}
+/* =========================
+   ADDITIONAL DETAILS
+========================= */
+
+.form h3 {
+    margin-top: 30px;
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e5e7eb;
+    color: #1f2937;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* Additional Details section */
+
+.additional-details {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 22px;
+    margin-bottom: 25px;
+}
+
+/* Two-column layout */
+
+.additional-details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px 25px;
+}
+
+/* Individual field */
+
+.additional-field {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Labels */
+
+.additional-field label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 7px;
+}
+
+/* Inputs and Select */
+
+.additional-field input,
+.additional-field select {
+    width: 100%;
+    height: 42px;
+    padding: 0 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 7px;
+    background: white;
+    font-size: 14px;
+    color: #374151;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+/* Focus */
+
+.additional-field input:focus,
+.additional-field select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+/* Computed fields */
+
+.computed-field {
+    background: #e5e7eb !important;
+    color: #6b7280 !important;
+    cursor: not-allowed;
+}
+
+/* Full-width field */
+
+.additional-field.full-width {
+    grid-column: 1 / -1;
+}
+
+/* =========================
+   PREVIOUS SERVICES
+========================= */
+
+.service-card {
+    background: #f8fafc;
+    border: 1px solid #dbe3ee;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 18px;
+    margin-bottom: 18px;
+}
+
+.service-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.service-header h4 {
+    margin: 0;
+    font-size: 16px;
+    color: #1f2937;
+}
+
+/* Service fields */
+
+.service-card label {
+    display: block;
+    margin-top: 12px;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.service-card input {
+    width: 100%;
+    height: 42px;
+    padding: 0 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 7px;
+    box-sizing: border-box;
+    outline: none;
+    background: white;
+}
+
+.service-card input:focus {
+    border-color: #2563eb;
+}
+
+/* Remove button */
+
+.remove-btn {
+    border: none;
+    background: #fee2e2;
+    color: #dc2626;
+    padding: 7px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.remove-btn:hover {
+    background: #fecaca;
+}
+
+/* Add service */
+
+.add-service-btn {
+    margin-top: 5px;
+    padding: 9px 16px;
+    border: 1px solid #2563eb;
+    background: white;
+    color: #2563eb;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.add-service-btn:hover {
+    background: #eff6ff;
+}
+
+/* =========================
+   EXISTING DOCUMENT
+========================= */
+
+.existing-document {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    padding: 9px 12px;
+    background: #f1f5f9;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+.existing-document a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.existing-document a:hover {
+    text-decoration: underline;
+}
+
+
+
+/* =========================
+   CONFIRM UPDATE POPUP
+========================= */
+
+.confirm-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 0, 0, 0.45);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 9999;
+}
+
+
+/* Popup */
+
+.confirm-popup {
+    width: 400px;
+    max-width: calc(100% - 30px);
+
+    background: white;
+
+    border-radius: 12px;
+
+    padding: 28px;
+
+    text-align: center;
+
+    box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.2);
+
+    animation: popupOpen 0.2s ease;
+}
+
+
+/* Icon */
+
+.confirm-icon {
+    width: 48px;
+    height: 48px;
+
+    margin: 0 auto 15px;
+
+    border-radius: 50%;
+
+    background: #fff4d6;
+
+    color: #d97706;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 25px;
+    font-weight: 700;
+}
+
+
+/* Heading */
+
+.confirm-popup h3 {
+    margin: 0 0 10px;
+
+    font-size: 20px;
+
+    color: #1f2937;
+}
+
+
+/* Message */
+
+.confirm-popup p {
+    margin: 0 0 25px;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+    color: #6b7280;
+}
+
+
+/* Buttons */
+
+.confirm-buttons {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+}
+
+
+/* Cancel */
+
+.cancel-confirm-btn {
+    border: 1px solid #d1d5db;
+
+    background: white;
+
+    color: #374151;
+
+    padding: 9px 18px;
+
+    border-radius: 7px;
+
+    cursor: pointer;
+
+    font-size: 14px;
+}
+
+.cancel-confirm-btn:hover {
+    background: #f3f4f6;
+}
+
+
+/* Confirm */
+
+.confirm-update-btn {
+    border: none;
+
+    background: #2563eb;
+
+    color: white;
+
+    padding: 9px 18px;
+
+    border-radius: 7px;
+
+    cursor: pointer;
+
+    font-size: 14px;
+}
+
+.confirm-update-btn:hover {
+    background: #1d4ed8;
+}
+
+/* =========================
+   TRANSPORT DOCUMENTS
+========================= */
+
+.transport-documents {
+    grid-column: 1 / -1;
+
+    margin-top: 10px;
+    padding: 20px;
+
+    background: #f8fafc;
+
+    border: 1px solid #dbe3ee;
+
+    border-radius: 10px;
+}
+
+.transport-documents h4 {
+    margin: 0 0 18px;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    color: #1f2937;
+
+    padding-bottom: 10px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.transport-documents label {
+    display: block;
+
+    margin-top: 15px;
+    margin-bottom: 7px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color: #374151;
+}
+
+.transport-documents input[type="file"] {
+    width: 100%;
+
+    padding: 9px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 7px;
+
+    background: white;
+
+    box-sizing: border-box;
+}
+
+/* Animation */
+
+@keyframes popupOpen {
+
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+}
+
+/* ======================================
+   Tablet Responsive
+====================================== */
+
+@media (max-width:1024px){
+
+.container{
+
+    width:95%;
+
+    max-width:800px;
+
+    margin:25px auto;
+
+    padding:25px;
+
+}
+
+.form{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:18px;
+
+}
+
+.form label{
+
+    grid-column:span 2;
+
+    margin-bottom:-10px;
+
+}
+
+.form input,
+.form select,
+.form textarea{
+
+    width:100%;
+
+}
+
+.buttons{
+
+    grid-column:span 2;
+
+}
+
+}
+/* ======================================
+   Mobile Responsive
+====================================== */
+
+@media (max-width:768px){
+    .additional-details-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .additional-field.full-width {
+        grid-column: auto;
+    }
+
+    .additional-details {
+        padding: 16px;
+    }
+
+    .service-card {
+        padding: 15px;
+    }
+
+    .service-header {
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+.container{
+
+    width:95%;
+
+    padding:20px;
+
+    margin:20px auto;
+
+}
+
+.container h2{
+
+    text-align:center;
+
+    font-size:24px;
+
+    margin-bottom:20px;
+
+}
+
+.form{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+}
+
+.form label{
+    font-size:14px;
+    font-weight:600;
+}
+
+.form input,
+.form select,
+.form textarea{
+    width:100%;
+    padding:10px 12px;
+    font-size:14px;
+}
+
+.form textarea{
+    min-height:90px;
+}
+
+.buttons{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    margin-top:15px;
+}
+
+.buttons button{
+    width:100%;
+}
+}
+/* ======================================
+   Small Mobile
+====================================== */
+
+@media (max-width:480px){
+        .form h3 {
+        font-size: 18px;
+    }
+
+    .additional-details {
+        padding: 12px;
+    }
+
+    .service-header {
+        flex-direction: column;
+    }
+
+    .remove-btn {
+        width: fit-content;
+    }
+     .confirm-popup {
+        padding: 22px;
+    }
+
+    .confirm-buttons {
+        flex-direction: column;
+    }
+
+    .cancel-confirm-btn,
+    .confirm-update-btn {
+        width: 100%;
+    }
+
+
+.container{
+
+    width:96%;
+
+    padding:16px;
+
+}
+
+.container h2{
+
+    font-size:22px;
+
+}
+
+.form label{
+
+    font-size:13px;
+
+}
+
+.form input,
+.form select,
+.form textarea{
+
+    font-size:13px;
+
+    padding:9px 10px;
+
+}
+
+.buttons button{
+
+    padding:10px;
+
+    font-size:14px;
+
+}
+
+}

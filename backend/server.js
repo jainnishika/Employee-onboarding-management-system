@@ -1,0 +1,25 @@
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const connectDB = require('./config/db');
+const app = express();
+const path = require("path");
+const uploadRoutes = require("./routes/upload");
+const requestRoutes = require("./routes/request");
+const applicationRoutes = require("./routes/application");
+connectDB();
+app.use(cors());
+app.use(express.json());
+app.use("/uploads",express.static(path.join(__dirname, "uploads")));
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/signup",require("./routes/signup"));
+app.use("/api/employee", require("./routes/create-employee"));
+app.use("/api/employee-details", require("./routes/employee-details"));
+app.use("/api/edit-employee", require("./routes/edit-employee"));
+app.use("/api/dashboard", require("./routes/dashboard"));
+app.use("/api/application", applicationRoutes);
+app.use("/api/request", requestRoutes);
+app.use("/api/upload", uploadRoutes);
+app.listen(8082, () => {
+    console.log("server running on port 8082");
+});

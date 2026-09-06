@@ -1,0 +1,25 @@
+<div class="page-wrapper">
+  <!-- Top Action Bar (Hidden during printing) -->
+  <header class="action-bar no-print">
+    <h2>Employee Onboarding and Management portal Manual</h2>
+    <div class="actions">
+      <button class="btn btn-secondary" (click)="printManual()" >
+        🖨️ Print
+      </button>
+      <button class="btn btn-primary" (click)="downloadManual()">
+        📥 Download Word File
+      </button>
+    </div>
+  </header>
+ 
+  
+ 
+  @if (errorMessage) {
+    <div class="error-state">
+      <p>{{ errorMessage }}</p>
+    </div>
+  }
+ 
+  <!-- Render Container where docx-preview outputs the file -->
+  <div #documentContainer class="document-viewer"></div>
+</div>

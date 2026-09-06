@@ -1,0 +1,3255 @@
+<!-- <div class="profile-requests-page"> -->
+
+    <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
+
+    <div class="page-header">
+
+        <button
+            class="back-btn"
+            type="button"
+            (click)="back()"
+        >
+            <mat-icon>arrow_back</mat-icon>
+            Back
+        </button>
+
+        <div class="header-title">
+
+            <h2>
+                Profile Update Requests
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         FILTERS
+    ====================================================== -->
+
+    <div class="top-controls">
+
+        <!-- SEARCH -->
+
+        <div class="search-box">
+
+            <mat-icon>
+                search
+            </mat-icon>
+
+            <input
+                type="text"
+                placeholder="Search employee..."
+                [(ngModel)]="searchText"
+                (input)="filterRequests()"
+            >
+
+        </div>
+
+
+        <!-- STATUS -->
+
+        <div class="filter-box">
+
+            <label>
+                Status
+            </label>
+
+            <select
+                [(ngModel)]="selectedStatus"
+                (change)="filterRequests()"
+            >
+
+                <option value="All">
+                    All
+                </option>
+
+                <option value="Pending">
+                    Pending
+                </option>
+
+                <option value="Approved">
+                    Approved
+                </option>
+
+                <option value="Rejected">
+                    Rejected
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+    <!-- RECORDS ROW -->
+<div class="records-row">
+
+    <div class="records-box">
+
+        <label>
+            Show
+        </label>
+
+        <select
+            [(ngModel)]="selectedCount"
+            (change)="changeRecords(selectedCount)"
+        >
+
+            <option [value]="5">5</option>
+
+            <option [value]="10">10</option>
+
+            <option [value]="25">25</option>
+
+            <option [value]="50">50</option>
+
+        </select>
+        <label> records </label>
+
+    </div>
+    <button
+    type="button"
+    class="excel-btn"
+    (click)="exportToExcel()">
+
+    <mat-icon>
+        download
+    </mat-icon>
+
+    Export Excel
+
+</button>
+
+</div>
+
+
+    <!-- =====================================================
+         MAIN TABLE
+    ====================================================== -->
+
+    <div
+        class="table-container"
+        *ngIf="requests.length > 0"
+    >
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <!-- EMPLOYEE -->
+
+                    <th
+                        class="sortable"
+                        (click)="sortColumn('username')"
+                    >
+
+                        Employee
+
+                        <span class="sort-icon">
+
+                            <mat-icon
+                                *ngIf="sortBy === 'username'"
+                            >
+                                {{
+                                    sortOrder === 'asc'
+                                    ? 'arrow_upward'
+                                    : 'arrow_downward'
+                                }}
+                            </mat-icon>
+
+                            <mat-icon
+                                *ngIf="sortBy !== 'username'"
+                            >
+                                unfold_more
+                            </mat-icon>
+
+                        </span>
+
+                    </th>
+
+
+                    <!-- REQUEST TYPE -->
+
+                    <th>
+                        Request Type
+                    </th>
+
+
+                    <!-- DATE -->
+
+                    <th
+                        class="sortable"
+                        (click)="sortColumn('submittedAt')"
+                    >
+
+                        Submitted Date
+
+                        <span class="sort-icon">
+
+                            <mat-icon
+                                *ngIf="sortBy === 'submittedAt'"
+                            >
+                                {{
+                                    sortOrder === 'asc'
+                                    ? 'arrow_upward'
+                                    : 'arrow_downward'
+                                }}
+                            </mat-icon>
+
+                            <mat-icon
+                                *ngIf="sortBy !== 'submittedAt'"
+                            >
+                                unfold_more
+                            </mat-icon>
+
+                        </span>
+
+                    </th>
+
+
+                    <!-- STATUS -->
+
+                    <th>
+                        Status
+                    </th>
+
+
+                    <!-- ACTION -->
+
+                    <th>
+                        Action
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                <tr
+                    *ngFor="
+                        let request of requests;
+                        trackBy: trackByRequest
+                    "
+                >
+
+                    <!-- EMPLOYEE -->
+
+                    <td>
+                        {{ request.username || '-' }}
+                    </td>
+
+
+                    <!-- REQUEST TYPE -->
+
+                    <td>
+                        {{ request.requestType || 'Profile Update' }}
+                    </td>
+
+
+                    <!-- DATE -->
+
+                    <td>
+                        {{
+                            formatDate(request.submittedAt)
+                        }}
+                    </td>
+
+
+                    <!-- STATUS -->
+
+                    <td>
+
+                        <span
+                            class="status-badge"
+                            [ngClass]="{
+                                'pending':
+                                    request.status === 'Pending',
+
+                                'approved':
+                                    request.status === 'Approved',
+
+                                'rejected':
+                                    request.status === 'Rejected'
+                            }"
+                        >
+
+                            {{ request.status }}
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- VIEW -->
+
+                    <td>
+
+                        <button
+                            type="button"
+                            class="view-btn"
+                            title="View Request"
+                            (click)="viewRequest(request)"
+                        >
+
+                            <mat-icon>
+                                visibility
+                            </mat-icon>
+
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- =====================================================
+         EMPTY STATE
+    ====================================================== -->
+
+    <div
+        class="empty-state"
+        *ngIf="requests.length === 0"
+    >
+
+        <mat-icon>
+            description
+        </mat-icon>
+
+        <h3>
+            No Profile Requests
+        </h3>
+
+        <p>
+            No profile update requests found.
+        </p>
+
+    </div>
+
+
+    <!-- =====================================================
+         PAGINATION
+    ====================================================== -->
+
+    <div
+        class="pagination"
+        *ngIf="totalPages > 1"
+    >
+
+        <button
+            type="button"
+            (click)="previousPage()"
+            [disabled]="currentPage === 1"
+        >
+            <<
+        </button>
+
+        <button
+            type="button"
+            class="page-number"
+            *ngFor="let page of pageNumbers"
+            [class.active]="
+                page === currentPage
+            "
+            (click)="goToPage(page)"
+        >
+            {{ page }}
+        </button>
+
+
+        <button
+            type="button"
+            (click)="nextPage()"
+            [disabled]="
+                currentPage === totalPages
+            "
+        >
+            >>
+        </button>
+
+    </div>
+<!-- </div> -->
+
+
+<!-- =========================================================
+     VIEW REQUEST POPUP
+========================================================= -->
+
+<div
+    class="popup-overlay"
+    *ngIf="selectedRequest"
+>
+
+    <div class="request-popup">
+
+
+        <!-- =================================================
+             POPUP HEADER
+        ================================================== -->
+
+        <div class="popup-header">
+
+            <div>
+
+                <h2>
+                    Profile Update Request
+                </h2>
+
+                <p>
+                    Employee:
+                    <strong>
+                        {{ selectedRequest.username }}
+                    </strong>
+                </p>
+
+                <p>
+                    Submitted:
+                    <strong>
+                        {{
+                            formatDate(
+                                selectedRequest.submittedAt
+                            )
+                        }}
+                    </strong>
+                </p>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="close-btn"
+                title="Close"
+                (click)="closeModal()"
+            >
+
+                <mat-icon>
+                    close
+                </mat-icon>
+
+            </button>
+
+        </div>
+
+
+        <!-- =================================================
+             STATUS
+        ================================================== -->
+
+        <div class="popup-status">
+
+            <span
+                class="status-badge"
+                [ngClass]="{
+                    'pending':
+                        selectedRequest.status === 'Pending',
+
+                    'approved':
+                        selectedRequest.status === 'Approved',
+
+                    'rejected':
+                        selectedRequest.status === 'Rejected'
+                }"
+            >
+
+                {{ selectedRequest.status }}
+
+            </span>
+
+        </div>
+
+
+        <!-- =================================================
+             BASIC DETAILS
+        ================================================== -->
+
+        <div class="section-title">
+
+            <h3>
+                Basic Details
+            </h3>
+
+        </div>
+
+
+        <div class="comparison-table">
+
+            <!-- HEADER -->
+
+            <div class="comparison-header">
+
+                <span>
+                    Field
+                </span>
+
+                <span>
+                    Previous Value
+                </span>
+
+                <span>
+                    Requested Value
+                </span>
+
+            </div>
+
+
+            <!-- NAME -->
+
+            <div
+                class="comparison-row"
+                [class.changed-row]="
+                    isChanged(
+                        selectedRequest.oldData?.name,
+                        selectedRequest.requestedData?.name
+                    )
+                "
+            >
+
+                <span class="field-name">
+                    Name
+                </span>
+
+                <span>
+                    {{
+                        displayValue(
+                            selectedRequest.oldData?.name
+                        )
+                    }}
+                </span>
+
+                <span
+                    [class.changed-field]="
+                        isChanged(
+                            selectedRequest.oldData?.name,
+                            selectedRequest.requestedData?.name
+                        )
+                    "
+                >
+
+                    {{
+                        isChanged(
+                            selectedRequest.oldData?.name,
+                            selectedRequest.requestedData?.name
+                        )
+                        ? displayValue(
+                            selectedRequest.requestedData?.name
+                        )
+                        : '-'
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- DOB -->
+
+            <div
+                class="comparison-row"
+                [class.changed-row]="
+                    isChanged(
+                        selectedRequest.oldData?.dob,
+                        selectedRequest.requestedData?.dob
+                    )
+                "
+            >
+
+                <span class="field-name">
+                    Date of Birth
+                </span>
+
+                <span>
+                    {{
+                        selectedRequest.oldData?.dob
+                        ? (selectedRequest.oldData?.dob
+                            | date:'dd/MM/yyyy')
+                        : '-'
+                    }}
+                </span>
+
+                <span
+                    [class.changed-field]="
+                        isChanged(
+                            selectedRequest.oldData?.dob,
+                            selectedRequest.requestedData?.dob
+                        )
+                    "
+                >
+
+                    {{
+                        isChanged(
+                            selectedRequest.oldData?.dob,
+                            selectedRequest.requestedData?.dob
+                        )
+                        ? (
+                            selectedRequest.requestedData?.dob
+                            | date:'dd/MM/yyyy'
+                        )
+                        : '-'
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- AGE -->
+
+            <div
+                class="comparison-row"
+                [class.changed-row]="
+                    isChanged(
+                        selectedRequest.oldData?.age,
+                        selectedRequest.requestedData?.age
+                    )
+                "
+            >
+
+                <span class="field-name">
+                    Age
+                </span>
+
+                <span>
+                    {{
+                        displayValue(
+                            selectedRequest.oldData?.age
+                        )
+                    }}
+                </span>
+
+                <span
+                    [class.changed-field]="
+                        isChanged(
+                            selectedRequest.oldData?.age,
+                            selectedRequest.requestedData?.age
+                        )
+                    "
+                >
+
+                    {{
+                        isChanged(
+                            selectedRequest.oldData?.age,
+                            selectedRequest.requestedData?.age
+                        )
+                        ? displayValue(
+                            selectedRequest.requestedData?.age
+                        )
+                        : '-'
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- EMAIL -->
+
+            <div
+                class="comparison-row"
+                [class.changed-row]="
+                    isChanged(
+                        selectedRequest.oldData?.email,
+                        selectedRequest.requestedData?.email
+                    )
+                "
+            >
+
+                <span class="field-name">
+                    Email
+                </span>
+
+                <span>
+                    {{
+                        displayValue(
+                            selectedRequest.oldData?.email
+                        )
+                    }}
+                </span>
+
+                <span
+                    [class.changed-field]="
+                        isChanged(
+                            selectedRequest.oldData?.email,
+                            selectedRequest.requestedData?.email
+                        )
+                    "
+                >
+
+                    {{
+                        isChanged(
+                            selectedRequest.oldData?.email,
+                            selectedRequest.requestedData?.email
+                        )
+                        ? displayValue(
+                            selectedRequest.requestedData?.email
+                        )
+                        : '-'
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- PHONE -->
+
+            <div
+                class="comparison-row"
+                [class.changed-row]="
+                    isChanged(
+                        selectedRequest.oldData?.phone,
+                        selectedRequest.requestedData?.phone
+                    )
+                "
+            >
+
+                <span class="field-name">
+                    Phone
+                </span>
+
+                <span>
+                    {{
+                        displayValue(
+                            selectedRequest.oldData?.phone
+                        )
+                    }}
+                </span>
+
+                <span
+                    [class.changed-field]="
+                        isChanged(
+                            selectedRequest.oldData?.phone,
+                            selectedRequest.requestedData?.phone
+                        )
+                    "
+                >
+
+                    {{
+                        isChanged(
+                            selectedRequest.oldData?.phone,
+                            selectedRequest.requestedData?.phone
+                        )
+                        ? displayValue(
+                            selectedRequest.requestedData?.phone
+                        )
+                        : '-'
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- GENDER -->
+
+            <div
+                class="comparison-row"
+                [class.changed-row]="
+                    isChanged(
+                        selectedRequest.oldData?.gender,
+                        selectedRequest.requestedData?.gender
+                    )
+                "
+            >
+
+                <span class="field-name">
+                    Gender
+                </span>
+
+                <span>
+                    {{
+                        displayValue(
+                            selectedRequest.oldData?.gender
+                        )
+                    }}
+                </span>
+
+                <span
+                    [class.changed-field]="
+                        isChanged(
+                            selectedRequest.oldData?.gender,
+                            selectedRequest.requestedData?.gender
+                        )
+                    "
+                >
+
+                    {{
+                        isChanged(
+                            selectedRequest.oldData?.gender,
+                            selectedRequest.requestedData?.gender
+                        )
+                        ? displayValue(
+                            selectedRequest.requestedData?.gender
+                        )
+                        : '-'
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- DEPARTMENT -->
+
+            <div
+                class="comparison-row"
+                [class.changed-row]="
+                    isChanged(
+                        selectedRequest.oldData?.department,
+                        selectedRequest.requestedData?.department
+                    )
+                "
+            >
+
+                <span class="field-name">
+                    Department
+                </span>
+
+                <span>
+                    {{
+                        displayValue(
+                            selectedRequest.oldData?.department
+                        )
+                    }}
+                </span>
+
+                <span
+                    [class.changed-field]="
+                        isChanged(
+                            selectedRequest.oldData?.department,
+                            selectedRequest.requestedData?.department
+                        )
+                    "
+                >
+
+                    {{
+                        isChanged(
+                            selectedRequest.oldData?.department,
+                            selectedRequest.requestedData?.department
+                        )
+                        ? displayValue(
+                            selectedRequest.requestedData?.department
+                        )
+                        : '-'
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- DESIGNATION -->
+
+            <div
+                class="comparison-row"
+                [class.changed-row]="
+                    isChanged(
+                        selectedRequest.oldData?.designation,
+                        selectedRequest.requestedData?.designation
+                    )
+                "
+            >
+
+                <span class="field-name">
+                    Designation
+                </span>
+
+                <span>
+                    {{
+                        displayValue(
+                            selectedRequest.oldData?.designation
+                        )
+                    }}
+                </span>
+
+                <span
+                    [class.changed-field]="
+                        isChanged(
+                            selectedRequest.oldData?.designation,
+                            selectedRequest.requestedData?.designation
+                        )
+                    "
+                >
+
+                    {{
+                        isChanged(
+                            selectedRequest.oldData?.designation,
+                            selectedRequest.requestedData?.designation
+                        )
+                        ? displayValue(
+                            selectedRequest.requestedData?.designation
+                        )
+                        : '-'
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- JOINING DATE -->
+
+            <div
+                class="comparison-row"
+                [class.changed-row]="
+                    isChanged(
+                        selectedRequest.oldData?.joiningDate,
+                        selectedRequest.requestedData?.joiningDate
+                    )
+                "
+            >
+
+                <span class="field-name">
+                    Joining Date
+                </span>
+
+                <span>
+                    {{
+                        selectedRequest.oldData?.joiningDate
+                        ? (
+                            selectedRequest.oldData?.joiningDate
+                            | date:'dd/MM/yyyy'
+                        )
+                        : '-'
+                    }}
+                </span>
+
+                <span
+                    [class.changed-field]="
+                        isChanged(
+                            selectedRequest.oldData?.joiningDate,
+                            selectedRequest.requestedData?.joiningDate
+                        )
+                    "
+                >
+
+                    {{
+                        isChanged(
+                            selectedRequest.oldData?.joiningDate,
+                            selectedRequest.requestedData?.joiningDate
+                        )
+                        ? (
+                            selectedRequest.requestedData?.joiningDate
+                            | date:'dd/MM/yyyy'
+                        )
+                        : '-'
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- ADDRESS -->
+
+            <div
+                class="comparison-row"
+                [class.changed-row]="
+                    isChanged(
+                        selectedRequest.oldData?.address,
+                        selectedRequest.requestedData?.address
+                    )
+                "
+            >
+
+                <span class="field-name">
+                    Address
+                </span>
+
+                <span>
+                    {{
+                        displayValue(
+                            selectedRequest.oldData?.address
+                        )
+                    }}
+                </span>
+
+                <span
+                    [class.changed-field]="
+                        isChanged(
+                            selectedRequest.oldData?.address,
+                            selectedRequest.requestedData?.address
+                        )
+                    "
+                >
+
+                    {{
+                        isChanged(
+                            selectedRequest.oldData?.address,
+                            selectedRequest.requestedData?.address
+                        )
+                        ? displayValue(
+                            selectedRequest.requestedData?.address
+                        )
+                        : '-'
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- ROLE -->
+
+            <div
+                class="comparison-row"
+                [class.changed-row]="
+                    isChanged(
+                        selectedRequest.oldData?.role,
+                        selectedRequest.requestedData?.role
+                    )
+                "
+            >
+
+                <span class="field-name">
+                    Role
+                </span>
+
+                <span>
+                    {{
+                        displayValue(
+                            selectedRequest.oldData?.role
+                        )
+                    }}
+                </span>
+
+                <span
+                    [class.changed-field]="
+                        isChanged(
+                            selectedRequest.oldData?.role,
+                            selectedRequest.requestedData?.role
+                        )
+                    "
+                >
+
+                    {{
+                        isChanged(
+                            selectedRequest.oldData?.role,
+                            selectedRequest.requestedData?.role
+                        )
+                        ? displayValue(
+                            selectedRequest.requestedData?.role
+                        )
+                        : '-'
+                    }}
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             ADDITIONAL DETAILS
+        ================================================== -->
+
+        <div class="section-title">
+
+            <h3>
+                Additional Details
+            </h3>
+
+        </div>
+
+
+        <div class="comparison-table">
+
+            <div class="comparison-header">
+
+                <span>
+                    Field
+                </span>
+
+                <span>
+                    Previous Value
+                </span>
+
+                <span>
+                    Requested Value
+                </span>
+
+            </div>
+
+
+            <!-- EMERGENCY CONTACT NAME -->
+
+            <div
+                class="comparison-row"
+                [class.changed-row]="
+                    isAdditionalChanged(
+                        selectedRequest,
+                        'emergencyContactName'
+                    )
+                "
+            >
+
+                <span class="field-name">
+                    Emergency Contact Name
+                </span>
+
+                <span>
+                    {{
+                        displayValue(
+                            selectedRequest
+                            .oldData
+                            ?.additionalDetails
+                            ?.emergencyContactName
+                        )
+                    }}
+                </span>
+
+                <span
+                    [class.changed-field]="
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'emergencyContactName'
+                        )
+                    "
+                >
+
+                    {{
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'emergencyContactName'
+                        )
+                        ? displayValue(
+                            selectedRequest
+                            .requestedData
+                            ?.additionalDetails
+                            ?.emergencyContactName
+                        )
+                        : '-'
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- EMERGENCY CONTACT NUMBER -->
+
+            <div
+                class="comparison-row"
+                [class.changed-row]="
+                    isAdditionalChanged(
+                        selectedRequest,
+                        'emergencyContactNumber'
+                    )
+                "
+            >
+
+                <span class="field-name">
+                    Emergency Contact Number
+                </span>
+
+                <span>
+                    {{
+                        displayValue(
+                            selectedRequest
+                            .oldData
+                            ?.additionalDetails
+                            ?.emergencyContactNumber
+                        )
+                    }}
+                </span>
+
+                <span
+                    [class.changed-field]="
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'emergencyContactNumber'
+                        )
+                    "
+                >
+
+                    {{
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'emergencyContactNumber'
+                        )
+                        ? displayValue(
+                            selectedRequest
+                            .requestedData
+                            ?.additionalDetails
+                            ?.emergencyContactNumber
+                        )
+                        : '-'
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- BLOOD GROUP -->
+
+            <div
+                class="comparison-row"
+                [class.changed-row]="
+                    isAdditionalChanged(
+                        selectedRequest,
+                        'bloodGroup'
+                    )
+                "
+            >
+
+                <span class="field-name">
+                    Blood Group
+                </span>
+
+                <span>
+                    {{
+                        displayValue(
+                            selectedRequest
+                            .oldData
+                            ?.additionalDetails
+                            ?.bloodGroup
+                        )
+                    }}
+                </span>
+
+                <span
+                    [class.changed-field]="
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'bloodGroup'
+                        )
+                    "
+                >
+
+                    {{
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'bloodGroup'
+                        )
+                        ? displayValue(
+                            selectedRequest
+                            .requestedData
+                            ?.additionalDetails
+                            ?.bloodGroup
+                        )
+                        : '-'
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- MARITAL STATUS -->
+
+            <div
+                class="comparison-row"
+                [class.changed-row]="
+                    isAdditionalChanged(
+                        selectedRequest,
+                        'maritalStatus'
+                    )
+                "
+            >
+
+                <span class="field-name">
+                    Marital Status
+                </span>
+
+                <span>
+                    {{
+                        displayValue(
+                            selectedRequest
+                            .oldData
+                            ?.additionalDetails
+                            ?.maritalStatus
+                        )
+                    }}
+                </span>
+
+                <span
+                    [class.changed-field]="
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'maritalStatus'
+                        )
+                    "
+                >
+
+                    {{
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'maritalStatus'
+                        )
+                        ? displayValue(
+                            selectedRequest
+                            .requestedData
+                            ?.additionalDetails
+                            ?.maritalStatus
+                        )
+                        : '-'
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- SPOUSE NAME -->
+
+            <div
+                class="comparison-row"
+                [class.changed-row]="
+                    isAdditionalChanged(
+                        selectedRequest,
+                        'spouseName'
+                    )
+                "
+            >
+
+                <span class="field-name">
+                    Spouse Name
+                </span>
+
+                <span>
+                    {{
+                        displayValue(
+                            selectedRequest
+                            .oldData
+                            ?.additionalDetails
+                            ?.spouseName
+                        )
+                    }}
+                </span>
+
+                <span
+                    [class.changed-field]="
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'spouseName'
+                        )
+                    "
+                >
+
+                    {{
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'spouseName'
+                        )
+                        ? displayValue(
+                            selectedRequest
+                            .requestedData
+                            ?.additionalDetails
+                            ?.spouseName
+                        )
+                        : '-'
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- SPOUSE OCCUPATION -->
+
+            <div
+                class="comparison-row"
+                [class.changed-row]="
+                    isAdditionalChanged(
+                        selectedRequest,
+                        'spouseOccupation'
+                    )
+                "
+            >
+
+                <span class="field-name">
+                    Spouse Occupation
+                </span>
+
+                <span>
+                    {{
+                        displayValue(
+                            selectedRequest
+                            .oldData
+                            ?.additionalDetails
+                            ?.spouseOccupation
+                        )
+                    }}
+                </span>
+
+                <span
+                    [class.changed-field]="
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'spouseOccupation'
+                        )
+                    "
+                >
+
+                    {{
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'spouseOccupation'
+                        )
+                        ? displayValue(
+                            selectedRequest
+                            .requestedData
+                            ?.additionalDetails
+                            ?.spouseOccupation
+                        )
+                        : '-'
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- NOMINEE NAME -->
+
+            <div
+                class="comparison-row"
+                [class.changed-row]="
+                    isAdditionalChanged(
+                        selectedRequest,
+                        'nomineeName'
+                    )
+                "
+            >
+
+                <span class="field-name">
+                    Nominee Name
+                </span>
+
+                <span>
+                    {{
+                        displayValue(
+                            selectedRequest
+                            .oldData
+                            ?.additionalDetails
+                            ?.nomineeName
+                        )
+                    }}
+                </span>
+
+                <span
+                    [class.changed-field]="
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'nomineeName'
+                        )
+                    "
+                >
+
+                    {{
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'nomineeName'
+                        )
+                        ? displayValue(
+                            selectedRequest
+                            .requestedData
+                            ?.additionalDetails
+                            ?.nomineeName
+                        )
+                        : '-'
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- RELATIONSHIP -->
+
+            <div
+                class="comparison-row"
+                [class.changed-row]="
+                    isAdditionalChanged(
+                        selectedRequest,
+                        'relationship'
+                    )
+                "
+            >
+
+                <span class="field-name">
+                    Nominee Relationship
+                </span>
+
+                <span>
+                    {{
+                        displayValue(
+                            selectedRequest
+                            .oldData
+                            ?.additionalDetails
+                            ?.relationship
+                        )
+                    }}
+                </span>
+
+                <span
+                    [class.changed-field]="
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'relationship'
+                        )
+                    "
+                >
+
+                    {{
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'relationship'
+                        )
+                        ? displayValue(
+                            selectedRequest
+                            .requestedData
+                            ?.additionalDetails
+                            ?.relationship
+                        )
+                        : '-'
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- NOMINEE PHONE -->
+
+            <div
+                class="comparison-row"
+                [class.changed-row]="
+                    isAdditionalChanged(
+                        selectedRequest,
+                        'nomineePhone'
+                    )
+                "
+            >
+
+                <span class="field-name">
+                    Nominee Phone
+                </span>
+
+                <span>
+                    {{
+                        displayValue(
+                            selectedRequest
+                            .oldData
+                            ?.additionalDetails
+                            ?.nomineePhone
+                        )
+                    }}
+                </span>
+
+                <span
+                    [class.changed-field]="
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'nomineePhone'
+                        )
+                    "
+                >
+
+                    {{
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'nomineePhone'
+                        )
+                        ? displayValue(
+                            selectedRequest
+                            .requestedData
+                            ?.additionalDetails
+                            ?.nomineePhone
+                        )
+                        : '-'
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- TRANSPORT FACILITY -->
+
+            <div
+                class="comparison-row"
+                [class.changed-row]="
+                    isAdditionalChanged(
+                        selectedRequest,
+                        'transportFacility'
+                    )
+                "
+            >
+
+                <span class="field-name">
+                    Transport Facility
+                </span>
+
+                <span>
+                    {{
+                        displayValue(
+                            selectedRequest
+                            .oldData
+                            ?.additionalDetails
+                            ?.transportFacility
+                        )
+                    }}
+                </span>
+
+                <span
+                    [class.changed-field]="
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'transportFacility'
+                        )
+                    "
+                >
+
+                    {{
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'transportFacility'
+                        )
+                        ? displayValue(
+                            selectedRequest
+                            .requestedData
+                            ?.additionalDetails
+                            ?.transportFacility
+                        )
+                        : '-'
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- HRA -->
+
+            <div
+                class="comparison-row"
+                [class.changed-row]="
+                    isAdditionalChanged(
+                        selectedRequest,
+                        'hra'
+                    )
+                "
+            >
+
+                <span class="field-name">
+                    HRA
+                </span>
+
+                <span>
+                    {{
+                        displayValue(
+                            selectedRequest
+                            .oldData
+                            ?.additionalDetails
+                            ?.hra
+                        )
+                    }}
+                </span>
+
+                <span
+                    [class.changed-field]="
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'hra'
+                        )
+                    "
+                >
+
+                    {{
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'hra'
+                        )
+                        ? displayValue(
+                            selectedRequest
+                            .requestedData
+                            ?.additionalDetails
+                            ?.hra
+                        )
+                        : '-'
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- AADHAAR NUMBER -->
+
+            <div
+                class="comparison-row"
+                [class.changed-row]="
+                    isAdditionalChanged(
+                        selectedRequest,
+                        'aadhaar'
+                    )
+                "
+            >
+
+                <span class="field-name">
+                    Aadhaar Number
+                </span>
+
+                <span>
+                    {{
+                        displayValue(
+                            selectedRequest
+                            .oldData
+                            ?.additionalDetails
+                            ?.aadhaar
+                        )
+                    }}
+                </span>
+
+                <span
+                    [class.changed-field]="
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'aadhaar'
+                        )
+                    "
+                >
+
+                    {{
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'aadhaar'
+                        )
+                        ? displayValue(
+                            selectedRequest
+                            .requestedData
+                            ?.additionalDetails
+                            ?.aadhaar
+                        )
+                        : '-'
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- PAN NUMBER -->
+
+            <div
+                class="comparison-row"
+                [class.changed-row]="
+                    isAdditionalChanged(
+                        selectedRequest,
+                        'pan'
+                    )
+                "
+            >
+
+                <span class="field-name">
+                    PAN Number
+                </span>
+
+                <span>
+                    {{
+                        displayValue(
+                            selectedRequest
+                            .oldData
+                            ?.additionalDetails
+                            ?.pan
+                        )
+                    }}
+                </span>
+
+                <span
+                    [class.changed-field]="
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'pan'
+                        )
+                    "
+                >
+
+                    {{
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'pan'
+                        )
+                        ? displayValue(
+                            selectedRequest
+                            .requestedData
+                            ?.additionalDetails
+                            ?.pan
+                        )
+                        : '-'
+                    }}
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             PREVIOUS SERVICES
+        ================================================== -->
+
+        <div class="section-title">
+
+            <h3>
+                Previous Services
+            </h3>
+
+        </div>
+
+
+        <div
+            class="services-section"
+            *ngIf="getServiceCount() > 0"
+        >
+
+            <div
+                class="service-card"
+                *ngFor="
+                    let i of [].constructor(getServiceCount());
+                    let index = index
+                "
+            >
+
+                <div class="service-title">
+
+                    Service {{ index + 1 }}
+
+                </div>
+
+
+                <div class="comparison-table">
+
+                    <div class="comparison-header">
+
+                        <span>
+                            Field
+                        </span>
+
+                        <span>
+                            Previous Value
+                        </span>
+
+                        <span>
+                            Requested Value
+                        </span>
+
+                    </div>
+
+
+                    <!-- COMPANY -->
+
+                    <div
+                        class="comparison-row"
+                        [class.changed-row]="
+                            serviceChanged(
+                                getOldService(index),
+                                getNewService(index),
+                                'organisation'
+                            )
+                        "
+                    >
+
+                        <span class="field-name">
+                            Company Name
+                        </span>
+
+                        <span>
+                            {{
+                                displayValue(
+                                    getOldService(index)?.organisation
+                                )
+                            }}
+                        </span>
+
+                        <span
+                            [class.changed-field]="
+                                serviceChanged(
+                                    getOldService(index),
+                                    getNewService(index),
+                                    'organisation'
+                                )
+                            "
+                        >
+
+                            {{
+                                serviceChanged(
+                                    getOldService(index),
+                                    getNewService(index),
+                                    'organisation'
+                                )
+                                ? displayValue(
+                                    getNewService(index)?.organisation
+                                )
+                                : '-'
+                            }}
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- DESIGNATION -->
+
+                    <div
+                        class="comparison-row"
+                        [class.changed-row]="
+                            serviceChanged(
+                                getOldService(index),
+                                getNewService(index),
+                                'designation'
+                            )
+                        "
+                    >
+
+                        <span class="field-name">
+                            Designation
+                        </span>
+
+                        <span>
+                            {{
+                                displayValue(
+                                    getOldService(index)?.designation
+                                )
+                            }}
+                        </span>
+
+                        <span
+                            [class.changed-field]="
+                                serviceChanged(
+                                    getOldService(index),
+                                    getNewService(index),
+                                    'designation'
+                                )
+                            "
+                        >
+
+                            {{
+                                serviceChanged(
+                                    getOldService(index),
+                                    getNewService(index),
+                                    'designation'
+                                )
+                                ? displayValue(
+                                    getNewService(index)?.designation
+                                )
+                                : '-'
+                            }}
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- START DATE -->
+
+                    <div
+                        class="comparison-row"
+                        [class.changed-row]="
+                            serviceChanged(
+                                getOldService(index),
+                                getNewService(index),
+                                'fromDate'
+                            )
+                        "
+                    >
+
+                        <span class="field-name">
+                            Start Date
+                        </span>
+
+                        <span>
+                            {{
+                                getOldService(index)?.fromDate
+                                ? (
+                                    getOldService(index)?.fromDate
+                                    | date:'dd/MM/yyyy'
+                                )
+                                : '-'
+                            }}
+                        </span>
+
+                        <span
+                            [class.changed-field]="
+                                serviceChanged(
+                                    getOldService(index),
+                                    getNewService(index),
+                                    'fromDate'
+                                )
+                            "
+                        >
+
+                            {{
+                                serviceChanged(
+                                    getOldService(index),
+                                    getNewService(index),
+                                    'fromDate'
+                                )
+                                ? (
+                                    getNewService(index)?.fromDate
+                                    | date:'dd/MM/yyyy'
+                                )
+                                : '-'
+                            }}
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- END DATE -->
+
+                    <div
+                        class="comparison-row"
+                        [class.changed-row]="
+                            serviceChanged(
+                                getOldService(index),
+                                getNewService(index),
+                                'toDate'
+                            )
+                        "
+                    >
+
+                        <span class="field-name">
+                            End Date
+                        </span>
+
+                        <span>
+                            {{
+                                getOldService(index)?.toDate
+                                ? (
+                                    getOldService(index)?.toDate
+                                    | date:'dd/MM/yyyy'
+                                )
+                                : '-'
+                            }}
+                        </span>
+
+                        <span
+                            [class.changed-field]="
+                                serviceChanged(
+                                    getOldService(index),
+                                    getNewService(index),
+                                    'toDate'
+                                )
+                            "
+                        >
+
+                            {{
+                                serviceChanged(
+                                    getOldService(index),
+                                    getNewService(index),
+                                    'toDate'
+                                )
+                                ? (
+                                    getNewService(index)?.toDate
+                                    | date:'dd/MM/yyyy'
+                                )
+                                : '-'
+                            }}
+
+                        </span>
+
+                    </div>
+                    <!-- TENURE -->
+
+<div
+    class="comparison-row"
+    [class.changed-row]="
+        serviceChanged(
+            getOldService(index),
+            getNewService(index),
+            'tenure'
+        )
+    "
+>
+
+    <span class="field-name">
+        Tenure
+    </span>
+
+    <!-- Previous Value -->
+
+    <span>
+        {{
+            displayValue(
+                getOldService(index)?.tenure
+            )
+        }}
+    </span>
+
+
+    <!-- Requested Value -->
+
+    <span
+        [class.changed-field]="
+            serviceChanged(
+                getOldService(index),
+                getNewService(index),
+                'tenure'
+            )
+        "
+    >
+
+        {{
+            serviceChanged(
+                getOldService(index),
+                getNewService(index),
+                'tenure'
+            )
+            ? displayValue(
+                getNewService(index)?.tenure
+            )
+            : '-'
+        }}
+
+    </span>
+
+</div>
+                    
+
+
+                    <!-- EXPERIENCE CERTIFICATE -->
+
+                    <div
+                        class="comparison-row"
+                    >
+
+                        <span class="field-name">
+                            Experience Certificate
+                        </span>
+
+
+                        <!-- OLD CERTIFICATE -->
+
+                        <span>
+
+                            <a
+                                *ngIf="
+                                    getOldService(index)
+                                    ?.experienceCertificate
+                                "
+                                [href]="
+                                    getDocumentUrl(
+                                        getOldService(index)
+                                        ?.experienceCertificate,
+                                        'experienceCertificate'
+                                    )
+                                "
+                                target="_blank"
+                                class="document-view-btn"
+                                title="View Previous Certificate"
+                            >
+
+                                <mat-icon>
+                                    visibility
+                                </mat-icon>
+
+                            </a>
+
+
+                            <span
+                                *ngIf="
+                                    !getOldService(index)
+                                    ?.experienceCertificate
+                                "
+                            >
+                                -
+                            </span>
+
+                        </span>
+
+
+                        <!-- NEW CERTIFICATE -->
+
+                        <span
+                            [class.changed-field]="
+                                serviceChanged(
+                                    getOldService(index),
+                                    getNewService(index),
+                                    'experienceCertificate'
+                                )
+                            "
+                        >
+
+                            <ng-container
+                                *ngIf="
+                                    serviceChanged(
+                                        getOldService(index),
+                                        getNewService(index),
+                                        'experienceCertificate'
+                                    )
+                                "
+                            >
+
+                                <a
+                                    *ngIf="
+                                        getNewService(index)
+                                        ?.experienceCertificate
+                                    "
+                                    [href]="
+                                        getDocumentUrl(
+                                            getNewService(index)
+                                            ?.experienceCertificate,
+                                            'experienceCertificate'
+                                        )
+                                    "
+                                    target="_blank"
+                                    class="document-view-btn"
+                                    title="View New Certificate"
+                                >
+
+                                    <mat-icon>
+                                        visibility
+                                    </mat-icon>
+
+                                </a>
+
+                                <span class="new-badge">
+                                    NEW
+                                </span>
+
+                            </ng-container>
+
+
+                            <span
+                                *ngIf="
+                                    !serviceChanged(
+                                        getOldService(index),
+                                        getNewService(index),
+                                        'experienceCertificate'
+                                    )
+                                "
+                            >
+                                -
+                            </span>
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            *ngIf="getServiceCount() === 0"
+            class="empty-state"
+        >
+
+            <p>
+                No previous service details available.
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             DOCUMENTS
+        ================================================== -->
+
+        <div class="section-title">
+
+            <h3>
+                Documents
+            </h3>
+
+        </div>
+
+
+        <div class="documents-section">
+
+            <div class="comparison-table">
+
+                <!-- HEADER -->
+
+                <div class="comparison-header">
+
+                    <span>
+                        Document
+                    </span>
+
+                    <span>
+                        Previous Document
+                    </span>
+
+                    <span>
+                        Requested Document
+                    </span>
+
+                </div>
+
+
+                <!-- PROFILE PHOTO -->
+
+                <div
+                    class="comparison-row"
+                    [class.changed-row]="
+                        isDocumentChanged(
+                            selectedRequest,
+                            'profilePhoto'
+                        )
+                    "
+                >
+
+                    <span class="field-name">
+                        Profile Photo
+                    </span>
+
+
+                    <span>
+
+                        <a
+                            *ngIf="
+                                selectedRequest?.oldData
+                                ?.documents?.profilePhoto
+                            "
+                            [href]="
+                                getDocumentUrl(
+                                    selectedRequest.oldData.documents.profilePhoto,
+                                    'profilePhoto'
+                                )
+                            "
+                            target="_blank"
+                            class="document-view-btn"
+                            title="View Previous Profile Photo"
+                        >
+
+                            <mat-icon>
+                                visibility
+                            </mat-icon>
+
+                        </a>
+
+                        <span
+                            *ngIf="
+                                !selectedRequest?.oldData
+                                ?.documents?.profilePhoto
+                            "
+                        >
+                            -
+                        </span>
+
+                    </span>
+
+
+                    <span
+                        [class.changed-field]="
+                            isDocumentChanged(
+                                selectedRequest,
+                                'profilePhoto'
+                            )
+                        "
+                    >
+
+                        <ng-container
+                            *ngIf="
+                                isDocumentChanged(
+                                    selectedRequest,
+                                    'profilePhoto'
+                                )
+                            "
+                        >
+
+                            <a
+                                *ngIf="
+                                    selectedRequest?.requestedData
+                                    ?.documents?.profilePhoto
+                                "
+                                [href]="
+                                    getDocumentUrl(
+                                        selectedRequest.requestedData.documents.profilePhoto,
+                                        'profilePhoto'
+                                    )
+                                "
+                                target="_blank"
+                                class="document-view-btn"
+                                title="View New Profile Photo"
+                            >
+
+                                <mat-icon>
+                                    visibility
+                                </mat-icon>
+
+                            </a>
+
+                            <span class="new-badge">
+                                NEW
+                            </span>
+
+                        </ng-container>
+
+                        <span
+                            *ngIf="
+                                !isDocumentChanged(
+                                    selectedRequest,
+                                    'profilePhoto'
+                                )
+                            "
+                        >
+                            -
+                        </span>
+
+                    </span>
+
+                </div>
+
+
+                <!-- AADHAAR -->
+
+                <div
+                    class="comparison-row"
+                    [class.changed-row]="
+                        isDocumentChanged(
+                            selectedRequest,
+                            'aadhaar'
+                        )
+                    "
+                >
+
+                    <span class="field-name">
+                        Aadhaar
+                    </span>
+
+
+                    <span>
+
+                        <a
+                            *ngIf="
+                                selectedRequest?.oldData
+                                ?.documents?.aadhaar
+                            "
+                            [href]="
+                                getDocumentUrl(
+                                    selectedRequest.oldData.documents.aadhaar,
+                                    'aadhaar'
+                                )
+                            "
+                            target="_blank"
+                            class="document-view-btn"
+                            title="View Previous Aadhaar"
+                        >
+
+                            <mat-icon>
+                                visibility
+                            </mat-icon>
+
+                        </a>
+
+                        <span
+                            *ngIf="
+                                !selectedRequest?.oldData
+                                ?.documents?.aadhaar
+                            "
+                        >
+                            -
+                        </span>
+
+                    </span>
+
+
+                    <span
+                        [class.changed-field]="
+                            isDocumentChanged(
+                                selectedRequest,
+                                'aadhaar'
+                            )
+                        "
+                    >
+
+                        <ng-container
+                            *ngIf="
+                                isDocumentChanged(
+                                    selectedRequest,
+                                    'aadhaar'
+                                )
+                            "
+                        >
+
+                            <a
+                                *ngIf="
+                                    selectedRequest?.requestedData
+                                    ?.documents?.aadhaar
+                                "
+                                [href]="
+                                    getDocumentUrl(
+                                        selectedRequest.requestedData.documents.aadhaar,
+                                        'aadhaar'
+                                    )
+                                "
+                                target="_blank"
+                                class="document-view-btn"
+                                title="View New Aadhaar"
+                            >
+
+                                <mat-icon>
+                                    visibility
+                                </mat-icon>
+
+                            </a>
+
+                            <span class="new-badge">
+                                NEW
+                            </span>
+
+                        </ng-container>
+
+
+                        <span
+                            *ngIf="
+                                !isDocumentChanged(
+                                    selectedRequest,
+                                    'aadhaar'
+                                )
+                            "
+                        >
+                            -
+                        </span>
+
+                    </span>
+
+                </div>
+
+
+                <!-- PAN -->
+
+                <div
+                    class="comparison-row"
+                    [class.changed-row]="
+                        isDocumentChanged(
+                            selectedRequest,
+                            'pan'
+                        )
+                    "
+                >
+
+                    <span class="field-name">
+                        PAN
+                    </span>
+
+
+                    <span>
+
+                        <a
+                            *ngIf="
+                                selectedRequest?.oldData
+                                ?.documents?.pan
+                            "
+                            [href]="
+                                getDocumentUrl(
+                                    selectedRequest.oldData.documents.pan,
+                                    'pan'
+                                )
+                            "
+                            target="_blank"
+                            class="document-view-btn"
+                            title="View Previous PAN"
+                        >
+
+                            <mat-icon>
+                                visibility
+                            </mat-icon>
+
+                        </a>
+
+                        <span
+                            *ngIf="
+                                !selectedRequest?.oldData
+                                ?.documents?.pan
+                            "
+                        >
+                            -
+                        </span>
+
+                    </span>
+
+
+                    <span
+                        [class.changed-field]="
+                            isDocumentChanged(
+                                selectedRequest,
+                                'pan'
+                            )
+                        "
+                    >
+
+                        <ng-container
+                            *ngIf="
+                                isDocumentChanged(
+                                    selectedRequest,
+                                    'pan'
+                                )
+                            "
+                        >
+
+                            <a
+                                *ngIf="
+                                    selectedRequest?.requestedData
+                                    ?.documents?.pan
+                                "
+                                [href]="
+                                    getDocumentUrl(
+                                        selectedRequest.requestedData.documents.pan,
+                                        'pan'
+                                    )
+                                "
+                                target="_blank"
+                                class="document-view-btn"
+                                title="View New PAN"
+                            >
+
+                                <mat-icon>
+                                    visibility
+                                </mat-icon>
+
+                            </a>
+
+                            <span class="new-badge">
+                                NEW
+                            </span>
+
+                        </ng-container>
+
+
+                        <span
+                            *ngIf="
+                                !isDocumentChanged(
+                                    selectedRequest,
+                                    'pan'
+                                )
+                            "
+                        >
+                            -
+                        </span>
+
+                    </span>
+
+                </div>
+
+
+                <!-- RESUME -->
+
+                <div
+                    class="comparison-row"
+                    [class.changed-row]="
+                        isDocumentChanged(
+                            selectedRequest,
+                            'resume'
+                        )
+                    "
+                >
+
+                    <span class="field-name">
+                        Resume
+                    </span>
+
+
+                    <span>
+
+                        <a
+                            *ngIf="
+                                selectedRequest?.oldData
+                                ?.documents?.resume
+                            "
+                            [href]="
+                                getDocumentUrl(
+                                    selectedRequest.oldData.documents.resume,
+                                    'resume'
+                                )
+                            "
+                            target="_blank"
+                            class="document-view-btn"
+                            title="View Previous Resume"
+                        >
+
+                            <mat-icon>
+                                visibility
+                            </mat-icon>
+
+                        </a>
+
+                        <span
+                            *ngIf="
+                                !selectedRequest?.oldData
+                                ?.documents?.resume
+                            "
+                        >
+                            -
+                        </span>
+
+                    </span>
+
+
+                    <span
+                        [class.changed-field]="
+                            isDocumentChanged(
+                                selectedRequest,
+                                'resume'
+                            )
+                        "
+                    >
+
+                        <ng-container
+                            *ngIf="
+                                isDocumentChanged(
+                                    selectedRequest,
+                                    'resume'
+                                )
+                            "
+                        >
+
+                            <a
+                                *ngIf="
+                                    selectedRequest?.requestedData
+                                    ?.documents?.resume
+                                "
+                                [href]="
+                                    getDocumentUrl(
+                                        selectedRequest.requestedData.documents.resume,
+                                        'resume'
+                                    )
+                                "
+                                target="_blank"
+                                class="document-view-btn"
+                                title="View New Resume"
+                            >
+
+                                <mat-icon>
+                                    visibility
+                                </mat-icon>
+
+                            </a>
+
+                            <span class="new-badge">
+                                NEW
+                            </span>
+
+                        </ng-container>
+
+
+                        <span
+                            *ngIf="
+                                !isDocumentChanged(
+                                    selectedRequest,
+                                    'resume'
+                                )
+                            "
+                        >
+                            -
+                        </span>
+
+                    </span>
+
+                </div>
+
+
+                <!-- LICENCE -->
+
+                <div
+                    class="comparison-row"
+                    [class.changed-row]="
+                        isDocumentChanged(
+                            selectedRequest,
+                            'licence'
+                        )
+                    "
+                >
+
+                    <span class="field-name">
+                        Driving Licence
+                    </span>
+
+
+                    <span>
+
+                        <a
+                            *ngIf="
+                                selectedRequest?.oldData
+                                ?.documents?.licence
+                            "
+                            [href]="
+                                getDocumentUrl(
+                                    selectedRequest.oldData.documents.licence,
+                                    'licence'
+                                )
+                            "
+                            target="_blank"
+                            class="document-view-btn"
+                            title="View Previous Driving Licence"
+                        >
+
+                            <mat-icon>
+                                visibility
+                            </mat-icon>
+
+                        </a>
+
+                        <span
+                            *ngIf="
+                                !selectedRequest?.oldData
+                                ?.documents?.licence
+                            "
+                        >
+                            -
+                        </span>
+
+                    </span>
+
+
+                    <span
+                        [class.changed-field]="
+                            isDocumentChanged(
+                                selectedRequest,
+                                'licence'
+                            )
+                        "
+                    >
+
+                        <ng-container
+                            *ngIf="
+                                isDocumentChanged(
+                                    selectedRequest,
+                                    'licence'
+                                )
+                            "
+                        >
+
+                            <a
+                                *ngIf="
+                                    selectedRequest?.requestedData
+                                    ?.documents?.licence
+                                "
+                                [href]="
+                                    getDocumentUrl(
+                                        selectedRequest.requestedData.documents.licence,
+                                        'licence'
+                                    )
+                                "
+                                target="_blank"
+                                class="document-view-btn"
+                                title="View New Driving Licence"
+                            >
+
+                                <mat-icon>
+                                    visibility
+                                </mat-icon>
+
+                            </a>
+
+                            <span class="new-badge">
+                                NEW
+                            </span>
+
+                        </ng-container>
+
+
+                        <span
+                            *ngIf="
+                                !isDocumentChanged(
+                                    selectedRequest,
+                                    'licence'
+                                )
+                            "
+                        >
+                            -
+                        </span>
+
+                    </span>
+
+                </div>
+
+
+                <!-- RC -->
+
+                <div
+                    class="comparison-row"
+                    [class.changed-row]="
+                        isDocumentChanged(
+                            selectedRequest,
+                            'rc'
+                        )
+                    "
+                >
+
+                    <span class="field-name">
+                        RC
+                    </span>
+
+
+                    <span>
+
+                        <a
+                            *ngIf="
+                                selectedRequest?.oldData
+                                ?.documents?.rc
+                            "
+                            [href]="
+                                getDocumentUrl(
+                                    selectedRequest.oldData.documents.rc,
+                                    'rc'
+                                )
+                            "
+                            target="_blank"
+                            class="document-view-btn"
+                            title="View Previous RC"
+                        >
+
+                            <mat-icon>
+                                visibility
+                            </mat-icon>
+
+                        </a>
+
+                        <span
+                            *ngIf="
+                                !selectedRequest?.oldData
+                                ?.documents?.rc
+                            "
+                        >
+                            -
+                        </span>
+
+                    </span>
+
+
+                    <span
+                        [class.changed-field]="
+                            isDocumentChanged(
+                                selectedRequest,
+                                'rc'
+                            )
+                        "
+                    >
+
+                        <ng-container
+                            *ngIf="
+                                isDocumentChanged(
+                                    selectedRequest,
+                                    'rc'
+                                )
+                            "
+                        >
+
+                            <a
+                                *ngIf="
+                                    selectedRequest?.requestedData
+                                    ?.documents?.rc
+                                "
+                                [href]="
+                                    getDocumentUrl(
+                                        selectedRequest.requestedData.documents.rc,
+                                        'rc'
+                                    )
+                                "
+                                target="_blank"
+                                class="document-view-btn"
+                                title="View New RC"
+                            >
+
+                                <mat-icon>
+                                    visibility
+                                </mat-icon>
+
+                            </a>
+
+                            <span class="new-badge">
+                                NEW
+                            </span>
+
+                        </ng-container>
+
+
+                        <span
+                            *ngIf="
+                                !isDocumentChanged(
+                                    selectedRequest,
+                                    'rc'
+                                )
+                            "
+                        >
+                            -
+                        </span>
+
+                    </span>
+
+                </div>
+
+
+                <!-- VEHICLE -->
+
+                <div
+                    class="comparison-row"
+                    [class.changed-row]="
+                        isDocumentChanged(
+                            selectedRequest,
+                            'vehicle'
+                        )
+                    "
+                >
+
+                    <span class="field-name">
+                        Vehicle Document
+                    </span>
+
+
+                    <span>
+
+                        <a
+                            *ngIf="
+                                selectedRequest?.oldData
+                                ?.documents?.vehicle
+                            "
+                            [href]="
+                                getDocumentUrl(
+                                    selectedRequest.oldData.documents.vehicle,
+                                    'vehicle'
+                                )
+                            "
+                            target="_blank"
+                            class="document-view-btn"
+                            title="View Previous Vehicle Document"
+                        >
+
+                            <mat-icon>
+                                visibility
+                            </mat-icon>
+
+                        </a>
+
+                        <span
+                            *ngIf="
+                                !selectedRequest?.oldData
+                                ?.documents?.vehicle
+                            "
+                        >
+                            -
+                        </span>
+
+                    </span>
+
+
+                    <span
+                        [class.changed-field]="
+                            isDocumentChanged(
+                                selectedRequest,
+                                'vehicle'
+                            )
+                        "
+                    >
+
+                        <ng-container
+                            *ngIf="
+                                isDocumentChanged(
+                                    selectedRequest,
+                                    'vehicle'
+                                )
+                            "
+                        >
+
+                            <a
+                                *ngIf="
+                                    selectedRequest?.requestedData
+                                    ?.documents?.vehicle
+                                "
+                                [href]="
+                                    getDocumentUrl(
+                                        selectedRequest.requestedData.documents.vehicle,
+                                        'vehicle'
+                                    )
+                                "
+                                target="_blank"
+                                class="document-view-btn"
+                                title="View New Vehicle Document"
+                            >
+
+                                <mat-icon>
+                                    visibility
+                                </mat-icon>
+
+                            </a>
+
+                            <span class="new-badge">
+                                NEW
+                            </span>
+
+                        </ng-container>
+
+
+                        <span
+                            *ngIf="
+                                !isDocumentChanged(
+                                    selectedRequest,
+                                    'vehicle'
+                                )
+                            "
+                        >
+                            -
+                        </span>
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             REMARKS
+        ================================================== -->
+
+        <div
+            class="remarks-section"
+            *ngIf="selectedRequest.status === 'Rejected'"
+        >
+
+            <h3>
+                Rejection Remarks
+            </h3>
+
+            <div class="remarks-content">
+
+                {{
+                    selectedRequest.remarks || '-'
+                }}
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             REJECT BOX
+        ================================================== -->
+
+        <div
+            class="reject-box"
+            *ngIf="
+                showRejectBox &&
+                selectedRequest.status === 'Pending'
+            "
+        >
+
+            <label>
+                Rejection Remarks
+            </label>
+
+            <textarea
+                rows="4"
+                [(ngModel)]="remarks"
+                placeholder="Enter reason for rejection..."
+            ></textarea>
+
+
+            <div class="reject-actions">
+
+                <button
+                    type="button"
+                    class="cancel-btn"
+                    (click)="cancelReject()"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="button"
+                    class="confirm-reject-btn"
+                    (click)="submitReject()"
+                >
+                    Reject Request
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             POPUP FOOTER
+        ================================================== -->
+
+        <div class="popup-footer">
+
+            <!-- PENDING -->
+
+            <ng-container
+                *ngIf="
+                    selectedRequest.status === 'Pending'
+                    && !showRejectBox
+                "
+            >
+
+                <button
+                    type="button"
+                    class="approve-btn"
+                    (click)="approveRequest()"
+                >
+
+                    <mat-icon>
+                        check
+                    </mat-icon>
+
+                    Approve
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="reject-btn"
+                    (click)="openRejectBox()"
+                >
+
+                    <mat-icon>
+                        close
+                    </mat-icon>
+
+                    Reject
+
+                </button>
+
+            </ng-container>
+
+
+            <!-- CLOSE -->
+
+            <button
+                type="button"
+                class="close-popup-btn"
+                (click)="closeModal()"
+            >
+
+                <mat-icon>
+                    close
+                </mat-icon>
+
+                Close
+
+            </button>
+
+        </div>
+
+
+    </div>
+
+</div>

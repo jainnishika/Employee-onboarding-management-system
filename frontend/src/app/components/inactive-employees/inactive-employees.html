@@ -1,0 +1,506 @@
+<div class="employee-container">
+
+    <!-- ================================= -->
+    <!-- PAGE HEADER -->
+    <!-- ================================= -->
+       <button
+            class="back-btn"
+            (click)="back()">
+
+            <mat-icon>
+                arrow_back
+            </mat-icon>
+
+            Back 
+
+        </button>
+
+    <div class="page-header">
+
+      
+
+        <h1>
+            Deactivated Employees
+        </h1>
+
+    </div>
+
+
+    <!-- ================================= -->
+    <!-- INFO -->
+    <!-- ================================= -->
+
+    <div class="info-box">
+
+        <mat-icon>
+            info
+        </mat-icon>
+
+        <span>
+            These employees are currently deactivated
+            and cannot log in to the system.
+        </span>
+
+    </div>
+
+
+    <!-- ================================= -->
+    <!-- TOP BAR -->
+    <!-- ================================= -->
+
+    <div class="top-bar">
+
+        <h3>
+            Total Deactivated Employees :
+            {{ employees.length }}
+        </h3>
+
+    </div>
+
+
+    <!-- ================================= -->
+    <!-- SEARCH -->
+    <!-- ================================= -->
+
+    <div class="search-section">
+
+        <input
+            type="text"
+            class="search-box"
+            placeholder="Search by Name, Username or Department"
+            [(ngModel)]="searchText"
+            (keyup)="searchEmployees()">
+
+    </div>
+
+
+    <!-- ================================= -->
+    <!-- FILTERS -->
+    <!-- ================================= -->
+
+    <div class="filter-section">
+
+        <!-- DEPARTMENT -->
+
+        <select
+            [(ngModel)]="selectedDepartment"
+            (change)="applyFilters()">
+
+            <option value="">
+                All Departments
+            </option>
+
+            <option
+                *ngFor="let dept of departments"
+                [value]="dept">
+
+                {{ dept }}
+
+            </option>
+
+        </select>
+
+
+        <!-- ROLE -->
+
+        <select
+            [(ngModel)]="selectedRole"
+            (change)="applyFilters()">
+
+            <option value="">
+                All Roles
+            </option>
+
+            <option
+                *ngFor="let role of roles"
+                [value]="role">
+
+                {{ role }}
+
+            </option>
+
+        </select>
+
+
+        <!-- DESIGNATION -->
+
+        <select
+            [(ngModel)]="selectedDesignation"
+            (change)="applyFilters()">
+
+            <option value="">
+                All Designations
+            </option>
+
+            <option
+                *ngFor="let designation of designations"
+                [value]="designation">
+
+                {{ designation }}
+
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- ================================= -->
+    <!-- RECORDS PER PAGE -->
+    <!-- ================================= -->
+
+    <div class="table-header">
+
+        <label>
+            Show
+        </label>
+
+        <select
+            [(ngModel)]="selectedCount"
+            (change)="changeRecords(selectedCount)">
+
+            <option [ngValue]="5">
+                5
+            </option>
+
+            <option [ngValue]="10">
+                10
+            </option>
+
+            <option [ngValue]="20">
+                20
+            </option>
+
+            <option [ngValue]="50">
+                50
+            </option>
+
+        </select>
+
+        <span>
+            Employees
+        </span>
+
+    </div>
+
+
+    <!-- ================================= -->
+    <!-- TABLE -->
+    <!-- ================================= -->
+
+    <div class="table-container">
+
+        <table
+            *ngIf="displayedEmployees.length > 0">
+
+            <thead>
+
+                <tr>
+
+                    <!-- NAME -->
+
+                    <th
+                        class="sortable-header"
+                        (click)="sortColumn('name')">
+
+                        Name
+
+                        <span class="sort-icon">
+
+                            {{ getSortArrow('name') }}
+
+                        </span>
+
+                    </th>
+
+
+                    <!-- USERNAME -->
+
+                    <th
+                        class="sortable-header"
+                        (click)="sortColumn('username')">
+
+                        Username
+
+                        <span class="sort-icon">
+
+                            {{ getSortArrow('username') }}
+
+                        </span>
+
+                    </th>
+
+
+                    <!-- PHONE -->
+
+                    <th>
+                        Phone
+                    </th>
+
+                    <th
+                        class="sortable-header"
+                        (click)="sortColumn('email')">
+
+                        Email
+                    </th>
+                    <th
+                        class="sortable-header"
+                        (click)="sortColumn('department')">
+
+                        Department
+                    </th>
+
+                    <th
+                        class="sortable-header"
+                        (click)="sortColumn('designation')">
+
+                        Designation             
+
+                    </th>
+                    <th
+                        class="sortable-header"
+                        (click)="sortColumn('role')">
+
+                        Role
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                  
+                    <th>
+                        Actions
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                <tr
+                    *ngFor="
+                        let emp of displayedEmployees
+                    ">
+
+                    <td>
+                        {{ emp.name?.toUpperCase() }}
+                    </td>
+
+                    <td>
+                        {{ emp.username }}
+                    </td>
+
+                    <td>
+                        {{ emp.phone }}
+                    </td>
+
+                    <td>
+                        {{ emp.email }}
+                    </td>
+
+                    <td>
+                        {{ emp.department }}
+                    </td>
+
+                    <td>
+                        {{ emp.designation }}
+                    </td>
+
+                    <td>
+                        {{ emp.role }}
+                    </td>
+
+                    <td>
+
+                        <span
+                            class="status-badge inactive">
+
+                            Inactive
+
+                        </span>
+
+                    </td>
+
+                    <td class="action-cell">
+
+                        <!-- VIEW -->
+
+                        <button
+                            class="view-btn"
+                            (click)="
+                                viewEmployee(emp._id)
+                            ">
+
+                            <mat-icon>
+                                visibility
+                            </mat-icon>
+
+                            View
+
+                        </button>
+
+
+                        <!-- ACTIVATE - ADMIN ONLY -->
+
+                        <button
+                            *ngIf="role === 'Admin'"
+                            class="activate-btn"
+                            (click)="
+                                activateEmployee(emp._id)
+                            ">
+
+                            <mat-icon>
+                                check_circle
+                            </mat-icon>
+
+                            Activate
+
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+
+        <!-- ================================= -->
+        <!-- NO DATA -->
+        <!-- ================================= -->
+
+        <div
+            class="no-data"
+            *ngIf="noEmployee()">
+
+            <mat-icon>
+                person_off
+            </mat-icon>
+
+            <h3>
+                No Deactivated Employees
+            </h3>
+
+            <p>
+                No employees match your search or filters.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================= -->
+    <!-- PAGINATION -->
+    <!-- ================================= -->
+
+    <div
+        class="pagination"
+        *ngIf="totalPages > 1">
+
+        <button
+            (click)="previousPage()"
+            [disabled]="currentPage === 1">
+
+            &lt;&lt;
+
+        </button>
+
+
+        <button
+            *ngFor="
+                let page of pageNumbers
+            "
+            (click)="goToPage(page)"
+            [class.active]="
+                page === currentPage
+            ">
+
+            {{ page }}
+
+        </button>
+
+
+        <button
+            (click)="nextPage()"
+            [disabled]="
+                currentPage === totalPages
+            ">
+
+            &gt;&gt;
+
+        </button>
+
+    </div>
+
+
+    <!-- ================================= -->
+    <!-- ACTIVATE POPUP -->
+    <!-- ================================= -->
+
+    <div
+        class="popup-overlay"
+        *ngIf="showActivatePopup">
+
+        <div class="popup-box">
+
+            <div class="popup-icon">
+
+                <mat-icon>
+                    check_circle
+                </mat-icon>
+
+            </div>
+
+
+            <h2>
+                Activate Employee?
+            </h2>
+
+
+            <p>
+                Are you sure you want to activate
+                this employee?
+            </p>
+
+
+            <p class="popup-info">
+
+                The employee will be able to log in
+                again after activation.
+
+            </p>
+
+
+            <div class="popup-buttons">
+
+                <button
+                    class="cancel-btn"
+                    (click)="cancelActivate()">
+
+                    Cancel
+
+                </button>
+
+
+                <button
+                    class="activate-confirm-btn"
+                    (click)="confirmActivate()">
+
+                    <mat-icon>
+                        check_circle
+                    </mat-icon>
+
+                    Activate
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

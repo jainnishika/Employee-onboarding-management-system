@@ -1,0 +1,757 @@
+<div class="container">
+
+    <h2>Edit Employee</h2>
+
+    <div class="form">
+
+        <!-- ========================= -->
+        <!-- BASIC DETAILS -->
+        <!-- ========================= -->
+
+        <h3>Basic Details</h3>
+
+        <label>Name</label>
+
+        <input
+            type="text"
+            [(ngModel)]="employee.name"
+            placeholder="Enter name">
+
+
+        <label>Date of Birth</label>
+
+        <input
+            type="date"
+            [(ngModel)]="employee.dob"
+            (change)="calculateAge()">
+
+
+        <label>Age</label>
+
+        <input
+            type="number"
+            [(ngModel)]="employee.age"
+            readonly
+            class="computed-field">
+
+
+        <label>Email</label>
+
+        <input
+            type="email"
+            [(ngModel)]="employee.email"
+            placeholder="Enter email">
+
+
+        <label>Phone</label>
+
+        <input
+            type="text"
+            [(ngModel)]="employee.phone"
+            maxlength="10"
+            placeholder="Enter phone number">
+
+
+        <label>Gender</label>
+
+        <select [(ngModel)]="employee.gender">
+
+            <option value="">Select Gender</option>
+
+            <option value="Male">
+                Male
+            </option>
+
+            <option value="Female">
+                Female
+            </option>
+
+            <option value="Other">
+                Other
+            </option>
+
+        </select>
+
+
+        <label>Department</label>
+
+        <input
+            type="text"
+            [(ngModel)]="employee.department"
+            placeholder="Enter department">
+
+    <label> Designation </label>
+
+
+       <select
+    [(ngModel)]="employee.designation">
+
+    <option value="">
+        Select Designation
+    </option>
+
+    <option value="E1">
+        E1
+    </option>
+
+    <option value="E2">
+        E2
+    </option>
+
+    <option value="E3">
+        E3
+    </option>
+
+    <option value="E4">
+      E4
+    </option>
+
+    <option value="E5">
+       E5
+    </option>
+
+    <option value="E6">
+       E6
+    </option>
+    <option value="E7">
+       E7
+    </option>
+    <option value="E8">
+       E8
+    </option>
+    <option value="E9">
+       E9
+    </option>
+    </select>
+
+
+
+        <label>Joining Date</label>
+
+        <input
+            type="date"
+            [(ngModel)]="employee.joiningDate">
+
+
+        <label>Address</label>
+
+        <textarea
+            rows="3"
+            [(ngModel)]="employee.address"
+            placeholder="Enter address">
+        </textarea>
+
+
+        <label>Role</label>
+
+        <select [(ngModel)]="employee.role">
+
+            <option value="Employee">
+                Employee
+            </option>
+
+            <option value="HR">
+                HR
+            </option>
+
+            <option value="Admin">
+                Admin
+            </option>
+
+        </select>
+
+
+        <!-- ========================= -->
+        <!-- LOGIN INFORMATION -->
+        <!-- ========================= -->
+
+        <h3>Login Information</h3>
+
+        <label>Username</label>
+
+        <input
+            type="text"
+            [(ngModel)]="employee.username"
+            readonly
+            class="computed-field">
+
+
+        <!-- ========================= -->
+        <!-- ADDITIONAL DETAILS -->
+        <!-- ========================= -->
+
+        <h3>Additional Details</h3>
+
+
+        <label>Emergency Contact Name</label>
+
+        <input
+            type="text"
+            [(ngModel)]="employee.additionalDetails.emergencyContactName">
+
+
+        <label>Emergency Contact Number</label>
+
+        <input
+            type="text"
+            maxlength="10"
+            [(ngModel)]="employee.additionalDetails.emergencyContactNumber">
+
+
+        <label>Blood Group</label>
+
+<select
+    [(ngModel)]="employee.additionalDetails.bloodGroup">
+
+    <option value="">
+        Select Blood Group
+    </option>
+
+    <option value="A+">A+</option>
+    <option value="A-">A-</option>
+
+    <option value="B+">B+</option>
+    <option value="B-">B-</option>
+
+    <option value="AB+">AB+</option>
+    <option value="AB-">AB-</option>
+
+    <option value="O+">O+</option>
+    <option value="O-">O-</option>
+
+</select>
+
+
+        <label>Marital Status</label>
+
+        <select
+            [(ngModel)]="employee.additionalDetails.maritalStatus">
+
+            <option value="Single">
+                Single
+            </option>
+
+            <option value="Married">
+                Married
+            </option>
+
+            <option value="Divorced">
+                Divorced
+            </option>
+
+            <option value="Widowed">
+                Widowed
+            </option>
+
+        </select>
+
+
+        <label>Spouse Name</label>
+
+        <input
+            type="text"
+            [(ngModel)]="employee.additionalDetails.spouseName">
+
+
+        <label>Spouse Occupation</label>
+
+        <input
+            type="text"
+            [(ngModel)]="employee.additionalDetails.spouseOccupation">
+
+
+        <label>Nominee Name</label>
+
+        <input
+            type="text"
+            [(ngModel)]="employee.additionalDetails.nomineeName">
+
+
+        <label>Relationship</label>
+
+        <input
+            type="text"
+            [(ngModel)]="employee.additionalDetails.relationship">
+
+
+        <label>Nominee Phone</label>
+
+        <input
+            type="text"
+            maxlength="10"
+            [(ngModel)]="employee.additionalDetails.nomineePhone">
+
+
+        <label>Transport Facility</label>
+
+    <select
+        [(ngModel)]="employee.additionalDetails.transportFacility">
+
+        <option value="No">No</option>
+        <option value="Yes">Yes</option>
+
+    </select>
+
+
+        <label>HRA</label>
+
+        <select
+            [(ngModel)]="employee.additionalDetails.hra">
+
+            <option value="No">
+                No
+            </option>
+
+            <option value="lease">
+                lease
+            </option>
+            <option value="hra">
+                hra
+            </option>
+
+        </select>
+
+
+        <label>Aadhaar Number</label>
+
+        <input
+            type="text"
+            maxlength="12"
+            [(ngModel)]="employee.additionalDetails.aadhaar">
+
+
+        <label>PAN Number</label>
+
+        <input
+            type="text"
+            [(ngModel)]="employee.additionalDetails.pan">
+
+
+        <!-- ========================= -->
+        <!-- PREVIOUS SERVICES -->
+        <!-- ========================= -->
+
+        <h3>Previous Services</h3>
+
+
+        <div
+            class="service-card"
+            *ngFor="
+                let service of employee.additionalDetails.previousServices;
+                let i = index
+            ">
+
+            <div class="service-header">
+
+                <h4>
+                    Previous Service {{ i + 1 }}
+                </h4>
+
+                <button
+                    type="button"
+                    class="remove-btn"
+                    (click)="removeService(i)">
+
+                    Remove
+
+                </button>
+
+            </div>
+
+
+            <label>Organisation</label>
+
+            <input
+                type="text"
+                [(ngModel)]="service.organisation"
+                placeholder="Organisation">
+
+
+            <label>From Date</label>
+
+            <input
+                type="date"
+                [(ngModel)]="service.fromDate"
+                (change)="calculateTenure(i)">
+
+
+            <label>To Date</label>
+
+            <input
+                type="date"
+                [(ngModel)]="service.toDate"
+                (change)="calculateTenure(i)">
+
+
+            <label>Tenure</label>
+
+            <input
+                type="text"
+                [(ngModel)]="service.tenure"
+                readonly
+                class="computed-field">
+
+
+            <label>Experience Certificate</label>
+
+            <div
+                *ngIf="service.experienceCertificate"
+                class="existing-document">
+
+                <span>
+                    Existing certificate:
+                </span>
+
+                <a
+                    [href]="
+                        'http://localhost:8082/uploads/experienceCertificate/' +
+                        service.experienceCertificate
+                    "
+                    target="_blank">
+
+                    View Certificate
+
+                </a>
+
+            </div>
+
+
+            <input
+                type="file"
+                accept=".pdf,.jpg,.jpeg,.png"
+                (change)="
+                    onExperienceCertificateSelected(
+                        $event,
+                        i
+                    )
+                ">
+
+        </div>
+
+
+        <button
+            type="button"
+            class="add-service-btn"
+            (click)="addService()">
+
+            + Add Previous Service
+
+        </button>
+
+
+        <!-- ========================= -->
+        <!-- DOCUMENTS -->
+        <!-- ========================= -->
+
+        <h3>Documents</h3>
+
+
+        <!-- Profile Photo -->
+
+        <label>Profile Photo</label>
+
+        <div
+            *ngIf="employee.documents.profilePhoto"
+            class="existing-document">
+
+            <span>
+                Existing:
+            </span>
+
+            <a
+                [href]="
+                    'http://localhost:8082/uploads/profile/' +
+                    employee.documents.profilePhoto
+                "
+                target="_blank">
+
+                View Profile Photo
+
+            </a>
+
+        </div>
+
+        <input
+            type="file"
+            accept="image/*"
+            (change)="
+                onDocumentSelected(
+                    $event,
+                    'profilePhoto'
+                )
+            ">
+
+
+        <!-- Aadhaar -->
+
+        <label>Aadhaar Document</label>
+
+        <div
+            *ngIf="employee.documents.aadhaar"
+            class="existing-document">
+
+            <span>
+                Existing:
+            </span>
+
+            <a
+                [href]="
+                    'http://localhost:8082/uploads/aadhaar/' +
+                    employee.documents.aadhaar
+                "
+                target="_blank">
+
+                View Aadhaar
+
+            </a>
+
+        </div>
+
+        <input
+            type="file"
+            accept=".pdf,.jpg,.jpeg,.png"
+            (change)="
+                onDocumentSelected(
+                    $event,
+                    'aadhaar'
+                )
+            ">
+
+
+        <!-- PAN -->
+
+        <label>PAN Document</label>
+
+        <div
+            *ngIf="employee.documents.pan"
+            class="existing-document">
+
+            <span>
+                Existing:
+            </span>
+
+            <a
+                [href]="
+                    'http://localhost:8082/uploads/pan/' +
+                    employee.documents.pan
+                "
+                target="_blank">
+
+                View PAN
+
+            </a>
+
+        </div>
+
+        <input
+            type="file"
+            accept=".pdf,.jpg,.jpeg,.png"
+            (change)="
+                onDocumentSelected(
+                    $event,
+                    'pan'
+                )
+            ">
+
+
+        <!-- Resume -->
+
+        <label>Resume</label>
+
+        <div
+            *ngIf="employee.documents.resume"
+            class="existing-document">
+
+            <span>
+                Existing:
+            </span>
+
+            <a
+                [href]="
+                    'http://localhost:8082/uploads/resume/' +
+                    employee.documents.resume
+                "
+                target="_blank">
+
+                View Resume
+
+            </a>
+
+        </div>
+
+        <input
+            type="file"
+            accept=".pdf,.doc,.docx"
+            (change)="
+                onDocumentSelected(
+                    $event,
+                    'resume'
+                )
+            ">
+
+<!-- ========================= -->
+<!-- TRANSPORT DOCUMENTS -->
+<!-- ========================= -->
+
+<div
+    class="transport-documents"
+    *ngIf="employee.additionalDetails.transportFacility === 'Yes'">
+
+    <h4>Transport Documents</h4>
+
+    <!-- Driving Licence -->
+
+    <label>Driving Licence</label>
+
+    <div
+        *ngIf="employee.documents.licence"
+        class="existing-document">
+
+        <span>Existing:</span>
+
+        <a
+            [href]="'http://localhost:8082/uploads/licence/' + employee.documents.licence"
+            target="_blank">
+
+            View Licence
+
+        </a>
+
+    </div>
+
+    <input
+        type="file"
+        accept=".pdf,.jpg,.jpeg,.png"
+        (change)="onDocumentSelected($event, 'licence')">
+
+
+    <!-- RC -->
+
+    <label>RC</label>
+
+    <div
+        *ngIf="employee.documents.rc"
+        class="existing-document">
+
+        <span>Existing:</span>
+
+        <a
+            [href]="'http://localhost:8082/uploads/rc/' + employee.documents.rc"
+            target="_blank">
+
+            View RC
+
+        </a>
+
+    </div>
+
+    <input
+        type="file"
+        accept=".pdf,.jpg,.jpeg,.png"
+        (change)="onDocumentSelected($event, 'rc')">
+
+
+    <!-- Vehicle -->
+
+    <label>Vehicle Document</label>
+
+    <div
+        *ngIf="employee.documents.vehicle"
+        class="existing-document">
+
+        <span>Existing:</span>
+
+        <a
+            [href]="'http://localhost:8082/uploads/vehicle/' + employee.documents.vehicle"
+            target="_blank">
+
+            View Vehicle Document
+
+        </a>
+
+    </div>
+
+    <input
+        type="file"
+        accept=".pdf,.jpg,.jpeg,.png"
+        (change)="onDocumentSelected($event, 'vehicle')">
+
+</div>
+        <!-- ========================= -->
+        <!-- BUTTONS -->
+        <!-- ========================= -->
+
+        <div class="buttons">
+
+           <button
+    type="button"
+    class="update-btn"
+    (click)="confirmUpdate()">
+
+    Update Employee
+
+</button>
+
+
+            <button
+                type="button"
+                class="back-btn"
+                (click)="back()">
+
+                Back
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- ========================= -->
+<!-- CONFIRM UPDATE POPUP -->
+<!-- ========================= -->
+
+<div
+    class="confirm-overlay"
+    *ngIf="showConfirmPopup">
+
+    <div class="confirm-popup">
+
+        <div class="confirm-icon">
+            ?
+        </div>
+
+        <h3>
+            Confirm Update
+        </h3>
+
+        <p>
+            Are you sure you want to update
+            these employee details?
+        </p>
+
+        <div class="confirm-buttons">
+
+            <button
+                type="button"
+                class="cancel-confirm-btn"
+                (click)="showConfirmPopup = false">
+
+                Cancel
+
+            </button>
+
+            <button
+                type="button"
+                class="confirm-update-btn"
+                (click)="updateEmployee()">
+
+                Yes, Update
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>

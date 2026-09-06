@@ -1,0 +1,714 @@
+/* =========================================================
+   PAGE
+========================================================= */
+
+.profile-container {
+    width: 94%;
+    max-width: 1200px;
+    margin: 30px auto;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #1f2937;
+}
+
+
+/* =========================================================
+   PROFILE HEADER
+========================================================= */
+
+.profile-header {
+    background: #005aab;
+
+    color: white;
+
+    border-radius: 16px;
+
+    padding: 30px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 22px;
+
+    box-shadow:
+        0 8px 25px rgba(0, 90, 171, 0.20);
+
+    margin-bottom: 24px;
+}
+
+
+.profile-avatar {
+    width: 85px;
+
+    height: 85px;
+
+    min-width: 85px;
+
+    border-radius: 50%;
+
+    background: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 40px;
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+
+.profile-heading h2 {
+    margin: 0 0 6px;
+
+    font-size: 27px;
+
+    font-weight: 600;
+}
+
+
+.profile-heading p {
+    margin: 0 0 10px;
+
+    font-size: 15px;
+
+    opacity: 0.9;
+}
+
+
+.username-badge {
+    display: inline-block;
+
+    padding: 5px 11px;
+
+    border-radius: 20px;
+
+    background: rgba(255, 255, 255, 0.18);
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   PROFILE CARD
+========================================================= */
+
+.profile-card {
+    background: white;
+
+    border-radius: 13px;
+
+    padding: 25px;
+
+    margin-bottom: 20px;
+
+    border: 1px solid #e5e7eb;
+
+    box-shadow:
+        0 5px 18px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================================================
+   SECTION HEADER
+========================================================= */
+
+.section-header {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 20px;
+
+    padding-bottom: 14px;
+
+    border-bottom: 2px solid #e5e7eb;
+}
+
+
+.section-icon {
+    width: 40px;
+
+    height: 40px;
+
+    border-radius: 9px;
+
+    background: #eff6ff;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 20px;
+}
+
+
+.section-header h3 {
+    margin: 0;
+
+    color: #005aab;
+
+    font-size: 19px;
+
+    font-weight: 600;
+}
+
+
+.section-header p {
+    margin: 4px 0 0;
+
+    color: #6b7280;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   INFORMATION GRID
+========================================================= */
+
+.info-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 15px;
+}
+
+
+.info-item {
+    background: #f8fafc;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 9px;
+
+    padding: 14px 16px;
+
+    min-height: 62px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    transition: 0.2s;
+}
+
+
+.info-item:hover {
+    border-color: #bfdbfe;
+
+    background: #f8fbff;
+}
+
+
+.info-item label {
+    color: #6b7280;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.4px;
+
+    margin-bottom: 6px;
+}
+
+
+.info-item span {
+    color: #1f2937;
+
+    font-size: 15px;
+
+    word-break: break-word;
+}
+
+
+/* =========================================================
+   ADDRESS
+========================================================= */
+
+.address-box {
+    background: #f8fafc;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 9px;
+
+    padding: 16px;
+
+    line-height: 1.6;
+
+    color: #374151;
+
+    min-height: 50px;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   SERVICE TABLE
+========================================================= */
+
+.service-table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+
+.service-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 9px;
+
+    overflow: hidden;
+}
+
+
+.service-table thead {
+    background: #005aab;
+
+    color: white;
+}
+
+
+.service-table th {
+    padding: 13px 12px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    text-align: center;
+
+    white-space: nowrap;
+}
+
+
+.service-table td {
+    padding: 12px;
+
+    font-size: 14px;
+
+    text-align: center;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+
+.service-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+
+.service-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   DOCUMENT LINKS
+========================================================= */
+
+.document-link,
+.document-info a {
+    color: #005aab;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+
+.document-link:hover,
+.document-info a:hover {
+    color: #003f7d;
+
+    text-decoration: underline;
+}
+
+
+.not-uploaded {
+    color: #9ca3af !important;
+
+    font-size: 13px !important;
+}
+
+
+/* =========================================================
+   EMPTY MESSAGE
+========================================================= */
+
+.empty-message {
+    padding: 25px;
+
+    text-align: center;
+
+    color: #6b7280;
+
+    background: #f8fafc;
+
+    border: 1px dashed #d1d5db;
+
+    border-radius: 9px;
+}
+
+
+.empty-icon {
+    display: block;
+
+    font-size: 25px;
+
+    margin-bottom: 7px;
+}
+
+
+/* =========================================================
+   DOCUMENTS GRID
+========================================================= */
+
+.documents-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 14px;
+}
+
+
+.document-card {
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 9px;
+
+    padding: 14px;
+
+    transition: 0.2s;
+}
+
+
+.document-card:hover {
+    background: #eff6ff;
+
+    border-color: #93c5fd;
+
+    transform: translateY(-1px);
+}
+
+
+.document-icon {
+    width: 42px;
+
+    height: 42px;
+
+    min-width: 42px;
+
+    border-radius: 9px;
+
+    background: #e0efff;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 20px;
+}
+
+
+.document-info {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+    min-width: 0;
+}
+
+
+.document-info label {
+    color: #374151;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   BUTTON GROUP
+========================================================= */
+
+.button-group {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-top: 25px;
+
+    padding-bottom: 30px;
+}
+
+
+.button-group button {
+    border: none;
+
+    border-radius: 8px;
+
+    padding: 11px 20px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.25s;
+}
+
+
+/* =========================================================
+   BACK BUTTON
+========================================================= */
+
+.back-btn {
+    background: #f3f4f6;
+
+    color: #374151;
+
+    border: 1px solid #d1d5db !important;
+}
+
+
+.back-btn:hover {
+    background: #e5e7eb;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   EDIT BUTTON
+========================================================= */
+
+.edit-btn {
+    background: #005aab;
+
+    color: white;
+}
+
+
+.edit-btn:hover {
+    background: #004582;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 4px 10px rgba(0, 90, 171, 0.2);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 992px) {
+
+    .profile-container {
+        width: 92%;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .documents-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .profile-container {
+        width: 92%;
+
+        margin: 20px auto;
+    }
+
+
+    .profile-header {
+        padding: 24px 18px;
+
+        flex-direction: column;
+
+        text-align: center;
+    }
+
+
+    .profile-avatar {
+        width: 72px;
+
+        height: 72px;
+
+        min-width: 72px;
+
+        font-size: 34px;
+    }
+
+
+    .profile-heading h2 {
+        font-size: 23px;
+    }
+
+
+    .profile-card {
+        padding: 18px;
+    }
+
+
+    .section-header h3 {
+        font-size: 17px;
+    }
+
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .documents-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .service-table-wrapper {
+        overflow-x: auto;
+    }
+
+
+    .service-table {
+        min-width: 700px;
+    }
+
+
+    .button-group {
+        flex-direction: column-reverse;
+
+        align-items: stretch;
+    }
+
+
+    .button-group button {
+        width: 100%;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .profile-container {
+        width: 94%;
+    }
+
+
+    .profile-header {
+        border-radius: 12px;
+    }
+
+
+    .profile-card {
+        padding: 15px;
+
+        border-radius: 10px;
+    }
+
+
+    .section-header {
+        gap: 9px;
+    }
+
+
+    .section-icon {
+        width: 36px;
+
+        height: 36px;
+
+        font-size: 17px;
+    }
+
+
+    .section-header h3 {
+        font-size: 16px;
+    }
+
+
+    .section-header p {
+        font-size: 12px;
+    }
+
+
+    .info-item {
+        padding: 12px;
+    }
+
+
+    .info-item span {
+        font-size: 14px;
+    }
+
+
+    .document-card {
+        padding: 12px;
+    }
+
+}

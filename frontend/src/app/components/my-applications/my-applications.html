@@ -1,0 +1,824 @@
+<div class="applications-page">
+
+    <!-- ========================= -->
+    <!-- PAGE HEADER -->
+    <!-- ========================= -->
+
+    <div class="page-header">
+
+        <h2>My Applications</h2>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- CONTROLS -->
+    <!-- ========================= -->
+
+    <div class="table-controls">
+
+
+        <!-- SEARCH -->
+
+        <div class="search-control">
+
+            <input
+                type="text"
+                placeholder="Search application..."
+                [(ngModel)]="searchText"
+                (keyup.enter)="searchApplications()"
+            >
+
+            <button
+                type="button"
+                (click)="searchApplications()"
+            >
+                Search
+            </button>
+
+        </div>
+
+
+        <!-- STATUS -->
+
+        <div class="status-control">
+
+            <label>
+                Status
+            </label>
+
+            <select
+                [(ngModel)]="statusFilter"
+                (change)="filterByStatus()"
+            >
+
+                <option value="All">
+                    All
+                </option>
+
+                <option value="Pending">
+                    Pending
+                </option>
+
+                <option value="Approved">
+                    Approved
+                </option>
+
+                <option value="Rejected">
+                    Rejected
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- RECORDS -->
+
+        <div class="records-control">
+
+            <label>
+                Show
+            </label>
+
+            <select
+                [(ngModel)]="selectedCount"
+                (change)="changeRecords(selectedCount)"
+            >
+
+                <option [ngValue]="5">
+                    5
+                </option>
+
+                <option [ngValue]="10">
+                    10
+                </option>
+
+                <option [ngValue]="20">
+                    20
+                </option>
+
+                <option [ngValue]="50">
+                    50
+                </option>
+
+            </select>
+
+            <span>
+                records
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- NO DATA -->
+    <!-- ========================= -->
+
+    <div
+        class="no-applications"
+        *ngIf="applications.length === 0"
+    >
+
+        <div class="empty-icon">
+            ✓
+        </div>
+
+        <h3>
+            No Applications Found
+        </h3>
+
+        <p>
+            You have not submitted any
+            applications yet.
+        </p>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- TABLE -->
+    <!-- ========================= -->
+
+    <div
+        class="table-wrapper"
+        *ngIf="applications.length > 0"
+    >
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        #
+                    </th>
+
+
+                    <!-- APPLICATION TYPE -->
+
+                    <th
+                        class="sortable"
+                        (click)="
+                            sortColumn(
+                                'applicationType'
+                            )
+                        "
+                    >
+
+                        <span>
+                            Application Type
+                        </span>
+
+                        <span class="sort-arrow">
+
+                            {{
+                                getSortArrow(
+                                    'applicationType'
+                                )
+                            }}
+
+                        </span>
+
+                    </th>
+
+
+                    <!-- SUBMITTED DATE -->
+
+                    <th
+                        class="sortable"
+                        (click)="
+                            sortColumn(
+                                'submittedAt'
+                            )
+                        "
+                    >
+
+                        <span>
+                            Submitted Date
+                        </span>
+
+                        <span class="sort-arrow">
+
+                            {{
+                                getSortArrow(
+                                    'submittedAt'
+                                )
+                            }}
+
+                        </span>
+
+                    </th>
+
+
+                    <!-- STATUS -->
+
+                    <th
+                        class="sortable"
+                        (click)="
+                            sortColumn(
+                                'status'
+                            )
+                        "
+                    >
+
+                        <span>
+                            Status
+                        </span>
+
+
+                    </th>
+
+
+                    <th>
+                        Reviewed By
+                    </th>
+
+
+                    <th>
+                        Reviewed Date
+                    </th>
+
+
+                    <th>
+                        Action
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                <tr
+                    *ngFor="
+                        let application of applications;
+                        let i = index;
+                        trackBy: trackByApplication
+                    "
+                >
+
+                    <!-- NUMBER -->
+
+                    <td>
+
+                        {{
+                            ((currentPage - 1)
+                            * selectedCount)
+                            + i + 1
+                        }}
+
+                    </td>
+
+
+                    <!-- APPLICATION TYPE -->
+
+                    <td>
+
+                        {{
+                            application.applicationType
+                            || "-"
+                        }}
+
+                    </td>
+
+
+                    <!-- SUBMITTED DATE -->
+
+                    <td>
+
+                        {{
+                            application.submittedAt
+                            | date:
+                            'dd/MM/yyyy hh:mm a'
+                        }}
+
+                    </td>
+
+
+                    <!-- STATUS -->
+
+                    <td>
+
+                        <span
+                            class="status-badge"
+                            [ngClass]="{
+
+                                'pending':
+                                    application.status
+                                    === 'Pending',
+
+                                'approved':
+                                    application.status
+                                    === 'Approved',
+
+                                'rejected':
+                                    application.status
+                                    === 'Rejected'
+
+                            }"
+                        >
+
+                            {{
+                                application.status
+                            }}
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- REVIEWED BY -->
+
+                    <td>
+
+                        {{
+                            application.reviewedBy
+                            || "-"
+                        }}
+
+                    </td>
+
+
+                    <!-- REVIEWED DATE -->
+
+                    <td>
+
+                        <ng-container
+                            *ngIf="
+                                application.reviewedAt;
+                                else noReviewDate
+                            "
+                        >
+
+                            {{
+                                application.reviewedAt
+                                | date:
+                                'dd/MM/yyyy hh:mm a'
+                            }}
+
+                        </ng-container>
+
+                        <ng-template #noReviewDate>
+
+                            -
+
+                        </ng-template>
+
+                    </td>
+
+
+                    <!-- VIEW -->
+
+                    <td>
+
+                        <button
+                            type="button"
+                            class="view-btn"
+                            (click)="
+                                viewApplication(
+                                    application
+                                )
+                            "
+                        >
+
+                            View Application
+
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- PAGINATION -->
+    <!-- ========================= -->
+
+    <div
+        class="pagination"
+        *ngIf="totalPages > 1"
+    >
+
+        <button
+            class="page-btn"
+            (click)="previousPage()"
+            [disabled]="currentPage === 1"
+        >
+
+            Previous
+
+        </button>
+
+
+        <button
+            class="page-number"
+            *ngFor="
+                let page of pageNumbers
+            "
+            [class.active]="
+                page === currentPage
+            "
+            (click)="goToPage(page)"
+        >
+
+            {{ page }}
+
+        </button>
+
+
+        <button
+            class="page-btn"
+            (click)="nextPage()"
+            [disabled]="
+                currentPage === totalPages
+            "
+        >
+
+            Next
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- VIEW APPLICATION POPUP -->
+<!-- ================================================= -->
+
+<div
+    class="popup-overlay"
+    *ngIf="showPopup"
+    (click)="closePopup()"
+>
+
+
+    <div
+        class="application-popup"
+        (click)="$event.stopPropagation()"
+    >
+
+
+        <!-- POPUP HEADER -->
+
+        <div class="popup-header">
+
+            <div>
+
+                <h3>
+                    Application Details
+                </h3>
+
+                <p>
+
+                    Submitted:
+
+                    {{
+                        selectedApplication?.submittedAt
+                        | date:
+                        'dd/MM/yyyy hh:mm a'
+                    }}
+
+                </p>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="close-btn"
+                (click)="closePopup()"
+            >
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <!-- STATUS -->
+
+        <div class="popup-status">
+
+            <span
+                class="status-badge"
+                [ngClass]="{
+
+                    'pending':
+                        selectedApplication?.status
+                        === 'Pending',
+
+                    'approved':
+                        selectedApplication?.status
+                        === 'Approved',
+
+                    'rejected':
+                        selectedApplication?.status
+                        === 'Rejected'
+
+                }"
+            >
+
+                {{
+                    selectedApplication?.status
+                }}
+
+            </span>
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- BASIC INFORMATION -->
+        <!-- ========================= -->
+
+        <div class="section-title">
+
+            <h4>
+                Application Information
+            </h4>
+
+        </div>
+
+
+        <div class="details-box">
+
+
+            <div class="detail-item">
+
+                <span class="detail-label">
+                    Application Type
+                </span>
+
+                <span class="detail-value">
+
+                    {{
+                        selectedApplication
+                            ?.applicationType
+                        || "-"
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span class="detail-label">
+                    Submitted Date
+                </span>
+
+                <span class="detail-value">
+
+                    {{
+                        selectedApplication
+                            ?.submittedAt
+                        | date:
+                        'dd/MM/yyyy hh:mm a'
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span class="detail-label">
+                    Status
+                </span>
+
+                <span class="detail-value">
+
+                    {{
+                        selectedApplication
+                            ?.status
+                        || "-"
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span class="detail-label">
+                    Reviewed By
+                </span>
+
+                <span class="detail-value">
+
+                    {{
+                        selectedApplication
+                            ?.reviewedBy
+                        || "-"
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span class="detail-label">
+                    Reviewed Date
+                </span>
+
+                <span class="detail-value">
+
+                    <ng-container
+                        *ngIf="
+                            selectedApplication
+                                ?.reviewedAt;
+                            else noPopupDate
+                        "
+                    >
+
+                        {{
+                            selectedApplication
+                                ?.reviewedAt
+                            | date:
+                            'dd/MM/yyyy hh:mm a'
+                        }}
+
+                    </ng-container>
+
+                    <ng-template #noPopupDate>
+                        -
+                    </ng-template>
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- APPLICATION DATA -->
+        <!-- ========================= -->
+
+        <div class="section-title">
+
+            <h4>
+                Application Details
+            </h4>
+
+        </div>
+
+
+        <div
+            class="application-data"
+            *ngIf="
+                selectedApplication
+                    ?.applicationData
+            "
+        >
+
+            <div
+                class="data-row"
+                *ngFor="
+                    let item of
+                    selectedApplication
+                        ?.applicationData
+                        | keyvalue
+                "
+            >
+
+                <span class="data-label">
+
+                    {{
+                        item.key
+                    }}
+
+                </span>
+
+                <span class="data-value">
+
+                    {{
+                        item.value || "-"
+                    }}
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- DOCUMENTS -->
+        <!-- ========================= -->
+
+        <ng-container
+            *ngIf="
+                selectedApplication?.documents
+            "
+        >
+
+            <div class="section-title">
+
+                <h4>
+                    Documents
+                </h4>
+
+            </div>
+
+
+            <div class="documents-box">
+
+                <div
+                    class="document-item"
+                    *ngFor="
+                        let document of
+                        selectedApplication
+                            ?.documents
+                            | keyvalue
+                    "
+                >
+
+                    <span>
+
+                        {{
+                            document.key
+                        }}
+
+                    </span>
+
+                    <span>
+
+                        {{
+                            document.value || "-"
+                        }}
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </ng-container>
+
+
+        <!-- ========================= -->
+        <!-- REMARKS -->
+        <!-- ========================= -->
+
+        <div
+            class="remarks-box"
+            *ngIf="
+                selectedApplication?.remarks
+            "
+        >
+
+            <h4>
+                Admin / HR Remarks
+            </h4>
+
+            <p>
+
+                {{
+                    selectedApplication
+                        ?.remarks
+                }}
+
+            </p>
+
+        </div>
+
+
+        <!-- FOOTER -->
+
+        <div class="popup-footer">
+
+            <button
+                type="button"
+                class="close-popup-btn"
+                (click)="closePopup()"
+            >
+
+                Close
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,2177 @@
+<div class="requests-page">
+
+    <!-- ========================= -->
+    <!-- PAGE HEADER -->
+    <!-- ========================= -->
+
+    <div class="page-header">
+
+        <div>
+            <h2>My Profile Requests</h2>
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- RECORDS + INFO -->
+    <!-- ========================= -->
+
+    <div
+        class="table-controls"
+        *ngIf="requests.length > 0">
+
+        <!-- STATUS -->
+
+        <div class="status-control">
+
+            <label>
+                Status
+            </label>
+
+            <select
+                [(ngModel)]="statusFilter"
+                (change)="filterByStatus()">
+
+                <option value="All">
+                    All
+                </option>
+
+                <option value="Pending">
+                    Pending
+                </option>
+
+                <option value="Approved">
+                    Approved
+                </option>
+
+                <option value="Rejected">
+                    Rejected
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- RECORDS -->
+
+        <div class="records-control">
+
+            <label>
+                Show
+            </label>
+
+            <select
+                [(ngModel)]="selectedCount"
+                (change)="changeRecords(selectedCount)">
+
+                <option [ngValue]="5">
+                    5
+                </option>
+
+                <option [ngValue]="10">
+                    10
+                </option>
+
+                <option [ngValue]="20">
+                    20
+                </option>
+
+                <option [ngValue]="50">
+                    50
+                </option>
+
+            </select>
+
+            <span>
+                records
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- NO REQUESTS -->
+    <!-- ========================= -->
+
+    <div
+        class="no-requests"
+        *ngIf="requests.length === 0">
+
+        <div class="empty-icon">
+            ✓
+        </div>
+
+        <h3>
+            No Profile Requests
+        </h3>
+
+        <p>
+            You have not submitted any
+            profile update requests yet.
+        </p>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- REQUEST TABLE -->
+    <!-- ========================= -->
+
+    <div
+        class="table-wrapper"
+        *ngIf="requests.length > 0">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        #
+                    </th>
+
+
+                    <!-- REQUEST TYPE -->
+
+                    <th
+                        class="sortable"
+                        (click)="sortColumn('requestType')">
+
+                        <span>
+                            Request Type
+                        </span>
+
+                        <!-- <span class="sort-arrow">
+
+                            {{
+                                getSortArrow(
+                                    'requestType'
+                                )
+                            }}
+
+                        </span> -->
+
+                    </th>
+
+
+                    <!-- SUBMITTED DATE -->
+
+                    <th
+                        class="sortable"
+                        (click)="sortColumn('submittedAt')">
+
+                        <span>
+                            Submitted Date
+                        </span>
+
+                        <span class="sort-arrow">
+
+                            {{
+                                getSortArrow(
+                                    'submittedAt'
+                                )
+                            }}
+
+                        </span>
+
+                    </th>
+
+
+                    <!-- STATUS -->
+
+                    <th
+                        class="sortable"
+                        (click)="sortColumn('status')">
+
+                        <span>
+                            Status
+                        </span>
+
+                        <span class="sort-arrow">
+
+                            {{
+                                getSortArrow(
+                                    'status'
+                                )
+                            }}
+
+                        </span>
+
+                    </th>
+
+
+                    <th>
+                        Reviewed By
+                    </th>
+
+
+                    <th>
+                        Reviewed Date
+                    </th>
+
+
+                    <th>
+                        Action
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                <tr
+                    *ngFor="
+                        let request of requests;
+                        let i = index;
+                        trackBy: trackByRequest
+                    ">
+
+                    <!-- NUMBER -->
+
+                    <td>
+
+                        {{
+                            (currentPage - 1)
+                            * selectedCount
+                            + i + 1
+                        }}
+
+                    </td>
+
+
+                    <!-- REQUEST TYPE -->
+
+                    <td>
+
+                        {{
+                            request.requestType
+                            || 'Profile Update'
+                        }}
+
+                    </td>
+
+
+                    <!-- SUBMITTED DATE -->
+
+                    <td>
+
+                        {{
+                            request.submittedAt
+                            | date:'dd/MM/yyyy hh:mm a'
+                        }}
+
+                    </td>
+
+
+                    <!-- STATUS -->
+
+                    <td>
+
+                        <span
+                            class="status-badge"
+                            [ngClass]="{
+
+                                'pending':
+                                    request.status === 'Pending',
+
+                                'approved':
+                                    request.status === 'Approved',
+
+                                'rejected':
+                                    request.status === 'Rejected'
+
+                            }">
+
+                            {{ request.status }}
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- REVIEWED BY -->
+
+                    <td>
+
+                        {{
+                            request.reviewedBy
+                            || '-'
+                        }}
+
+                    </td>
+
+
+                    <!-- REVIEWED DATE -->
+
+                    <td>
+
+                        {{
+                            request.reviewedAt
+                            ? (
+                                request.reviewedAt
+                                | date:'dd/MM/yyyy hh:mm a'
+                            )
+                            : '-'
+                        }}
+
+                    </td>
+
+
+                    <!-- ACTION -->
+
+                    <td>
+
+                        <button
+                            class="view-btn"
+                            type="button"
+                            (click)="viewChanges(request)">
+
+                            View Changes
+
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- PAGINATION -->
+    <!-- ========================= -->
+
+    <div
+        class="pagination"
+        *ngIf="totalPages > 1">
+
+        <button
+            class="page-btn"
+            type="button"
+            (click)="previousPage()"
+            [disabled]="currentPage === 1">
+
+            <<
+
+        </button>
+
+
+        <button
+            class="page-number"
+            type="button"
+            *ngFor="let page of pageNumbers"
+            [class.active]="page === currentPage"
+            (click)="goToPage(page)">
+
+            {{ page }}
+
+        </button>
+
+
+        <button
+            class="page-btn"
+            type="button"
+            (click)="nextPage()"
+            [disabled]="currentPage === totalPages">
+
+            >>
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- CHANGE DETAILS POPUP -->
+<!-- ================================================= -->
+
+<div
+    class="popup-overlay"
+    *ngIf="showPopup"
+    (click)="closePopup()">
+
+
+    <div
+        class="changes-popup"
+        (click)="$event.stopPropagation()">
+
+
+        <!-- ========================= -->
+        <!-- POPUP HEADER -->
+        <!-- ========================= -->
+
+        <div class="popup-header">
+
+            <div>
+
+                <h3>
+                    Profile Changes
+                </h3>
+
+                <p>
+
+                    Submitted:
+
+                    {{
+                        selectedRequest?.submittedAt
+                        | date:'dd/MM/yyyy hh:mm a'
+                    }}
+
+                </p>
+
+            </div>
+
+
+            <button
+                class="close-btn"
+                type="button"
+                (click)="closePopup()">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- STATUS -->
+        <!-- ========================= -->
+
+        <div class="popup-status">
+
+            <span
+                class="status-badge"
+                [ngClass]="{
+
+                    'pending':
+                        selectedRequest?.status === 'Pending',
+
+                    'approved':
+                        selectedRequest?.status === 'Approved',
+
+                    'rejected':
+                        selectedRequest?.status === 'Rejected'
+
+                }">
+
+                {{ selectedRequest?.status }}
+
+            </span>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- BASIC DETAILS -->
+        <!-- ================================================= -->
+
+        <div class="section-title">
+
+            <h4>
+                Basic Details
+            </h4>
+
+        </div>
+
+
+        <div class="changes-table">
+
+            <div class="change-header">
+
+                <span>
+                    Field
+                </span>
+
+                <span>
+                    Previous Value
+                </span>
+
+                <span>
+                    Requested Value
+                </span>
+
+            </div>
+
+
+            <!-- NAME -->
+
+            <div
+                class="change-row"
+                [class.changed-row]="
+                    isChanged(
+                        selectedRequest,
+                        'name'
+                    )
+                ">
+
+                <span class="field-name">
+                    Name
+                </span>
+
+                <span>
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.oldData
+                                ?.name
+                        )
+                    }}
+
+                </span>
+
+                <span
+                    [class.changed-value]="
+                        isChanged(
+                            selectedRequest,
+                            'name'
+                        )
+                    ">
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.requestedData
+                                ?.name
+                        )
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- DOB -->
+
+            <div
+                class="change-row"
+                [class.changed-row]="
+                    isChanged(
+                        selectedRequest,
+                        'dob'
+                    )
+                ">
+
+                <span class="field-name">
+                    Date of Birth
+                </span>
+
+                <span>
+
+                    {{
+                        formatDate(
+                            selectedRequest
+                                ?.oldData
+                                ?.dob
+                        )
+                    }}
+
+                </span>
+
+                <span
+                    [class.changed-value]="
+                        isChanged(
+                            selectedRequest,
+                            'dob'
+                        )
+                    ">
+
+                    {{
+                        formatDate(
+                            selectedRequest
+                                ?.requestedData
+                                ?.dob
+                        )
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- AGE -->
+
+            <div
+                class="change-row"
+                [class.changed-row]="
+                    isChanged(
+                        selectedRequest,
+                        'age'
+                    )
+                ">
+
+                <span class="field-name">
+                    Age
+                </span>
+
+                <span>
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.oldData
+                                ?.age
+                        )
+                    }}
+
+                </span>
+
+                <span
+                    [class.changed-value]="
+                        isChanged(
+                            selectedRequest,
+                            'age'
+                        )
+                    ">
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.requestedData
+                                ?.age
+                        )
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- EMAIL -->
+
+            <div
+                class="change-row"
+                [class.changed-row]="
+                    isChanged(
+                        selectedRequest,
+                        'email'
+                    )
+                ">
+
+                <span class="field-name">
+                    Email
+                </span>
+
+                <span>
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.oldData
+                                ?.email
+                        )
+                    }}
+
+                </span>
+
+                <span
+                    [class.changed-value]="
+                        isChanged(
+                            selectedRequest,
+                            'email'
+                        )
+                    ">
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.requestedData
+                                ?.email
+                        )
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- PHONE -->
+
+            <div
+                class="change-row"
+                [class.changed-row]="
+                    isChanged(
+                        selectedRequest,
+                        'phone'
+                    )
+                ">
+
+                <span class="field-name">
+                    Phone
+                </span>
+
+                <span>
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.oldData
+                                ?.phone
+                        )
+                    }}
+
+                </span>
+
+                <span
+                    [class.changed-value]="
+                        isChanged(
+                            selectedRequest,
+                            'phone'
+                        )
+                    ">
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.requestedData
+                                ?.phone
+                        )
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- GENDER -->
+
+            <div
+                class="change-row"
+                [class.changed-row]="
+                    isChanged(
+                        selectedRequest,
+                        'gender'
+                    )
+                ">
+
+                <span class="field-name">
+                    Gender
+                </span>
+
+                <span>
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.oldData
+                                ?.gender
+                        )
+                    }}
+
+                </span>
+
+                <span
+                    [class.changed-value]="
+                        isChanged(
+                            selectedRequest,
+                            'gender'
+                        )
+                    ">
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.requestedData
+                                ?.gender
+                        )
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- DEPARTMENT -->
+
+            <div
+                class="change-row"
+                [class.changed-row]="
+                    isChanged(
+                        selectedRequest,
+                        'department'
+                    )
+                ">
+
+                <span class="field-name">
+                    Department
+                </span>
+
+                <span>
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.oldData
+                                ?.department
+                        )
+                    }}
+
+                </span>
+
+                <span
+                    [class.changed-value]="
+                        isChanged(
+                            selectedRequest,
+                            'department'
+                        )
+                    ">
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.requestedData
+                                ?.department
+                        )
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- DESIGNATION -->
+
+            <div
+                class="change-row"
+                [class.changed-row]="
+                    isChanged(
+                        selectedRequest,
+                        'designation'
+                    )
+                ">
+
+                <span class="field-name">
+                    Designation
+                </span>
+
+                <span>
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.oldData
+                                ?.designation
+                        )
+                    }}
+
+                </span>
+
+                <span
+                    [class.changed-value]="
+                        isChanged(
+                            selectedRequest,
+                            'designation'
+                        )
+                    ">
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.requestedData
+                                ?.designation
+                        )
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- JOINING DATE -->
+
+            <div
+                class="change-row"
+                [class.changed-row]="
+                    isChanged(
+                        selectedRequest,
+                        'joiningDate'
+                    )
+                ">
+
+                <span class="field-name">
+                    Joining Date
+                </span>
+
+                <span>
+
+                    {{
+                        formatDate(
+                            selectedRequest
+                                ?.oldData
+                                ?.joiningDate
+                        )
+                    }}
+
+                </span>
+
+                <span
+                    [class.changed-value]="
+                        isChanged(
+                            selectedRequest,
+                            'joiningDate'
+                        )
+                    ">
+
+                    {{
+                        formatDate(
+                            selectedRequest
+                                ?.requestedData
+                                ?.joiningDate
+                        )
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- ADDRESS -->
+
+            <div
+                class="change-row"
+                [class.changed-row]="
+                    isChanged(
+                        selectedRequest,
+                        'address'
+                    )
+                ">
+
+                <span class="field-name">
+                    Address
+                </span>
+
+                <span>
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.oldData
+                                ?.address
+                        )
+                    }}
+
+                </span>
+
+                <span
+                    [class.changed-value]="
+                        isChanged(
+                            selectedRequest,
+                            'address'
+                        )
+                    ">
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.requestedData
+                                ?.address
+                        )
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- ROLE -->
+
+            <div
+                class="change-row"
+                [class.changed-row]="
+                    isChanged(
+                        selectedRequest,
+                        'role'
+                    )
+                ">
+
+                <span class="field-name">
+                    Role
+                </span>
+
+                <span>
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.oldData
+                                ?.role
+                        )
+                    }}
+
+                </span>
+
+                <span
+                    [class.changed-value]="
+                        isChanged(
+                            selectedRequest,
+                            'role'
+                        )
+                    ">
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.requestedData
+                                ?.role
+                        )
+                    }}
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- ADDITIONAL DETAILS -->
+        <!-- ================================================= -->
+
+        <div class="section-title">
+
+            <h4>
+                Additional Details
+            </h4>
+
+        </div>
+
+
+        <div class="changes-table">
+
+            <div class="change-header">
+
+                <span>
+                    Field
+                </span>
+
+                <span>
+                    Previous Value
+                </span>
+
+                <span>
+                    Requested Value
+                </span>
+
+            </div>
+
+
+            <!-- EMERGENCY CONTACT NAME -->
+
+            <div
+                class="change-row"
+                [class.changed-row]="
+                    isAdditionalChanged(
+                        selectedRequest,
+                        'emergencyContactName'
+                    )
+                ">
+
+                <span class="field-name">
+                    Emergency Contact Name
+                </span>
+
+                <span>
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.oldData
+                                ?.additionalDetails
+                                ?.emergencyContactName
+                        )
+                    }}
+
+                </span>
+
+                <span
+                    [class.changed-value]="
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'emergencyContactName'
+                        )
+                    ">
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.requestedData
+                                ?.additionalDetails
+                                ?.emergencyContactName
+                        )
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- EMERGENCY NUMBER -->
+
+            <div
+                class="change-row"
+                [class.changed-row]="
+                    isAdditionalChanged(
+                        selectedRequest,
+                        'emergencyContactNumber'
+                    )
+                ">
+
+                <span class="field-name">
+                    Emergency Contact Number
+                </span>
+
+                <span>
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.oldData
+                                ?.additionalDetails
+                                ?.emergencyContactNumber
+                        )
+                    }}
+
+                </span>
+
+                <span
+                    [class.changed-value]="
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'emergencyContactNumber'
+                        )
+                    ">
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.requestedData
+                                ?.additionalDetails
+                                ?.emergencyContactNumber
+                        )
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- BLOOD GROUP -->
+
+            <div
+                class="change-row"
+                [class.changed-row]="
+                    isAdditionalChanged(
+                        selectedRequest,
+                        'bloodGroup'
+                    )
+                ">
+
+                <span class="field-name">
+                    Blood Group
+                </span>
+
+                <span>
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.oldData
+                                ?.additionalDetails
+                                ?.bloodGroup
+                        )
+                    }}
+
+                </span>
+
+                <span
+                    [class.changed-value]="
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'bloodGroup'
+                        )
+                    ">
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.requestedData
+                                ?.additionalDetails
+                                ?.bloodGroup
+                        )
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- MARITAL STATUS -->
+
+            <div
+                class="change-row"
+                [class.changed-row]="
+                    isAdditionalChanged(
+                        selectedRequest,
+                        'maritalStatus'
+                    )
+                ">
+
+                <span class="field-name">
+                    Marital Status
+                </span>
+
+                <span>
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.oldData
+                                ?.additionalDetails
+                                ?.maritalStatus
+                        )
+                    }}
+
+                </span>
+
+                <span
+                    [class.changed-value]="
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'maritalStatus'
+                        )
+                    ">
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.requestedData
+                                ?.additionalDetails
+                                ?.maritalStatus
+                        )
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- SPOUSE NAME -->
+
+            <div
+                class="change-row"
+                [class.changed-row]="
+                    isAdditionalChanged(
+                        selectedRequest,
+                        'spouseName'
+                    )
+                ">
+
+                <span class="field-name">
+                    Spouse Name
+                </span>
+
+                <span>
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.oldData
+                                ?.additionalDetails
+                                ?.spouseName
+                        )
+                    }}
+
+                </span>
+
+                <span
+                    [class.changed-value]="
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'spouseName'
+                        )
+                    ">
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.requestedData
+                                ?.additionalDetails
+                                ?.spouseName
+                        )
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- SPOUSE OCCUPATION -->
+
+            <div
+                class="change-row"
+                [class.changed-row]="
+                    isAdditionalChanged(
+                        selectedRequest,
+                        'spouseOccupation'
+                    )
+                ">
+
+                <span class="field-name">
+                    Spouse Occupation
+                </span>
+
+                <span>
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.oldData
+                                ?.additionalDetails
+                                ?.spouseOccupation
+                        )
+                    }}
+
+                </span>
+
+                <span
+                    [class.changed-value]="
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'spouseOccupation'
+                        )
+                    ">
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.requestedData
+                                ?.additionalDetails
+                                ?.spouseOccupation
+                        )
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- NOMINEE NAME -->
+
+            <div
+                class="change-row"
+                [class.changed-row]="
+                    isAdditionalChanged(
+                        selectedRequest,
+                        'nomineeName'
+                    )
+                ">
+
+                <span class="field-name">
+                    Nominee Name
+                </span>
+
+                <span>
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.oldData
+                                ?.additionalDetails
+                                ?.nomineeName
+                        )
+                    }}
+
+                </span>
+
+                <span
+                    [class.changed-value]="
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'nomineeName'
+                        )
+                    ">
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.requestedData
+                                ?.additionalDetails
+                                ?.nomineeName
+                        )
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- RELATIONSHIP -->
+
+            <div
+                class="change-row"
+                [class.changed-row]="
+                    isAdditionalChanged(
+                        selectedRequest,
+                        'relationship'
+                    )
+                ">
+
+                <span class="field-name">
+                    Relationship
+                </span>
+
+                <span>
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.oldData
+                                ?.additionalDetails
+                                ?.relationship
+                        )
+                    }}
+
+                </span>
+
+                <span
+                    [class.changed-value]="
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'relationship'
+                        )
+                    ">
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.requestedData
+                                ?.additionalDetails
+                                ?.relationship
+                        )
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- NOMINEE PHONE -->
+
+            <div
+                class="change-row"
+                [class.changed-row]="
+                    isAdditionalChanged(
+                        selectedRequest,
+                        'nomineePhone'
+                    )
+                ">
+
+                <span class="field-name">
+                    Nominee Phone
+                </span>
+
+                <span>
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.oldData
+                                ?.additionalDetails
+                                ?.nomineePhone
+                        )
+                    }}
+
+                </span>
+
+                <span
+                    [class.changed-value]="
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'nomineePhone'
+                        )
+                    ">
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.requestedData
+                                ?.additionalDetails
+                                ?.nomineePhone
+                        )
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- TRANSPORT -->
+
+            <div
+                class="change-row"
+                [class.changed-row]="
+                    isAdditionalChanged(
+                        selectedRequest,
+                        'transportFacility'
+                    )
+                ">
+
+                <span class="field-name">
+                    Transport Facility
+                </span>
+
+                <span>
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.oldData
+                                ?.additionalDetails
+                                ?.transportFacility
+                        )
+                    }}
+
+                </span>
+
+                <span
+                    [class.changed-value]="
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'transportFacility'
+                        )
+                    ">
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.requestedData
+                                ?.additionalDetails
+                                ?.transportFacility
+                        )
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- HRA -->
+
+            <div
+                class="change-row"
+                [class.changed-row]="
+                    isAdditionalChanged(
+                        selectedRequest,
+                        'hra'
+                    )
+                ">
+
+                <span class="field-name">
+                    HRA
+                </span>
+
+                <span>
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.oldData
+                                ?.additionalDetails
+                                ?.hra
+                        )
+                    }}
+
+                </span>
+
+                <span
+                    [class.changed-value]="
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'hra'
+                        )
+                    ">
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.requestedData
+                                ?.additionalDetails
+                                ?.hra
+                        )
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- AADHAAR -->
+
+            <div
+                class="change-row"
+                [class.changed-row]="
+                    isAdditionalChanged(
+                        selectedRequest,
+                        'aadhaar'
+                    )
+                ">
+
+                <span class="field-name">
+                    Aadhaar
+                </span>
+
+                <span>
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.oldData
+                                ?.additionalDetails
+                                ?.aadhaar
+                        )
+                    }}
+
+                </span>
+
+                <span
+                    [class.changed-value]="
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'aadhaar'
+                        )
+                    ">
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.requestedData
+                                ?.additionalDetails
+                                ?.aadhaar
+                        )
+                    }}
+
+                </span>
+
+            </div>
+
+
+            <!-- PAN -->
+
+            <div
+                class="change-row"
+                [class.changed-row]="
+                    isAdditionalChanged(
+                        selectedRequest,
+                        'pan'
+                    )
+                ">
+
+                <span class="field-name">
+                    PAN
+                </span>
+
+                <span>
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.oldData
+                                ?.additionalDetails
+                                ?.pan
+                        )
+                    }}
+
+                </span>
+
+                <span
+                    [class.changed-value]="
+                        isAdditionalChanged(
+                            selectedRequest,
+                            'pan'
+                        )
+                    ">
+
+                    {{
+                        displayValue(
+                            selectedRequest
+                                ?.requestedData
+                                ?.additionalDetails
+                                ?.pan
+                        )
+                    }}
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- PREVIOUS SERVICES -->
+        <!-- ================================================= -->
+
+        <div
+            class="section-title"
+            *ngIf="getServiceCount() > 0">
+
+            <h4>
+                Previous Services
+            </h4>
+
+        </div>
+
+
+        <div
+            class="services-comparison"
+            *ngFor="
+                let serviceIndex of [].constructor(
+                    getServiceCount()
+                );
+                let i = index
+            ">
+
+            <div class="service-title">
+
+                Previous Service {{ i + 1 }}
+
+            </div>
+
+
+            <div class="changes-table">
+
+                <div class="change-header">
+
+                    <span>
+                        Field
+                    </span>
+
+                    <span>
+                        Previous Value
+                    </span>
+
+                    <span>
+                        Requested Value
+                    </span>
+
+                </div>
+
+
+                <!-- ORGANISATION -->
+
+                <div
+                    class="change-row"
+                    [class.changed-row]="
+                        serviceChanged(
+                            getOldService(i),
+                            getNewService(i),
+                            'organisation'
+                        )
+                    ">
+
+                    <span class="field-name">
+                        Organisation
+                    </span>
+
+                    <span>
+
+                        {{
+                            displayValue(
+                                getOldService(i)
+                                    ?.organisation
+                            )
+                        }}
+
+                    </span>
+
+                    <span
+                        [class.changed-value]="
+                            serviceChanged(
+                                getOldService(i),
+                                getNewService(i),
+                                'organisation'
+                            )
+                        ">
+
+                        {{
+                            displayValue(
+                                getNewService(i)
+                                    ?.organisation
+                            )
+                        }}
+
+                    </span>
+
+                </div>
+
+
+                <!-- FROM DATE -->
+
+                <div
+                    class="change-row"
+                    [class.changed-row]="
+                        serviceChanged(
+                            getOldService(i),
+                            getNewService(i),
+                            'fromDate'
+                        )
+                    ">
+
+                    <span class="field-name">
+                        From Date
+                    </span>
+
+                    <span>
+
+                        {{
+                            formatDate(
+                                getOldService(i)
+                                    ?.fromDate
+                            )
+                        }}
+
+                    </span>
+
+                    <span
+                        [class.changed-value]="
+                            serviceChanged(
+                                getOldService(i),
+                                getNewService(i),
+                                'fromDate'
+                            )
+                        ">
+
+                        {{
+                            formatDate(
+                                getNewService(i)
+                                    ?.fromDate
+                            )
+                        }}
+
+                    </span>
+
+                </div>
+
+
+                <!-- TO DATE -->
+
+                <div
+                    class="change-row"
+                    [class.changed-row]="
+                        serviceChanged(
+                            getOldService(i),
+                            getNewService(i),
+                            'toDate'
+                        )
+                    ">
+
+                    <span class="field-name">
+                        To Date
+                    </span>
+
+                    <span>
+
+                        {{
+                            formatDate(
+                                getOldService(i)
+                                    ?.toDate
+                            )
+                        }}
+
+                    </span>
+
+                    <span
+                        [class.changed-value]="
+                            serviceChanged(
+                                getOldService(i),
+                                getNewService(i),
+                                'toDate'
+                            )
+                        ">
+
+                        {{
+                            formatDate(
+                                getNewService(i)
+                                    ?.toDate
+                            )
+                        }}
+
+                    </span>
+
+                </div>
+
+
+                <!-- TENURE -->
+
+                <div
+                    class="change-row"
+                    [class.changed-row]="
+                        serviceChanged(
+                            getOldService(i),
+                            getNewService(i),
+                            'tenure'
+                        )
+                    ">
+
+                    <span class="field-name">
+                        Tenure
+                    </span>
+
+                    <span>
+
+                        {{
+                            displayValue(
+                                getOldService(i)
+                                    ?.tenure
+                            )
+                        }}
+
+                    </span>
+
+                    <span
+                        [class.changed-value]="
+                            serviceChanged(
+                                getOldService(i),
+                                getNewService(i),
+                                'tenure'
+                            )
+                        ">
+
+                        {{
+                            displayValue(
+                                getNewService(i)
+                                    ?.tenure
+                            )
+                        }}
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- DOCUMENTS -->
+        <!-- ================================================= -->
+
+        <div class="section-title">
+
+            <h4>
+                Documents
+            </h4>
+
+        </div>
+
+
+        <div class="documents-comparison">
+
+            <!-- DOCUMENT HEADER -->
+
+            <div class="change-header">
+
+                <span>
+                    Document
+                </span>
+
+                <span>
+                    Previous Document
+                </span>
+
+                <span>
+                    Requested Document
+                </span>
+
+            </div>
+
+
+            <!-- DOCUMENT ROWS -->
+
+            <div
+                class="document-change-row"
+                *ngFor="let document of documentFields"
+                [class.changed-row]="
+                    isDocumentChanged(
+                        selectedRequest,
+                        document.key
+                    )
+                ">
+
+
+                <!-- DOCUMENT NAME -->
+
+                <span class="field-name">
+
+                    {{ document.label }}
+
+                </span>
+
+
+                <!-- OLD DOCUMENT -->
+
+                <span>
+
+                    <ng-container
+                        *ngIf="
+                            selectedRequest
+                                ?.oldData
+                                ?.documents
+                                ?.[document.key];
+                            else noOldDocument
+                        ">
+
+                        <a
+                            [href]="
+                                getDocumentUrl(
+    selectedRequest.oldData.documents[document.key],
+    document.key
+)
+                            "
+                            target="_blank"
+                            class="document-link">
+
+                            View Document
+
+                        </a>
+
+                    </ng-container>
+
+
+                    <ng-template #noOldDocument>
+
+                        <span class="no-document">
+
+                            No document
+
+                        </span>
+
+                    </ng-template>
+
+                </span>
+
+
+                <!-- REQUESTED DOCUMENT -->
+
+                <span
+                    [class.changed-value]="
+                        isDocumentChanged(
+                            selectedRequest,
+                            document.key
+                        )
+                    ">
+
+                    <ng-container
+                        *ngIf="
+                            selectedRequest
+                                ?.requestedData
+                                ?.documents
+                                ?.[document.key];
+                            else noNewDocument
+                        ">
+
+                        <a
+                            [href]="
+                                getDocumentUrl(
+    selectedRequest.requestedData.documents[document.key],
+    document.key
+)
+                            "
+                            target="_blank"
+                            class="document-link new-document">
+
+                            View Document
+
+                        </a>
+
+
+                        <!-- NEW BADGE -->
+
+                        <span
+                            class="new-badge"
+                            *ngIf="
+                                isDocumentChanged(
+                                    selectedRequest,
+                                    document.key
+                                )
+                            ">
+
+                            NEW
+
+                        </span>
+
+                    </ng-container>
+
+
+                    <ng-template #noNewDocument>
+
+                        <span class="no-document">
+
+                            No document
+
+                        </span>
+
+                    </ng-template>
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- REMARKS -->
+        <!-- ================================================= -->
+
+        <div
+            class="remarks-box"
+            *ngIf="selectedRequest?.remarks">
+
+            <h4>
+                Admin / HR Remarks
+            </h4>
+
+            <p>
+                {{ selectedRequest.remarks }}
+            </p>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- POPUP FOOTER -->
+        <!-- ================================================= -->
+
+        <div class="popup-footer">
+
+            <button
+                type="button"
+                class="close-popup-btn"
+                (click)="closePopup()">
+
+                Close
+
+            </button>
+
+        </div>
+
+
+    </div>
+
+</div>

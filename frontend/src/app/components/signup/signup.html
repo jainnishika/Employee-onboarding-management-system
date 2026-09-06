@@ -1,0 +1,74 @@
+<div class="signup-container">
+
+    <div class="signup-box">
+
+        <div class="signup-icon">
+            👤
+        </div>
+
+        <h2>Create User</h2>
+
+        <p class="subtitle">
+            Create a new employee account
+        </p>
+
+        <input
+            type="text"
+            placeholder="Enter Name"
+            [(ngModel)]="name"
+            required>
+
+        <input
+            type="date"
+            [(ngModel)]="dob"
+            (change)="calculateAge()"
+            [max]="maxDate"
+            name="dob"
+            required>
+
+        <input
+            type="number"
+            [(ngModel)]="age"
+            readonly
+            placeholder="Age"
+            name="age">
+
+        <input
+            type="email"
+            placeholder="Enter Email"
+            [(ngModel)]="email"
+            required>
+
+        <button class="signup-btn" (click)="createUser()">
+            Create User
+        </button>
+
+        <button
+            class="back-btn"
+            (click)="goToLogin()">
+
+            Back to Login
+
+        </button>
+
+        <div *ngIf="username" class="credentials">
+
+            <h3>🎉 User Created Successfully</h3>
+
+            <div class="credential-box">
+
+                <p><strong>Username:</strong> {{username}}</p>
+
+                <p><strong>Password:</strong> {{password}}</p>
+
+            </div>
+
+            <p class="note">
+                Please save these credentials before leaving this page.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>

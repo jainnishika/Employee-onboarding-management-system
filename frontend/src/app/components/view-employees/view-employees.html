@@ -1,0 +1,596 @@
+<div class="main">
+
+    <div class="employee-container">
+
+        <!-- ============================================
+             PAGE HEADER
+        ============================================= -->
+
+        <h1>Employee Management</h1>
+
+        <button
+            type="button"
+            class="back-btn"
+            (click)="back()">
+
+            ← Back to Dashboard
+
+        </button>
+
+
+        <!-- ============================================
+             TOP BAR
+        ============================================= -->
+
+        <div class="top-bar">
+
+            <h3>
+                Total Employees : {{ filteredEmployees.length }}
+            </h3>
+
+            <div class="action-buttons">
+
+                <!-- EXPORT EXCEL -->
+                <button
+                    type="button"
+                    class="excel-btn"
+                    (click)="exportToExcel()">
+
+                    <mat-icon>
+                        download
+                    </mat-icon>
+
+                    Export Excel
+
+                </button>
+
+
+                <!-- CREATE EMPLOYEE -->
+                <button
+                    type="button"
+                    class="create-btn"
+                    (click)="createEmployee()">
+
+                    <mat-icon>
+                        person_add
+                    </mat-icon>
+
+                    Create Employee
+
+                </button>
+
+
+                <!-- DEACTIVATED EMPLOYEES -->
+                <button
+                    type="button"
+                    *ngIf="role === 'Admin' || role === 'HR'"
+                    class="inactive-btn"
+                    (click)="openInactiveEmployees()">
+
+                    <mat-icon>
+                        person_off
+                    </mat-icon>
+
+                    Deactivated Employees
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ============================================
+             SEARCH
+        ============================================= -->
+
+        <div class="search-section">
+
+            <input
+                type="text"
+                class="search-box"
+                placeholder="Search by Name, Username or Department"
+                [(ngModel)]="searchText"
+                (keyup)="searchEmployees()">
+
+        </div>
+
+
+        <!-- ============================================
+             FILTERS
+        ============================================= -->
+
+        <div class="filter-section">
+
+            <!-- DEPARTMENT -->
+
+            <select
+                [(ngModel)]="selectedDepartment"
+                (change)="applyFilters()">
+
+                <option value="">
+                    All Departments
+                </option>
+
+                <option
+                    *ngFor="let dept of departments"
+                    [value]="dept">
+
+                    {{ dept }}
+
+                </option>
+
+            </select>
+
+
+            <!-- ROLE -->
+
+            <select
+                [(ngModel)]="selectedRole"
+                (change)="applyFilters()">
+
+                <option value="">
+                    All Roles
+                </option>
+
+                <option
+                    *ngFor="let role of roles"
+                    [value]="role">
+
+                    {{ role }}
+
+                </option>
+
+            </select>
+
+
+            <!-- DESIGNATION -->
+
+            <select
+                [(ngModel)]="selectedDesignation"
+                (change)="applyFilters()">
+
+                <option value="">
+                    All Designations
+                </option>
+
+                <option
+                    *ngFor="let des of designations"
+                    [value]="des">
+
+                    {{ des }}
+
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- ============================================
+             RECORDS PER PAGE
+        ============================================= -->
+
+        <div class="table-header">
+
+            <label>
+                Show
+            </label>
+
+            <select
+                [(ngModel)]="selectedCount"
+                (change)="changeRecords(selectedCount)">
+
+                <option [ngValue]="5">
+                    5
+                </option>
+
+                <option [ngValue]="10">
+                    10
+                </option>
+
+                <option [ngValue]="20">
+                    20
+                </option>
+
+                <option [ngValue]="50">
+                    50
+                </option>
+
+            </select>
+
+            <span>
+                Employees
+            </span>
+
+        </div>
+
+
+        <!-- ============================================
+             EMPLOYEE TABLE
+        ============================================= -->
+
+        <div class="table-container">
+
+            <table *ngIf="filteredEmployees.length > 0">
+
+                <!-- TABLE HEADER -->
+
+                <thead>
+
+                    <tr>
+
+                        <!-- NAME -->
+
+                        <th
+                            class="sortable-header"
+                            (click)="sortName()">
+
+                            <span>
+                                Name
+                            </span>
+
+                            <span class="sort-icon">
+                                {{
+                                    sortOrder === 'asc'
+                                        ? '↑'
+                                        : '↓'
+                                }}
+                            </span>
+
+                        </th>
+
+
+                        <!-- USERNAME -->
+
+                        <th>
+                            Username
+                        </th>
+
+
+                        <!-- PHONE -->
+
+                        <th>
+                            Phone
+                        </th>
+
+
+                        <!-- EMAIL -->
+
+                        <th>
+                            Email
+                        </th>
+
+
+                        <!-- DEPARTMENT -->
+
+                        <th>
+                            Department
+                        </th>
+
+
+                        <!-- DESIGNATION -->
+
+                        <th>
+                            Designation
+                        </th>
+
+
+                        <!-- ROLE -->
+
+                        <th>
+                            Role
+                        </th>
+
+
+                        <!-- STATUS -->
+
+                        <th>
+                            Status
+                        </th>
+
+
+                        <!-- ACTIONS -->
+
+                        <th>
+                            Actions
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <!-- TABLE BODY -->
+
+                <tbody>
+
+                    <tr
+                        *ngFor="let emp of displayedEmployees">
+
+                        <!-- NAME -->
+
+                        <td>
+                            {{ emp.name?.toUpperCase() }}
+                        </td>
+
+
+                        <!-- USERNAME -->
+
+                        <td>
+                            {{ emp.username || '-' }}
+                        </td>
+
+
+                        <!-- PHONE -->
+
+                        <td>
+                            {{ emp.phone || '-' }}
+                        </td>
+
+
+                        <!-- EMAIL -->
+
+                        <td>
+                            {{ emp.email || '-' }}
+                        </td>
+
+
+                        <!-- DEPARTMENT -->
+
+                        <td>
+                            {{ emp.department || '-' }}
+                        </td>
+
+
+                        <!-- DESIGNATION -->
+
+                        <td>
+                            {{ emp.designation || '-' }}
+                        </td>
+
+
+                        <!-- ROLE -->
+
+                        <td>
+                            {{ emp.role || '-' }}
+                        </td>
+
+
+                        <!-- STATUS -->
+
+                        <td>
+
+                            <span
+                                class="status-badge"
+                                [ngClass]="
+                                    emp.isActive === false
+                                        ? 'inactive'
+                                        : 'active'
+                                ">
+
+                                {{
+                                    emp.isActive === false
+                                        ? 'Inactive'
+                                        : 'Active'
+                                }}
+
+                            </span>
+
+                        </td>
+
+
+                        <!-- ACTIONS -->
+
+                        <td class="action-cell">
+
+                            <!-- VIEW -->
+
+                            <button
+                                type="button"
+                                class="view-btn"
+                                (click)="viewEmployee(emp._id)">
+
+                                <mat-icon>
+                                    visibility
+                                </mat-icon>
+
+                                View
+
+                            </button>
+
+
+                            <!-- EDIT -->
+
+                            <button
+                                type="button"
+                                class="edit-btn"
+                                (click)="editEmployee(emp._id)">
+
+                                <mat-icon>
+                                    edit
+                                </mat-icon>
+
+                                Edit
+
+                            </button>
+
+
+                            <!-- DEACTIVATE
+                                 ADMIN ONLY -->
+
+                            <button
+                                type="button"
+                                *ngIf="
+                                    role === 'Admin' &&
+                                    emp.isActive !== false
+                                "
+                                class="deactivate-btn"
+                                (click)="deactivateEmployee(emp._id)">
+
+                                <mat-icon>
+                                    block
+                                </mat-icon>
+
+                                Deactivate
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- ============================================
+             NO DATA
+        ============================================= -->
+
+        <div
+            class="no-data"
+            *ngIf="noemployee()">
+
+            No Employees Found
+
+        </div>
+
+
+        <!-- ============================================
+             PAGINATION
+        ============================================= -->
+
+        <div
+            class="pagination"
+            *ngIf="totalPages > 1">
+
+            <!-- PREVIOUS -->
+
+            <button
+                type="button"
+                (click)="previousPage()"
+                [disabled]="currentPage === 1">
+
+                &lt;&lt;
+
+            </button>
+
+
+            <!-- PAGE NUMBERS -->
+
+            <button
+                type="button"
+                *ngFor="let page of pageNumbers"
+                (click)="goToPage(page)"
+                [class.active]="page === currentPage">
+
+                {{ page }}
+
+            </button>
+
+
+            <!-- NEXT -->
+
+            <button
+                type="button"
+                (click)="nextPage()"
+                [disabled]="currentPage === totalPages">
+
+                &gt;&gt;
+
+            </button>
+
+        </div>
+
+
+        <!-- ============================================
+             DEACTIVATE CONFIRMATION POPUP
+        ============================================= -->
+
+        <div
+            class="popup-overlay"
+            *ngIf="showDeactivatePopup">
+
+            <div class="popup-box">
+
+                <!-- ICON -->
+
+                <div class="popup-icon">
+
+                    <mat-icon>
+                        block
+                    </mat-icon>
+
+                </div>
+
+
+                <!-- HEADING -->
+
+                <h2>
+                    Deactivate Employee?
+                </h2>
+
+
+                <!-- MESSAGE -->
+
+                <p>
+                    Are you sure you want to deactivate
+                    this employee?
+                </p>
+
+
+                <!-- WARNING -->
+
+                <p class="warning-text">
+
+                    The employee will no longer be able
+                    to log in, but their profile,
+                    documents and records will remain safe.
+
+                </p>
+
+
+                <!-- BUTTONS -->
+
+                <div class="popup-buttons">
+
+                    <!-- CANCEL -->
+
+                    <button
+                        type="button"
+                        class="cancel-btn"
+                        (click)="cancelDeactivate()">
+
+                        Cancel
+
+                    </button>
+
+
+                    <!-- CONFIRM -->
+
+                    <button
+                        type="button"
+                        class="deactivate-confirm-btn"
+                        (click)="confirmDeactivate()">
+
+                        <mat-icon>
+                            block
+                        </mat-icon>
+
+                        Deactivate
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

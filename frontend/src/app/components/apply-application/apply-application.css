@@ -1,0 +1,248 @@
+.container{
+
+    width:60%;
+
+    margin:30px auto;
+
+    background:#fff;
+
+    padding:30px;
+
+    border-radius:12px;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.1);
+
+}
+
+h2{
+
+    text-align:center;
+
+    color:#1565c0;
+
+    margin-bottom:30px;
+
+}
+
+.form-group{
+
+    margin-bottom:20px;
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.form-group label{
+
+    margin-bottom:8px;
+
+    font-weight:600;
+
+}
+
+.form-group input,
+
+.form-group select,
+
+.form-group textarea{
+
+    padding:12px;
+
+    border:1px solid #ccc;
+
+    border-radius:8px;
+
+    font-size:15px;
+
+}
+
+.form-group input:focus,
+
+.form-group select:focus,
+
+.form-group textarea:focus{
+
+    outline:none;
+
+    border-color:#1565c0;
+
+}
+
+textarea{
+
+    resize:none;
+
+}
+
+.submit-btn{
+
+    width:100%;
+
+    padding:14px;
+
+    background:#1565c0;
+
+    color:white;
+
+    border:none;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+    margin-top:15px;
+
+}
+
+.submit-btn:hover{
+
+    background:#0d47a1;
+
+}
+
+.back-btn{
+
+    border:none;
+
+    background:none;
+
+    color:#1565c0;
+
+    cursor:pointer;
+
+    margin-bottom:20px;
+
+    font-weight:600;
+
+}
+
+input[type=file]{
+
+    padding:8px;
+
+}
+/* ======================================
+   Tablet
+====================================== */
+
+@media (max-width:992px){
+
+.container{
+    width:90%;
+    padding:30px;
+}
+
+.container h2{
+    font-size:28px;
+}
+
+.form-group{
+    margin-bottom:18px;
+}
+
+.submit-btn,
+.back-btn{
+    width:100%;
+}
+
+}
+
+/* ======================================
+   Mobile
+====================================== */
+
+@media (max-width:768px){
+
+.container{
+    width:95%;
+    padding:20px;
+    margin:15px auto;
+}
+
+.container h2{
+    font-size:24px;
+    text-align:center;
+}
+
+.back-btn{
+    width:100%;
+    margin-bottom:15px;
+}
+
+.form-group{
+    margin-bottom:16px;
+}
+
+.form-group label{
+    font-size:14px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+    width:100%;
+    font-size:14px;
+}
+
+.form-group input,
+.form-group select{
+    height:45px;
+}
+
+.form-group textarea{
+    min-height:100px;
+}
+
+.submit-btn{
+    width:100%;
+    height:45px;
+    font-size:15px;
+}
+
+}
+
+/* ======================================
+   Small Mobile
+====================================== */
+
+@media (max-width:480px){
+
+.container{
+    width:100%;
+    padding:15px;
+    border-radius:10px;
+}
+
+.container h2{
+    font-size:20px;
+}
+
+.form-group label{
+    font-size:13px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+    font-size:13px;
+}
+
+.form-group input,
+.form-group select{
+    height:42px;
+}
+
+.submit-btn,
+.back-btn{
+    height:42px;
+    font-size:14px;
+}
+
+}
+
+
+
