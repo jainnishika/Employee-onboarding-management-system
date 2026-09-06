@@ -31,7 +31,8 @@
     </header>
   <!-- Sidebar -->
 <aside class="sidebar" 
-[class.mobile-open]="!isSidebarOpen">
+[class.collapsed]="!isSidebarOpen"
+[class.mobile-open]="isSidebarOpen">
 
   <!-- Admin Menu -->
   <div *ngIf="role === 'Admin' || role === 'HR'">
