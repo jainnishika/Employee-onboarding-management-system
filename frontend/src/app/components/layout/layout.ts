@@ -27,6 +27,11 @@ export class Layout {
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
+  closeSidebarOnMobile() {
+  if (window.innerWidth <= 768) {
+    this.isSidebarOpen = false;
+  }
+}
 
   toggleProfile() {
     this.showProfile = !this.showProfile;

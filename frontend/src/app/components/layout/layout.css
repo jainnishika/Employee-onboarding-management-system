@@ -602,6 +602,9 @@ body {
         padding: 0 20px;
     }
 }
+.overlay {
+    display: none;
+}
 
 
 /* =========================================================
@@ -630,6 +633,20 @@ body {
 
         left: 0 !important;
     }
+    .overlay {
+    display: block;
+
+    position: fixed;
+
+    top: 65px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    background: rgba(0, 0, 0, 0.35);
+
+    z-index: 998;
+}
 
 
     /* ---------------- SIDEBAR ---------------- */

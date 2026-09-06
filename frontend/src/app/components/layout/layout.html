@@ -36,18 +36,18 @@
   <!-- Admin Menu -->
   <div *ngIf="role === 'Admin' || role === 'HR'">
 
-    <button [routerLink]="role === 'Admin' ? '/admin-dashboard' : '/hr-dashboard'">
+    <button [routerLink]="role === 'Admin' ? '/admin-dashboard' : '/hr-dashboard'" (click)="closeSidebarOnMobile()">
       <mat-icon>dashboard</mat-icon>
       <span *ngIf="isSidebarOpen">
         Dashboard</span>
     </button>
     <div *ngIf="role ==='Admin'|| role ==='HR'">
-      <button routerLink="/profile-requests" >
+      <button routerLink="/profile-requests" (click)="closeSidebarOnMobile()">
         <mat-icon>request_page</mat-icon>
          <span *ngIf="isSidebarOpen">
         Profile Update Requests</span>
       </button>
-      <button routerLink="/application-requests">
+      <button routerLink="/application-requests" (click)="closeSidebarOnMobile()">
       <mat-icon>description</mat-icon>
       <span *ngIf="isSidebarOpen">
         Application Requests
@@ -56,13 +56,13 @@
     </div>
 
 
-    <button routerLink="/view-employees" >
+    <button routerLink="/view-employees" (click)="closeSidebarOnMobile()">
       <mat-icon>groups</mat-icon> 
       <span *ngIf="isSidebarOpen">
         View Employees</span>
     </button>
 
-    <button routerLink="/create-employee" >
+    <button routerLink="/create-employee" (click)="closeSidebarOnMobile()">
       <mat-icon>person_add</mat-icon> 
        <span *ngIf="isSidebarOpen">
         Create Employee</span>
@@ -79,30 +79,29 @@
         Dashboard</span>
     </button> -->
 
-    <button routerLink="/employee-profile" >
+    <button routerLink="/employee-profile" (click)="closeSidebarOnMobile()">
       <mat-icon>person</mat-icon>
       <span *ngIf="isSidebarOpen">
         My Profile</span>
     </button>
-    <button routerLink="/apply-application" >
+    <button routerLink="/apply-application" (click)="closeSidebarOnMobile()">
       <mat-icon>description</mat-icon>
       <span *ngIf="isSidebarOpen">
         Apply Application</span>
     </button>
-     <button routerLink="/my-applications" >
+     <button routerLink="/my-applications" (click)="closeSidebarOnMobile()">
       <mat-icon>assignment</mat-icon>
       <span *ngIf="isSidebarOpen">
         My Applications</span>
     </button>
-     <button routerLink="/my-profile-requests" >
+     <button routerLink="/my-profile-requests" (click)="closeSidebarOnMobile()">
       <mat-icon>request_page</mat-icon>
       <span *ngIf="isSidebarOpen">
         My Profile Requests</span>
     </button>
 
       </div>
-        <button class="sidebar-item" 
-      routerLink="/user-manual">
+        <button class="sidebar-item" routerLink="/user-manual" (click)="closeSidebarOnMobile()">
     <mat-icon>menu_book</mat-icon>
      <span *ngIf="isSidebarOpen">
            User Manual</span>
@@ -117,12 +116,12 @@
     
 </aside>
 
-<!-- Overlay -->
-<!-- <div
+<!-- Mobile Overlay -->
+<div
   class="overlay"
-  *ngIf="isSidebarOpen && isMobile"
-    (click)="toggleSidebar()">
-</div> -->
+  *ngIf="isSidebarOpen"
+  (click)="closeSidebarOnMobile()">
+</div>
 
 <!-- Content -->
 <main class="content"
