@@ -613,141 +613,56 @@ body {
 
 @media (max-width: 768px) {
 
-    /* ---------------- NAVBAR ---------------- */
-
+    /* NAVBAR */
     .navbar {
-
-        left: 0 !important;
-
-        right: 0;
-
         width: 100%;
-
-        height: 65px;
-
-        padding: 0 15px;
-    }
-
-
-    .navbar.collapsed {
-
-        left: 0 !important;
-    }
-    .overlay {
-    display: block;
-
-    position: fixed;
-
-    top: 65px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-
-    background: rgba(0, 0, 0, 0.35);
-
-    z-index: 998;
-}
-
-
-    /* ---------------- SIDEBAR ---------------- */
-
-    .sidebar {
-
-        top: 65px;
-
-        left: -260px;
-
-        width: 250px;
-
-        height: calc(100vh - 65px);
-
-        transition:
-            left 0.3s ease;
-    }
-
-
-    .sidebar.collapsed {
-
-        left: -260px;
-
-        width: 250px;
-    }
-
-
-    .sidebar:not(.collapsed) {
-
         left: 0;
     }
 
-
-    /* ---------------- CONTENT ---------------- */
-
-    .content {
-
+    .navbar.collapsed {
         width: 100%;
+    }
 
+    /* SIDEBAR */
+    .sidebar {
+        width: 250px;
+        left: -250px;
+        top: 65px;
+        height: calc(100vh - 65px);
+
+        transition: left 0.3s ease;
+        z-index: 1000;
+    }
+
+    /* WHEN OPEN */
+    .sidebar:not(.collapsed) {
+        left: 0;
+    }
+
+    /* WHEN CLOSED */
+    .sidebar.collapsed {
+        width: 250px;
+        left: -250px;
+    }
+
+    /* CONTENT ALWAYS FULL WIDTH */
+    .content,
+    .content.collapsed {
+        width: 100%;
         margin-left: 0;
-
-        margin-top: 65px;
-
-        min-height: calc(100vh - 65px);
-
         padding: 15px;
     }
 
-
-    .content.collapsed {
-
+    /* OVERLAY */
+    .overlay {
+        display: block;
+        position: fixed;
+        top: 65px;
+        left: 0;
         width: 100%;
-
-        margin-left: 0;
-    }
-
-
-    /* ---------------- PROFILE ---------------- */
-
-    .profile-btn {
-
-        font-size: 13px;
-
-        padding: 0 7px;
-    }
-
-
-    .profile-btn span {
-
-        display: none;
-    }
-
-
-    .profile-btn mat-icon {
-
-        font-size: 27px;
-
-        width: 27px;
-        height: 27px;
-    }
-
-
-    /* ---------------- DROPDOWN ---------------- */
-
-    .dropdown {
-
-        width: 210px;
-
-        top: 57px;
-
-        right: 0;
-    }
-
-
-    /* ---------------- MENU BUTTON ---------------- */
-
-    .menu-btn {
-
-        width: 40px;
-
-        height: 40px;
+        height: calc(100vh - 65px);
+        background: rgba(0, 0, 0, 0.35);
+        z-index: 999;
     }
 }
 

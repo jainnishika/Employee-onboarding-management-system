@@ -17,8 +17,7 @@ export class Layout {
   username = localStorage.getItem("username") || "";
   role = localStorage.getItem("role") || "";
   showProfile = false;
-  isSidebarOpen = true;
- 
+  isSidebarOpen = window.innerWidth > 768;
 
   constructor(private router: Router,
     private cdr:ChangeDetectorRef
