@@ -20,6 +20,9 @@ app.use("/api/dashboard", require("./routes/dashboard"));
 app.use("/api/application", applicationRoutes);
 app.use("/api/request", requestRoutes);
 app.use("/api/upload", uploadRoutes);
+app.get("/", (req, res) => {
+    res.send("Employee Onboarding Backend is Running");
+});
 const PORT = process.env.PORT || 8082;
 
 app.listen(PORT, () => {
