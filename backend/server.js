@@ -20,6 +20,8 @@ app.use("/api/dashboard", require("./routes/dashboard"));
 app.use("/api/application", applicationRoutes);
 app.use("/api/request", requestRoutes);
 app.use("/api/upload", uploadRoutes);
-app.listen(8082, () => {
-    console.log("server running on port 8082");
+const PORT = process.env.PORT || 8082;
+
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
