@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router,RouterModule, RouterOutlet } from '@angular/router';
 import {MatIconModule} from '@angular/material/icon';
@@ -18,6 +18,7 @@ export class Layout {
   role = localStorage.getItem("role") || "";
   showProfile = false;
   isSidebarOpen = window.innerWidth > 768;
+  isMobile = window.innerWidth <= 768;
 
   constructor(private router: Router,
     private cdr:ChangeDetectorRef
@@ -57,6 +58,13 @@ export class Layout {
       }
     );
   }
+  @HostListener('window:resize')
+onResize() {
+  this.isMobile = window.innerWidth <= 768;
+  if (!this.isMobile) {
+      this.isSidebarOpen = true;
+    }
+}
 
  logout() {
     localStorage.removeItem("username");
